@@ -1,8 +1,8 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "https://script.google.com/macros/s/AKfycbw0H7mqcvatugf0oZ_9jPLTHJkT4nusvywRlJzNnHkzkU_9TMKu8Ytuitl_D89GGjkr/exec"
+      "src": "/(.*)",
+      "dest": "https://script.google.com/macros/s/AKfycbw0H7mqcvatugf0oZ_9jPLTHJkT4nusvywRlJzNnHkzkU_9TMKu8Ytuitl_D89GGjkr/exec"
     }
   ]
 }
