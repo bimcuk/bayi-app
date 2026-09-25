@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Admin - Kelola Akun</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background: #f5f7f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 35px rgba(0,0,0,.08);
+    }
+
+    .logo {
+      width: 55px;
+      height: 55px;
+      border-radius: 15px;
+      background: #259148;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 5px;
+      font-size: 23px;
+    }
+
+    .subtitle {
+      color: #777;
+      font-size: 13px;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      margin-bottom: 17px;
+    }
+
+    input:focus {
+      border-color: #259148;
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 13px;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #259148;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      opacity: .9;
+    }
+
+    .btn-logout {
+      margin-top: 10px;
+      background: #f1f1f1;
+      color: #555;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .message {
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .error {
+      background: #fff0f0;
+      color: #c62828;
+    }
+
+    .success {
+      background: #edf9f1;
+      color: #20803c;
+    }
+
+    .info {
+      background: #f4f7f5;
+      border-radius: 12px;
+      padding: 13px;
+      margin-bottom: 20px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .admin-email {
+      font-weight: 600;
+      color: #259148;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- =====================================================
+       LOGIN ADMIN
+       ===================================================== -->
+
+  <div
+    id="loginCard"
+    class="card"
+  >
+
+    <div class="logo">
+      🔐
+    </div>
+
+    <h1>Admin</h1>
+
+    <div class="subtitle">
+      Kelola akun pengguna
+    </div>
+
+    <div
+      id="loginMessage"
+      class="message error hidden"
+    ></div>
+
+    <label>Email Admin</label>
+
+    <input
+      id="adminEmail"
+      type="email"
+      autocomplete="username"
+      placeholder="Email admin"
+    >
+
+    <label>Password Admin</label>
+
+    <input
+      id="adminPassword"
+      type="password"
+      autocomplete="current-password"
+      placeholder="Password admin"
+    >
+
+    <button
+      class="btn-primary"
+      onclick="loginAdmin()"
+    >
+      Masuk
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       ADMIN PANEL
+       ===================================================== -->
+
+  <div
+    id="adminCard"
+    class="card hidden"
+  >
+
+    <div class="logo">
+      ⚙️
+    </div>
+
+    <h1>Kelola Akun</h1>
+
+    <div class="subtitle">
+      Ubah email dan password pengguna
+    </div>
+
+    <div class="info">
+
+      Login sebagai:
+      <div
+        id="loggedAdminEmail"
+        class="admin-email"
+      ></div>
+
+    </div>
+
+    <div
+      id="updateMessage"
+      class="message hidden"
+    ></div>
+
+    <label>Email Lama</label>
+
+    <input
+      id="oldEmail"
+      type="email"
+      placeholder="Email akun yang mau diubah"
+    >
+
+    <label>Email Baru</label>
+
+    <input
+      id="newEmail"
+      type="email"
+      placeholder="Kosongkan jika tidak ingin mengubah email"
+    >
+
+    <label>Password Baru</label>
+
+    <input
+      id="newPassword"
+      type="password"
+      placeholder="Kosongkan jika tidak ingin mengubah password"
+    >
+
+    <button
+      id="updateButton"
+      class="btn-primary"
+      onclick="updateUser()"
+    >
+      Simpan Perubahan
+    </button>
+
+    <button
+      class="btn-logout"
+      onclick="logoutAdmin()"
+    >
+      Keluar
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  // =========================================================
+  // SUPABASE
+  // =========================================================
+
+  const SUPABASE_URL =
+    'https://evvqxxsojeiisrsuygky.supabase.co';
+
+  const SUPABASE_ANON_KEY =
+    'sb_publishable_RIJfZBsXRoq56wUkA1j19g_W8GPcm7Z';
+
+  const {
+    createClient
+  } = window.supabase;
+
+  const supabaseClient =
+    createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
+
+
+  // =========================================================
+  // LOGIN ADMIN
+  // =========================================================
+
+  async function loginAdmin() {
+
+    const email =
+      document
+        .getElementById('adminEmail')
+        .value
+        .trim();
+
+    const password =
+      document
+        .getElementById('adminPassword')
+        .value;
+
+    const message =
+      document.getElementById(
+        'loginMessage'
+      );
+
+    message.classList.add('hidden');
+
+    if (!email || !password) {
+
+      message.textContent =
+        'Email dan password wajib diisi.';
+
+      message.classList.remove('hidden');
+
+      return;
+    }
+
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+
+    if (error) {
+
+      message.textContent =
+        error.message;
+
+      message.classList.remove('hidden');
+
+      return;
+    }
+
+    if (!data.session) {
+
+      message.textContent =
+        'Session admin tidak ditemukan.';
+
+      message.classList.remove('hidden');
+
+      return;
+    }
+
+    document
+      .getElementById('loggedAdminEmail')
+      .textContent =
+        data.user.email || '';
+
+    document
+      .getElementById('loginCard')
+      .classList.add('hidden');
+
+    document
+      .getElementById('adminCard')
+      .classList.remove('hidden');
+  }
+
+
+  // =========================================================
+  // UPDATE USER
+  // =========================================================
+
+  async function updateUser() {
+
+    const oldEmail =
+      document
+        .getElementById('oldEmail')
+        .value
+        .trim();
+
+    const newEmail =
+      document
+        .getElementById('newEmail')
+        .value
+        .trim();
+
+    const newPassword =
+      document
+        .getElementById('newPassword')
+        .value;
+
+    const message =
+      document.getElementById(
+        'updateMessage'
+      );
+
+    const button =
+      document.getElementById(
+        'updateButton'
+      );
+
+    message.className =
+      'message hidden';
+
+    if (!oldEmail) {
+
+      showUpdateMessage(
+        'Email lama wajib diisi.',
+        'error'
+      );
+
+      return;
+    }
+
+    if (!newEmail && !newPassword) {
+
+      showUpdateMessage(
+        'Isi email baru atau password baru.',
+        'error'
+      );
+
+      return;
+    }
+
+    if (
+      newPassword &&
+      newPassword.length < 6
+    ) {
+
+      showUpdateMessage(
+        'Password minimal 6 karakter.',
+        'error'
+      );
+
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'Memproses...';
+
+    try {
+
+      const {
+        data: {
+          session
+        }
+      } =
+        await supabaseClient.auth.getSession();
+
+      if (!session) {
+
+        throw new Error(
+          'Session admin sudah berakhir. Silakan login lagi.'
+        );
+      }
+
+      const response =
+        await fetch(
+          SUPABASE_URL +
+          '/functions/v1/admin-update-user',
+          {
+            method: 'POST',
+
+            headers: {
+              'Authorization':
+                'Bearer ' +
+                session.access_token,
+
+              'apikey':
+                SUPABASE_ANON_KEY,
+
+              'Content-Type':
+                'application/json'
+            },
+
+            body: JSON.stringify({
+              oldEmail,
+              newEmail,
+              newPassword
+            })
+          }
+        );
+
+      const result =
+        await response.json();
+
+      if (!response.ok || !result.success) {
+
+        throw new Error(
+          result.message ||
+          'Gagal memperbarui akun.'
+        );
+      }
+
+      showUpdateMessage(
+        'Berhasil! Email/password user sudah diperbarui.',
+        'success'
+      );
+
+      document
+        .getElementById('oldEmail')
+        .value = '';
+
+      document
+        .getElementById('newEmail')
+        .value = '';
+
+      document
+        .getElementById('newPassword')
+        .value = '';
+
+    } catch (error) {
+
+      console.error(error);
+
+      showUpdateMessage(
+        error.message ||
+        'Terjadi kesalahan.',
+        'error'
+      );
+
+    } finally {
+
+      button.disabled = false;
+      button.textContent =
+        'Simpan Perubahan';
+    }
+  }
+
+
+  // =========================================================
+  // MESSAGE
+  // =========================================================
+
+  function showUpdateMessage(
+    text,
+    type
+  ) {
+
+    const message =
+      document.getElementById(
+        'updateMessage'
+      );
+
+    message.textContent = text;
+
+    message.className =
+      'message ' + type;
+  }
+
+
+  // =========================================================
+  // LOGOUT
+  // =========================================================
+
+  async function logoutAdmin() {
+
+    await supabaseClient.auth.signOut();
+
+    document
+      .getElementById('adminCard')
+      .classList.add('hidden');
+
+    document
+      .getElementById('loginCard')
+      .classList.remove('hidden');
+
+    document
+      .getElementById('adminPassword')
+      .value = '';
+  }
+
+
+  // =========================================================
+  // SESSION SAAT PAGE DIBUKA
+  // =========================================================
+
+  async function checkSession() {
+
+    const {
+      data: {
+        session
+      }
+    } =
+      await supabaseClient.auth.getSession();
+
+    if (session?.user) {
+
+      document
+        .getElementById('loggedAdminEmail')
+        .textContent =
+        session.user.email || '';
+
+      document
+        .getElementById('loginCard')
+        .classList.add('hidden');
+
+      document
+        .getElementById('adminCard')
+        .classList.remove('hidden');
+    }
+  }
+
+  checkSession();
+
+</script>
+
+</body>
+</html>
