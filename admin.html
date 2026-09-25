@@ -103,6 +103,11 @@
       cursor: pointer;
     }
 
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
     .btn-primary {
       background: #259148;
       color: white;
@@ -151,6 +156,8 @@
     .admin-email {
       font-weight: 600;
       color: #259148;
+      margin-top: 3px;
+      word-break: break-word;
     }
 
   </style>
@@ -203,6 +210,7 @@
     >
 
     <button
+      id="loginButton"
       class="btn-primary"
       onclick="loginAdmin()"
     >
@@ -234,6 +242,7 @@
     <div class="info">
 
       Login sebagai:
+
       <div
         id="loggedAdminEmail"
         class="admin-email"
@@ -302,6 +311,23 @@
   const SUPABASE_ANON_KEY =
     'sb_publishable_RIJfZBsXRoq56wUkA1j19g_W8GPcm7Z';
 
+
+  // =========================================================
+  // EMAIL ADMIN YANG DIIZINKAN
+  //
+  // GANTI INI DENGAN EMAIL YANG LU DAFTARKAN
+  // SEBAGAI ADMIN DI EDGE FUNCTION.
+  //
+  // =========================================================
+
+  const ADMIN_EMAIL =
+    'rojulanfayadulmujahid@gmail.com';
+
+
+  // =========================================================
+  // SUPABASE CLIENT
+  // =========================================================
+
   const {
     createClient
   } = window.supabase;
@@ -311,6 +337,23 @@
       SUPABASE_URL,
       SUPABASE_ANON_KEY
     );
+
+
+  // =========================================================
+  // HELPER CEK ADMIN
+  // =========================================================
+
+  function isAdminUser(user) {
+
+    if (!user || !user.email) {
+      return false;
+    }
+
+    return (
+      user.email.trim().toLowerCase() ===
+      ADMIN_EMAIL.trim().toLowerCase()
+    );
+  }
 
 
   // =========================================================
@@ -335,6 +378,11 @@
         'loginMessage'
       );
 
+    const button =
+      document.getElementById(
+        'loginButton'
+      );
+
     message.classList.add('hidden');
 
     if (!email || !password) {
@@ -347,44 +395,121 @@
       return;
     }
 
-    const { data, error } =
-      await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
 
-    if (error) {
+    // =====================================================
+    // CEK EMAIL SEBELUM LOGIN
+    //
+    // User biasa bahkan tidak perlu diproses
+    // sebagai admin.
+    // =====================================================
+
+    if (
+      email.toLowerCase() !==
+      ADMIN_EMAIL.trim().toLowerCase()
+    ) {
 
       message.textContent =
-        error.message;
+        'Akses ditolak. Email ini bukan akun admin.';
 
       message.classList.remove('hidden');
 
       return;
     }
 
-    if (!data.session) {
+
+    button.disabled = true;
+    button.textContent = 'Memeriksa...';
+
+
+    try {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+
+      if (error) {
+
+        message.textContent =
+          error.message;
+
+        message.classList.remove('hidden');
+
+        return;
+      }
+
+
+      if (!data.session || !data.user) {
+
+        message.textContent =
+          'Session admin tidak ditemukan.';
+
+        message.classList.remove('hidden');
+
+        await supabaseClient.auth.signOut();
+
+        return;
+      }
+
+
+      // ===================================================
+      // CEK LAGI EMAIL USER YANG BENAR-BENAR LOGIN
+      // ===================================================
+
+      if (!isAdminUser(data.user)) {
+
+        await supabaseClient.auth.signOut();
+
+        message.textContent =
+          'Akses ditolak. Akun ini bukan admin.';
+
+        message.classList.remove('hidden');
+
+        return;
+      }
+
+
+      // ===================================================
+      // ADMIN VALID
+      // ===================================================
+
+      document
+        .getElementById('loggedAdminEmail')
+        .textContent =
+          data.user.email || '';
+
+
+      document
+        .getElementById('loginCard')
+        .classList.add('hidden');
+
+
+      document
+        .getElementById('adminCard')
+        .classList.remove('hidden');
+
+
+    } catch (error) {
+
+      console.error(error);
 
       message.textContent =
-        'Session admin tidak ditemukan.';
+        error.message ||
+        'Terjadi kesalahan saat login.';
 
       message.classList.remove('hidden');
 
-      return;
+    } finally {
+
+      button.disabled = false;
+      button.textContent = 'Masuk';
+
     }
-
-    document
-      .getElementById('loggedAdminEmail')
-      .textContent =
-        data.user.email || '';
-
-    document
-      .getElementById('loginCard')
-      .classList.add('hidden');
-
-    document
-      .getElementById('adminCard')
-      .classList.remove('hidden');
   }
 
 
@@ -421,8 +546,10 @@
         'updateButton'
       );
 
+
     message.className =
       'message hidden';
+
 
     if (!oldEmail) {
 
@@ -434,6 +561,7 @@
       return;
     }
 
+
     if (!newEmail && !newPassword) {
 
       showUpdateMessage(
@@ -443,6 +571,7 @@
 
       return;
     }
+
 
     if (
       newPassword &&
@@ -457,10 +586,16 @@
       return;
     }
 
+
     button.disabled = true;
     button.textContent = 'Memproses...';
 
+
     try {
+
+      // ===================================================
+      // AMBIL SESSION ADMIN
+      // ===================================================
 
       const {
         data: {
@@ -469,12 +604,32 @@
       } =
         await supabaseClient.auth.getSession();
 
-      if (!session) {
+
+      if (!session || !session.user) {
 
         throw new Error(
           'Session admin sudah berakhir. Silakan login lagi.'
         );
       }
+
+
+      // ===================================================
+      // CEK ADMIN SEKALI LAGI
+      // ===================================================
+
+      if (!isAdminUser(session.user)) {
+
+        await supabaseClient.auth.signOut();
+
+        throw new Error(
+          'Akses ditolak. Akun ini bukan admin.'
+        );
+      }
+
+
+      // ===================================================
+      // PANGGIL EDGE FUNCTION
+      // ===================================================
 
       const response =
         await fetch(
@@ -484,6 +639,7 @@
             method: 'POST',
 
             headers: {
+
               'Authorization':
                 'Bearer ' +
                 session.access_token,
@@ -496,17 +652,24 @@
             },
 
             body: JSON.stringify({
+
               oldEmail,
               newEmail,
               newPassword
+
             })
           }
         );
 
+
       const result =
         await response.json();
 
-      if (!response.ok || !result.success) {
+
+      if (
+        !response.ok ||
+        !result.success
+      ) {
 
         throw new Error(
           result.message ||
@@ -514,22 +677,31 @@
         );
       }
 
+
+      // ===================================================
+      // BERHASIL
+      // ===================================================
+
       showUpdateMessage(
         'Berhasil! Email/password user sudah diperbarui.',
         'success'
       );
 
+
       document
         .getElementById('oldEmail')
         .value = '';
+
 
       document
         .getElementById('newEmail')
         .value = '';
 
+
       document
         .getElementById('newPassword')
         .value = '';
+
 
     } catch (error) {
 
@@ -588,13 +760,37 @@
       .classList.remove('hidden');
 
     document
+      .getElementById('adminEmail')
+      .value = '';
+
+    document
       .getElementById('adminPassword')
       .value = '';
+
+    document
+      .getElementById('oldEmail')
+      .value = '';
+
+    document
+      .getElementById('newEmail')
+      .value = '';
+
+    document
+      .getElementById('newPassword')
+      .value = '';
+
+    document
+      .getElementById('loginMessage')
+      .classList.add('hidden');
+
+    document
+      .getElementById('updateMessage')
+      .classList.add('hidden');
   }
 
 
   // =========================================================
-  // SESSION SAAT PAGE DIBUKA
+  // CEK SESSION SAAT PAGE DIBUKA
   // =========================================================
 
   async function checkSession() {
@@ -606,22 +802,48 @@
     } =
       await supabaseClient.auth.getSession();
 
-    if (session?.user) {
 
-      document
-        .getElementById('loggedAdminEmail')
-        .textContent =
+    if (!session || !session.user) {
+      return;
+    }
+
+
+    // =====================================================
+    // SESSION ADA, TAPI BUKAN ADMIN
+    // =====================================================
+
+    if (!isAdminUser(session.user)) {
+
+      await supabaseClient.auth.signOut();
+
+      return;
+    }
+
+
+    // =====================================================
+    // SESSION VALID DAN USER ADALAH ADMIN
+    // =====================================================
+
+    document
+      .getElementById('loggedAdminEmail')
+      .textContent =
         session.user.email || '';
 
-      document
-        .getElementById('loginCard')
-        .classList.add('hidden');
 
-      document
-        .getElementById('adminCard')
-        .classList.remove('hidden');
-    }
+    document
+      .getElementById('loginCard')
+      .classList.add('hidden');
+
+
+    document
+      .getElementById('adminCard')
+      .classList.remove('hidden');
   }
+
+
+  // =========================================================
+  // JALANKAN CEK SESSION
+  // =========================================================
 
   checkSession();
 
