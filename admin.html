@@ -1,13 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="id">
 
 <head>
   <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
+>
 
   <title>Admin - Kelola Akun</title>
 
@@ -160,7 +162,42 @@
       word-break: break-word;
     }
 
+
+    /* =====================================================
+       PASSWORD TOGGLE
+       ===================================================== */
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper input {
+      padding-right: 45px;
+    }
+
+    .password-toggle {
+      position: absolute;
+      width: auto;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 0;
+      padding: 4px;
+      margin: 0;
+      background: transparent;
+      color: #777;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .password-toggle:hover {
+      opacity: 1;
+      color: #259148;
+    }
+
   </style>
+
 </head>
 
 <body>
@@ -176,49 +213,63 @@
     class="card"
   >
 
-    <div class="logo">
-      🔐
-    </div>
+```
+<div class="logo">
+  🔐
+</div>
 
-    <h1>Admin</h1>
+<h1>Admin</h1>
 
-    <div class="subtitle">
-      Kelola akun pengguna
-    </div>
+<div class="subtitle">
+  Kelola akun pengguna
+</div>
 
-    <div
-      id="loginMessage"
-      class="message error hidden"
-    ></div>
+<div
+  id="loginMessage"
+  class="message error hidden"
+></div>
 
-    <label>Email Admin</label>
+<label>Email Admin</label>
 
-    <input
-      id="adminEmail"
-      type="email"
-      autocomplete="username"
-      placeholder="Email admin"
-    >
+<input
+  id="adminEmail"
+  type="email"
+  autocomplete="username"
+  placeholder="Email admin"
+>
 
-    <label>Password Admin</label>
+<label>Password Admin</label>
 
-    <input
-      id="adminPassword"
-      type="password"
-      autocomplete="current-password"
-      placeholder="Password admin"
-    >
+<div class="password-wrapper">
 
-    <button
-      id="loginButton"
-      class="btn-primary"
-      onclick="loginAdmin()"
-    >
-      Masuk
-    </button>
+  <input
+    id="adminPassword"
+    type="password"
+    autocomplete="current-password"
+    placeholder="Password admin"
+  >
+
+  <button
+    type="button"
+    class="password-toggle"
+    onclick="togglePassword('adminPassword', this)"
+    aria-label="Tampilkan password"
+  >
+    👁
+  </button>
+
+</div>
+
+<button
+  id="loginButton"
+  class="btn-primary"
+  onclick="loginAdmin()"
+>
+  Masuk
+</button>
+```
 
   </div>
-
 
   <!-- =====================================================
        ADMIN PANEL
@@ -229,75 +280,89 @@
     class="card hidden"
   >
 
-    <div class="logo">
-      ⚙️
-    </div>
+```
+<div class="logo">
+  ⚙️
+</div>
 
-    <h1>Kelola Akun</h1>
+<h1>Kelola Akun</h1>
 
-    <div class="subtitle">
-      Ubah email dan password pengguna
-    </div>
+<div class="subtitle">
+  Ubah email dan password pengguna
+</div>
 
-    <div class="info">
+<div class="info">
 
-      Login sebagai:
+  Login sebagai:
 
-      <div
-        id="loggedAdminEmail"
-        class="admin-email"
-      ></div>
+  <div
+    id="loggedAdminEmail"
+    class="admin-email"
+  ></div>
 
-    </div>
+</div>
 
-    <div
-      id="updateMessage"
-      class="message hidden"
-    ></div>
+<div
+  id="updateMessage"
+  class="message hidden"
+></div>
 
-    <label>Email Lama</label>
+<label>Email Lama</label>
 
-    <input
-      id="oldEmail"
-      type="email"
-      placeholder="Email akun yang mau diubah"
-    >
+<input
+  id="oldEmail"
+  type="email"
+  placeholder="Email akun yang mau diubah"
+>
 
-    <label>Email Baru</label>
+<label>Email Baru</label>
 
-    <input
-      id="newEmail"
-      type="email"
-      placeholder="Kosongkan jika tidak ingin mengubah email"
-    >
+<input
+  id="newEmail"
+  type="email"
+  placeholder="Kosongkan jika tidak ingin mengubah email"
+>
 
-    <label>Password Baru</label>
+<label>Password Baru</label>
 
-    <input
-      id="newPassword"
-      type="password"
-      placeholder="Kosongkan jika tidak ingin mengubah password"
-    >
+<div class="password-wrapper">
 
-    <button
-      id="updateButton"
-      class="btn-primary"
-      onclick="updateUser()"
-    >
-      Simpan Perubahan
-    </button>
+  <input
+    id="newPassword"
+    type="password"
+    placeholder="Kosongkan jika tidak ingin mengubah password"
+  >
 
-    <button
-      class="btn-logout"
-      onclick="logoutAdmin()"
-    >
-      Keluar
-    </button>
+  <button
+    type="button"
+    class="password-toggle"
+    onclick="togglePassword('newPassword', this)"
+    aria-label="Tampilkan password"
+  >
+    👁
+  </button>
+
+</div>
+
+<button
+  id="updateButton"
+  class="btn-primary"
+  onclick="updateUser()"
+>
+  Simpan Perubahan
+</button>
+
+<button
+  class="btn-logout"
+  onclick="logoutAdmin()"
+>
+  Keluar
+</button>
+```
 
   </div>
 
 </div>
-
 
 <script>
 
@@ -353,6 +418,42 @@
       user.email.trim().toLowerCase() ===
       ADMIN_EMAIL.trim().toLowerCase()
     );
+  }
+
+
+  // =========================================================
+  // TOGGLE PASSWORD
+  // =========================================================
+
+  function togglePassword(inputId, button) {
+
+    const input =
+      document.getElementById(inputId);
+
+    if (!input) return;
+
+    if (input.type === 'password') {
+
+      input.type = 'text';
+
+      button.textContent = '👁';
+
+      button.setAttribute(
+        'aria-label',
+        'Sembunyikan password'
+      );
+
+    } else {
+
+      input.type = 'password';
+
+      button.textContent = '👁';
+
+      button.setAttribute(
+        'aria-label',
+        'Tampilkan password'
+      );
+    }
   }
 
 
