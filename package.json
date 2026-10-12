@@ -1,0 +1,10 @@
+{
+  "name": "catatan-si-kecil",
+  "version": "1.0.0",
+  "description": "Aplikasi Web Pemantau Tumbuh Kembang Bayi",
+  "scripts": {
+    "build": "echo 'Build complete'",
+    "start": "node server.js",
+    "dev": "node server.js"
+  }
+}
