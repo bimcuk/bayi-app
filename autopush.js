@@ -26,22 +26,34 @@ try {
     env: { ...process.env, PATH: 'C:\\Users\\user\\AppData\\Local\\Programs\\MinGit\\cmd;' + (process.env.PATH || '') }
   }).toString().trim();
 
-  if (!status) {
-    console.log('✅ Tidak ada file yang berubah. Repository sudah up-to-date!');
+  let unpushed = '';
+  try {
+    unpushed = execSync(`"${gitExe}" cherry -v`, {
+      cwd: __dirname,
+      env: { ...process.env, PATH: 'C:\\Users\\user\\AppData\\Local\\Programs\\MinGit\\cmd;' + (process.env.PATH || '') }
+    }).toString().trim();
+  } catch (e) {}
+
+  if (!status && !unpushed) {
+    console.log('✅ Tidak ada file yang berubah & semua commit sudah ter-push ke GitHub!');
     console.log('------------------------------------------------------\n');
     process.exit(0);
   }
 
-  console.log('📁 Staging semua file...');
-  run(`"${gitExe}" add -A`);
+  if (status) {
+    console.log('📁 Staging semua file...');
+    run(`"${gitExe}" add -A`);
 
-  const now = new Date();
-  const dateStr = now.toISOString().replace('T', ' ').substring(0, 19);
-  const userMsg = process.argv.slice(2).join(' ').trim();
-  const commitMsg = userMsg || `Update aplikasi - ${dateStr}`;
+    const now = new Date();
+    const dateStr = now.toISOString().replace('T', ' ').substring(0, 19);
+    const userMsg = process.argv.slice(2).join(' ').trim();
+    const commitMsg = userMsg || `Update aplikasi - ${dateStr}`;
 
-  console.log(`\n💬 Membuat commit: "${commitMsg}"...`);
-  run(`"${gitExe}" commit -m "${commitMsg}"`);
+    console.log(`\n💬 Membuat commit: "${commitMsg}"...`);
+    run(`"${gitExe}" commit -m "${commitMsg}"`);
+  } else {
+    console.log('ℹ️ Ada commit lokal yang belum di-push ke GitHub.');
+  }
 
   console.log('\n☁️ Mengirim perubahan ke branch main...');
   run(`"${gitExe}" push origin main`);
