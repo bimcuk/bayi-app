@@ -1095,32 +1095,148 @@
     }
 
     /* =========================================================
-       DONATION MODAL STYLES (CLEAN & MINIMALIST)
+       SUBSCRIBE & PAYWALL MODAL STYLES (PREMIUM)
        ========================================================= */
-    .donation-subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      margin: 0 0 16px;
-      line-height: 1.45;
+    .subscribe-modal-box {
+      width: min(520px, 100%);
     }
 
-    .qr-container {
+    .subscribe-alert {
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.45;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .subscribe-alert.warning {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #d97706;
+    }
+
+    .subscribe-alert.danger {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #dc2626;
+    }
+
+    .subscribe-alert.success {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #059669;
+    }
+
+    .subscribe-price-card {
+      background: linear-gradient(135deg, var(--surface2) 0%, var(--surface) 100%);
+      border: 1.5px solid var(--primary-soft);
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 24px var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .subscribe-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .subscribe-price-value {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+
+    .subscribe-price-value .currency {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .subscribe-price-value .amount {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+    }
+
+    .subscribe-price-value .period {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .subscribe-features {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 12.5px;
+      color: var(--text);
+    }
+
+    .feat-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feat-item i {
+      color: #10b981;
+      font-size: 12px;
+    }
+
+    .subscribe-qr-card {
       background: var(--surface2);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 20px;
       padding: 18px 14px;
       text-align: center;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
+    }
+
+    .subscribe-qr-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .qr-merchant-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    .qr-nmid {
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-top: 2px;
     }
 
     .qr-image-frame {
-      width: 200px;
-      height: 200px;
-      margin: 0 auto 10px;
+      width: 220px;
+      height: 220px;
+      margin: 0 auto 12px;
       background: #ffffff;
-      border-radius: 14px;
-      padding: 10px;
+      border-radius: 16px;
+      padding: 8px;
       border: 1px solid var(--border);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1130,55 +1246,506 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
+      border-radius: 10px;
     }
 
-    .qr-caption {
+    .qr-instruction {
       font-size: 12px;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .donation-nominal-label {
-      font-size: 12px;
-      font-weight: 600;
       color: var(--muted);
-      margin-bottom: 7px;
+      line-height: 1.45;
+      max-width: 380px;
+      margin: 0 auto 10px;
     }
 
-    .nominal-pills {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+    .download-qr-btn {
+      display: inline-flex;
+      align-items: center;
       gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: 0.15s;
+    }
+
+    .download-qr-btn:hover {
+      background: var(--primary-soft);
+      border-color: var(--primary);
+    }
+
+    .upload-proof-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
       margin-bottom: 14px;
     }
 
-    .nominal-pill {
-      border: 1px solid var(--border);
-      background: var(--surface);
+    .upload-proof-title {
+      font-size: 13.5px;
+      font-weight: 700;
       color: var(--text);
-      border-radius: 10px;
-      padding: 8px 4px;
-      font-size: 11.5px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 4px;
     }
 
-    .nominal-pill:hover,
-    .nominal-pill.active {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: #ffffff;
-    }
-
-
-
-    .donation-thankyou-box {
-      text-align: center;
+    .upload-proof-desc {
       font-size: 12px;
       color: var(--muted);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .upload-dropzone {
+      border: 2px dashed var(--border);
+      border-radius: 14px;
+      padding: 18px 12px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--surface2);
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .upload-dropzone:hover {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .upload-dropzone.has-file {
+      border-style: solid;
+      border-color: var(--border);
+      background: var(--surface);
+    }
+
+    #dropzonePreview img {
+      max-width: 140px;
+      max-height: 140px;
+      object-fit: contain;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      margin-bottom: 8px;
+    }
+
+    .proof-preview-info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .btn-remove-proof {
+      background: transparent;
+      border: none;
+      color: #ef4444;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 6px;
+    }
+
+    .current-uploaded-box {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+    }
+
+    .uploaded-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .uploaded-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+
+    .uploaded-badge.pending {
+      background: rgba(245, 158, 11, 0.15);
+      color: #d97706;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .uploaded-badge.active {
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .uploaded-date {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .uploaded-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .uploaded-content img {
+      width: 52px;
+      height: 52px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .uploaded-text {
+      flex: 1;
+      font-size: 11.5px;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .btn-refresh-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 5px;
+      background: transparent;
+      border: none;
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .paywall-logout-box {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* =========================================================
+       ADMIN MODAL & LIGHTBOX STYLES
+       ========================================================= */
+    .admin-modal-box {
+      width: min(640px, 100%);
+    }
+
+    .admin-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .admin-tab {
+      background: transparent;
+      border: none;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.15s;
+    }
+
+    .admin-tab:hover {
+      color: var(--text);
+      background: var(--surface2);
+    }
+
+    .admin-tab.active {
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .admin-tab-desc {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+
+    .manual-acc-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+    }
+
+    .manual-acc-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .admin-requests-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .admin-request-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    .admin-request-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .admin-req-email {
+      font-weight: 700;
+      font-size: 13.5px;
+      color: var(--text);
+      word-break: break-all;
+    }
+
+    .admin-req-date {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .admin-req-body {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .admin-req-thumb {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    .admin-req-thumb:hover {
+      transform: scale(1.04);
+    }
+
+    .admin-req-meta {
+      flex: 1;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .admin-req-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .admin-btn {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      text-decoration: none;
+      border: none;
+      transition: 0.15s;
+    }
+
+    .admin-btn.preview {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .admin-btn.preview:hover {
+      background: var(--primary-soft);
+      border-color: var(--primary);
+    }
+
+    .admin-btn.download {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .admin-btn.download:hover {
+      background: var(--surface);
+      border-color: var(--text);
+    }
+
+    .admin-btn.acc {
+      background: #10b981;
+      color: #ffffff;
+      margin-left: auto;
+    }
+
+    .admin-btn.acc:hover {
+      background: #059669;
+    }
+
+    .admin-btn.reject {
+      background: transparent;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #ef4444;
+    }
+
+    .admin-btn.reject:hover {
+      background: rgba(239, 68, 68, 0.12);
+    }
+
+    .delete-account-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .danger-btn {
+      background: #dc2626;
+      color: #ffffff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: background 0.15s;
+    }
+
+    .danger-btn:hover {
+      background: #b91c1c;
+    }
+
+    .admin-users-table-wrap {
       margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .admin-users-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    .admin-users-table th {
+      background: var(--surface2);
+      padding: 10px 12px;
+      font-weight: 700;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .admin-users-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .admin-users-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* LIGHTBOX */
+    .proof-lightbox-backdrop {
+      z-index: 100000;
+      background: rgba(0, 0, 0, 0.88);
+    }
+
+    .proof-lightbox-box {
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .proof-lightbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+    }
+
+    .proof-lb-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .proof-lb-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .proof-lightbox-img-wrap {
+      max-width: 85vw;
+      max-height: 78vh;
+      overflow: auto;
+      border-radius: 14px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .proof-lightbox-img-wrap img {
+      max-width: 100%;
+      max-height: 78vh;
+      object-fit: contain;
+      display: block;
     }
 
     .modal-header {
@@ -1936,13 +2503,22 @@
             <span class="menu-badge" id="menuLangBadge">🇬🇧 English</span>
           </button>
 
-          <!-- 5. Donasi -->
-          <button class="menu-item" onclick="openDonationModal(); closeHamburgerMenu();">
+          <!-- 5. Subscribe / Langganan -->
+          <button class="menu-item" id="menuSubscribeBtn" onclick="openSubscribeModal(); closeHamburgerMenu();">
             <div class="menu-item-left">
-              <i class="fa-solid fa-qrcode"></i>
-              <span data-i18n="menuDonation">Donasi</span>
+              <i class="fa-solid fa-crown" style="color: #f59e0b;"></i>
+              <span data-i18n="menuSubscribe">Langganan</span>
             </div>
-            <span class="menu-badge">QRIS</span>
+            <span class="menu-badge" id="menuSubscribeBadge">Trial</span>
+          </button>
+
+          <!-- 5b. Panel Admin (Khusus Akun Admin) -->
+          <button class="menu-item admin-only-item hidden" id="menuAdminBtn" onclick="openAdminPanel(); closeHamburgerMenu();">
+            <div class="menu-item-left">
+              <i class="fa-solid fa-shield-halved" style="color: var(--primary);"></i>
+              <span data-i18n="menuAdmin">Panel Admin</span>
+            </div>
+            <span class="menu-badge" style="background:var(--primary); color:#fff;">Admin</span>
           </button>
 
           <div class="menu-divider"></div>
@@ -2495,45 +3071,210 @@
 
 </div>
 
-<!-- DONATION MODAL -->
-<div id="donationModal" class="modal-backdrop-custom">
-  <div class="modal-box">
+<!-- SUBSCRIBE / PAYWALL MODAL -->
+<div id="subscribeModal" class="modal-backdrop-custom">
+  <div class="modal-box subscribe-modal-box">
     <div class="modal-header">
-      <h3 data-i18n="donationTitle">Donasi</h3>
-      <button type="button" class="modal-close" onclick="closeDonationModal()">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:20px;">👑</span>
+        <h3 id="subscribeModalTitle" data-i18n="subscribeTitle">Langganan Catatan Si Kecil</h3>
+      </div>
+      <button type="button" class="modal-close" id="subscribeModalCloseBtn" onclick="closeSubscribeModal()">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
 
-    <p class="donation-subtitle" data-i18n="donationSubtitle">
-      Dukungan untuk biaya operasional dan kelanjutan aplikasi.
-    </p>
+    <!-- Alert Status / Info -->
+    <div id="subscribeStatusAlert" class="subscribe-alert hidden"></div>
 
-    <!-- QR CODE -->
-    <div class="qr-container">
+    <!-- Pricing Card -->
+    <div class="subscribe-price-card">
+      <div class="subscribe-badge">Langganan 1 Tahun</div>
+      <div class="subscribe-price-value">
+        <span class="currency">Rp</span>
+        <span class="amount">250.000</span>
+        <span class="period">/ tahun</span>
+      </div>
+      <div class="subscribe-features">
+        <div class="feat-item"><i class="fa-solid fa-circle-check"></i> Akses tanpa batas pemantau ASIP, Sufor, & DBF</div>
+        <div class="feat-item"><i class="fa-solid fa-circle-check"></i> Grafik lengkap berat, tinggi, & lingkar kepala bayi</div>
+        <div class="feat-item"><i class="fa-solid fa-circle-check"></i> Catatan popok dan riwayat tak terbatas</div>
+        <div class="feat-item"><i class="fa-solid fa-circle-check"></i> Sinkronisasi Cloud otomatis & aman</div>
+      </div>
+    </div>
+
+    <!-- QRIS PAYMENT BOX -->
+    <div class="subscribe-qr-card">
+      <div class="subscribe-qr-header">
+        <span class="qr-merchant-name">TUMBANGKAN ADEK</span>
+        <span class="qr-nmid">NMID: ID1026615810292</span>
+      </div>
       <div class="qr-image-frame">
-        <!-- URL gambar QRIS Payment Gateway -->
         <img
-          id="donationQrImage"
-          src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=Catatan-Si-Kecil-Donation&color=1e293b"
-          alt="QRIS"
+          id="subscribeQrImage"
+          src="assets/qr_subscribe.png"
+          alt="QRIS Pembayaran"
           class="qr-code-img"
         >
       </div>
-      <div class="qr-caption">QRIS</div>
+      <div class="qr-instruction">
+        Scan QRIS di atas via <strong>BCA, Mandiri, BRI, BNI, GoPay, OVO, Dana</strong>, atau mobile banking apa pun.
+      </div>
+      <a href="assets/qr_subscribe.png" download="QRIS-Tumbangkan-Adek.png" class="download-qr-btn">
+        <i class="fa-solid fa-download"></i> Unduh Gambar QRIS
+      </a>
     </div>
 
-    <!-- NOMINAL -->
-    <div class="donation-nominal-label" data-i18n="donationNominalLabel">Pilihan Nominal:</div>
-    <div class="nominal-pills">
-      <button type="button" class="nominal-pill active" onclick="selectNominal('10.000', this)">Rp 10.000</button>
-      <button type="button" class="nominal-pill" onclick="selectNominal('25.000', this)">Rp 25.000</button>
-      <button type="button" class="nominal-pill" onclick="selectNominal('50.000', this)">Rp 50.000</button>
-      <button type="button" class="nominal-pill" onclick="selectNominal('100.000', this)">Rp 100.000</button>
+    <!-- UPLOAD BUKTI TRANSFER -->
+    <div class="upload-proof-card">
+      <div class="upload-proof-title">
+        <i class="fa-solid fa-receipt"></i> Upload Bukti Transfer
+      </div>
+      <p class="upload-proof-desc">
+        Setelah transfer berhasil, upload bukti screenshot atau struk transfer Anda di bawah ini:
+      </p>
+
+      <div class="upload-dropzone" id="proofDropzone" onclick="document.getElementById('proofFileInput').click()">
+        <input type="file" id="proofFileInput" accept="image/*" style="display:none;" onchange="handleProofFileSelected(event)">
+        <div id="dropzoneEmpty">
+          <i class="fa-solid fa-cloud-arrow-up" style="font-size:28px; color:var(--primary); margin-bottom:8px;"></i>
+          <div><strong>Klik untuk pilih foto / screenshot</strong></div>
+          <div style="font-size:11px; color:var(--muted); margin-top:4px;">Format JPG, PNG, atau WebP</div>
+        </div>
+        <div id="dropzonePreview" class="hidden">
+          <img id="proofPreviewImg" src="" alt="Bukti Transfer">
+          <div class="proof-preview-info">
+            <span id="proofFileName"></span>
+            <button type="button" class="btn-remove-proof" onclick="event.stopPropagation(); removeSelectedProof();">
+              <i class="fa-solid fa-trash"></i> Hapus
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top:12px;">
+        <label for="proofSenderNote" style="font-size:12px; margin-bottom:4px; font-weight:600; color:var(--text);">Nama Pengirim / Catatan (Opsional)</label>
+        <input type="text" id="proofSenderNote" placeholder="Contoh: Rekening BCA a.n. Fiena">
+      </div>
+
+      <button type="button" id="submitProofBtn" class="primary-btn" style="width:100%; margin-top:14px;" onclick="submitPaymentProof()">
+        <i class="fa-solid fa-paper-plane"></i> Kirim Bukti Pembayaran
+      </button>
+
+      <!-- Status Upload Saat Ini (jika sudah upload sebelumnya) -->
+      <div id="currentUploadedBox" class="current-uploaded-box hidden">
+        <div class="uploaded-header">
+          <span class="uploaded-badge pending" id="uploadedStatusBadge">⏳ Menunggu Verifikasi Admin</span>
+          <span class="uploaded-date" id="uploadedStatusDate"></span>
+        </div>
+        <div class="uploaded-content">
+          <img id="uploadedThumbnail" src="" alt="Bukti" onclick="previewUploadedThumbnail()" title="Klik untuk perbesar">
+          <div class="uploaded-text">
+            <div>Bukti transfer sudah terkirim. Admin akan memeriksa dan meng-ACC akun Anda.</div>
+            <button type="button" class="btn-refresh-status" onclick="checkUserSubscriptionStatus(true)">
+              <i class="fa-solid fa-rotate"></i> Cek Status Langganan
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="donation-thankyou-box" data-i18n="donationThankYou">
-      Terima kasih atas dukungannya!
+    <!-- Keluar Akun (tampil saat terkunci paywall) -->
+    <div id="paywallLogoutBox" class="paywall-logout-box hidden">
+      <button type="button" class="secondary-btn" style="width:100%;" onclick="confirmLogout()">
+        <i class="fa-solid fa-right-from-bracket"></i> Keluar Akun
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL MODAL (ACC SUBSCRIBE, PREVIEW/DOWNLOAD BUKTI, HAPUS AKUN) -->
+<div id="adminPanelModal" class="modal-backdrop-custom">
+  <div class="modal-box admin-modal-box">
+    <div class="modal-header">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-shield-halved" style="color:var(--primary); font-size:20px;"></i>
+        <h3>Panel Admin - Catatan Si Kecil</h3>
+      </div>
+      <button type="button" class="modal-close" onclick="closeAdminPanel()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Admin Tabs -->
+    <div class="admin-tabs">
+      <button type="button" class="admin-tab active" id="tabSubBtn" onclick="switchAdminTab('subscriptions')">
+        <i class="fa-solid fa-receipt"></i> Bukti & ACC Subscribe
+      </button>
+      <button type="button" class="admin-tab" id="tabUsersBtn" onclick="switchAdminTab('users')">
+        <i class="fa-solid fa-users-gear"></i> Kelola & Hapus Akun
+      </button>
+    </div>
+
+    <!-- TAB 1: SUBSCRIPTION REQUESTS & ACC -->
+    <div id="adminSubTab" class="admin-tab-content">
+      <div class="admin-tab-desc">
+        Daftar pengguna yang mengupload bukti transfer. Anda bisa melihat preview, mengunduh bukti, dan meng-ACC akun agar aktif selama 1 tahun (365 hari).
+      </div>
+
+      <!-- Quick Manual ACC Form -->
+      <div class="manual-acc-box">
+        <div class="manual-acc-title"><i class="fa-solid fa-wand-magic-sparkles"></i> ACC Langganan Manual</div>
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <input type="email" id="manualAccEmail" placeholder="Masukkan email pengguna (misal: user@gmail.com)" style="flex:1;">
+          <button type="button" class="primary-btn" style="padding:0 16px; white-space:nowrap;" onclick="adminManualApprove()">
+            <i class="fa-solid fa-check"></i> ACC 1 Tahun
+          </button>
+        </div>
+      </div>
+
+      <div id="adminSubList" class="admin-requests-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- TAB 2: KELOLA & HAPUS AKUN -->
+    <div id="adminUsersTab" class="admin-tab-content hidden">
+      <div class="admin-tab-desc">
+        Hapus akun pengguna dan semua data riwayatnya (susu, dbf, popok, pertumbuhan, profil).
+      </div>
+
+      <div class="delete-account-box">
+        <div class="form-group">
+          <label style="font-weight:600; font-size:13px; color:var(--text); margin-bottom:6px; display:block;">Email Akun yang Ingin Dihapus</label>
+          <input type="email" id="adminDeleteEmail" placeholder="user@gmail.com">
+        </div>
+        <button type="button" class="danger-btn" style="width:100%; margin-top:10px;" onclick="adminDeleteAccount()">
+          <i class="fa-solid fa-trash-can"></i> Hapus Akun Permanen
+        </button>
+      </div>
+
+      <div class="admin-users-list-title" style="margin-top:20px; font-weight:700; font-size:14px; color:var(--text);">
+        Daftar Akun Terdaftar & Status Langganan
+      </div>
+      <div id="adminAllUsersList" class="admin-users-table-wrap">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX PREVIEW BUKTI TRANSFER -->
+<div id="proofLightboxModal" class="modal-backdrop-custom proof-lightbox-backdrop" onclick="closeProofLightbox()">
+  <div class="proof-lightbox-box" onclick="event.stopPropagation()">
+    <div class="proof-lightbox-header">
+      <div id="proofLightboxTitle" style="font-weight:600; font-size:13.5px; color:#fff;">Bukti Transfer</div>
+      <div style="display:flex; gap:8px;">
+        <a id="proofLightboxDownloadBtn" href="" download="bukti-transfer.jpg" class="proof-lb-btn" title="Unduh Bukti">
+          <i class="fa-solid fa-download"></i> Unduh
+        </a>
+        <button type="button" class="proof-lb-btn close" onclick="closeProofLightbox()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+    <div class="proof-lightbox-img-wrap">
+      <img id="proofLightboxImg" src="" alt="Bukti Transfer">
     </div>
   </div>
 </div>
@@ -2603,8 +3344,8 @@
           <i class="fa-solid fa-floppy-disk"></i> Simpan Profil
         </button>
 
-        <button type="button" class="secondary-btn" style="width:100%; margin-top:12px;" onclick="closeProfile(); openDonationModal();" data-i18n="btnOpenDonation">
-          Donasi
+        <button type="button" class="secondary-btn" style="width:100%; margin-top:12px;" onclick="closeProfile(); openSubscribeModal();" data-i18n="btnOpenSubscribe">
+          <i class="fa-solid fa-crown" style="color:#f59e0b; margin-right:6px;"></i> Langganan (1 Tahun)
         </button>
       </form>
     </div>
@@ -2847,14 +3588,13 @@ const translations = {
     menuMode: "Mode",
     menuProfile: "Profil & Akun",
     menuLang: "Bahasa",
-    menuDonation: "Donasi",
+    menuSubscribe: "Langganan",
+    menuAdmin: "Panel Admin",
     menuLogout: "Keluar",
     defaultBabyName: "Adek Bayi",
-    btnOpenDonation: "Donasi",
-    donationTitle: "Donasi",
-    donationSubtitle: "Dukungan untuk biaya operasional dan kelanjutan aplikasi.",
-    donationNominalLabel: "Pilihan Nominal:",
-    donationThankYou: "Terima kasih atas dukungannya!",
+    btnOpenSubscribe: "Langganan (1 Tahun)",
+    subscribeTitle: "Langganan Catatan Si Kecil",
+    subscribeSubtitle: "Akses penuh fitur pemantau buah hati Anda selama 1 tahun.",
 
     // Global Filter
     filterMonthLabel: "Bulan",
@@ -3068,14 +3808,13 @@ const translations = {
     menuMode: "Mode",
     menuProfile: "Profile & Account",
     menuLang: "Language",
-    menuDonation: "Donation",
+    menuSubscribe: "Subscription",
+    menuAdmin: "Admin Panel",
     menuLogout: "Logout",
     defaultBabyName: "Little Baby",
-    btnOpenDonation: "Donate",
-    donationTitle: "Donation",
-    donationSubtitle: "Support for operational and development costs.",
-    donationNominalLabel: "Amount Suggestions:",
-    donationThankYou: "Thank you for your support!",
+    btnOpenSubscribe: "Subscribe (1 Year)",
+    subscribeTitle: "Catatan Si Kecil Subscription",
+    subscribeSubtitle: "Full access to your baby tracking features for 1 year.",
 
     // Global Filter
     filterMonthLabel: "Month",
@@ -3982,6 +4721,7 @@ async function enterApp() {
 
   try {
     await loadAllData();
+    await checkUserSubscriptionStatus();
   } catch(error) {
     console.error('Error saat loadAllData:', error);
     showToast('Gagal memuat sebagian data: ' + getErrorMessage(error));
@@ -3994,6 +4734,9 @@ async function enterApp() {
 
 function showLogin() {
   clearUserData();
+  hidePaywallModal();
+  const subModal = document.getElementById('subscribeModal');
+  if (subModal) subModal.classList.remove('show');
   document.body.classList.remove('auth-loading');
   document.getElementById('authOverlay').classList.remove('hidden');
   const pass = document.getElementById('loginPassword');
@@ -4649,11 +5392,23 @@ async function loadProfileFromServer() {
     return;
   }
 
+  let cleanAvatar = data.avatar_url || 'https://cdn-icons-png.flaticon.com/512/4140/4140047.png';
+  if (cleanAvatar.includes('###SUB###')) {
+    const parts = cleanAvatar.split('###SUB###');
+    cleanAvatar = parts[0] || 'https://cdn-icons-png.flaticon.com/512/4140/4140047.png';
+    try {
+      const remoteSub = JSON.parse(decodeURIComponent(parts[1]));
+      if (remoteSub && currentUser && currentUser.email) {
+        localStorage.setItem('baby_sub_' + currentUser.email.toLowerCase().trim(), JSON.stringify(remoteSub));
+      }
+    } catch(e) {}
+  }
+
   profileData = {
     babyName: data.baby_name || 'Adek Bayi',
     birthDate: data.birth_date || '',
     gender: localStorage.getItem('babyGender') || 'male',
-    avatarUrl: data.avatar_url || 'https://cdn-icons-png.flaticon.com/512/4140/4140047.png'
+    avatarUrl: cleanAvatar
   };
 
   applyProfile();
@@ -4692,6 +5447,12 @@ async function submitProfile(e) {
     profileData.gender = data.gender;
     localStorage.setItem('babyGender', data.gender);
 
+    let finalAvatarUrl = data.avatarUrl || 'https://cdn-icons-png.flaticon.com/512/4140/4140047.png';
+    const existingSub = getSubscriptionRecord(currentUser.id, currentUser.email);
+    if (existingSub) {
+      finalAvatarUrl = `${finalAvatarUrl.split('###SUB###')[0]}###SUB###${encodeURIComponent(JSON.stringify(existingSub))}`;
+    }
+
     const {
       error
     } = await supabaseClient
@@ -4701,7 +5462,7 @@ async function submitProfile(e) {
           user_id:currentUser.id,
           baby_name:data.babyName || 'Adek Bayi',
           birth_date:data.birthDate || null,
-          avatar_url:data.avatarUrl || null
+          avatar_url:finalAvatarUrl
         },
         {
           onConflict:'user_id'
@@ -4855,30 +5616,794 @@ function openProfile() {
 
 
 /* =========================================================
-   DONATION MODAL FUNCTIONS
+   SUBSCRIBE, TRIAL 1 BULAN & ADMIN ACC / HAPUS AKUN
    ========================================================= */
 
-function openDonationModal() {
-  const modal = document.getElementById('donationModal');
+const ADMIN_EMAILS = [
+  'fienaakmala@gmail.com',
+  'rojulanfayadulmujahid@gmail.com'
+];
+
+let selectedProofBase64 = null;
+let isAppLockedByPaywall = false;
+
+function isCurrentUserAdmin() {
+  if (!currentUser || !currentUser.email) return false;
+  const em = currentUser.email.toLowerCase().trim();
+  return ADMIN_EMAILS.some(admin => admin.toLowerCase().trim() === em);
+}
+
+function checkAndShowAdminMenu() {
+  const adminBtn = document.getElementById('menuAdminBtn');
+  if (adminBtn) {
+    if (isCurrentUserAdmin()) {
+      adminBtn.classList.remove('hidden');
+    } else {
+      adminBtn.classList.add('hidden');
+    }
+  }
+}
+
+// Format date helper
+function formatDateTimeReadable(isoStr) {
+  if (!isoStr) return '-';
+  try {
+    const d = new Date(isoStr);
+    if (isNaN(d.getTime())) return isoStr;
+    const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    const day = d.getDate();
+    const mon = months[d.getMonth()];
+    const yr = d.getFullYear();
+    const hr = String(d.getHours()).padStart(2, '0');
+    const min = String(d.getMinutes()).padStart(2, '0');
+    return `${day} ${mon} ${yr}, ${hr}:${min}`;
+  } catch(e) {
+    return isoStr;
+  }
+}
+
+// ----------------------------------------------------
+// STORAGE & SYNC REGISTRY
+// ----------------------------------------------------
+function getAllApprovedRegistry() {
+  try {
+    const raw = localStorage.getItem('baby_approved_subscriptions');
+    return raw ? JSON.parse(raw) : {};
+  } catch(e) {
+    return {};
+  }
+}
+
+function saveApprovedRegistry(registry) {
+  try {
+    localStorage.setItem('baby_approved_subscriptions', JSON.stringify(registry));
+  } catch(e) {}
+}
+
+function getAllSubscriptionRequests() {
+  try {
+    const raw = localStorage.getItem('baby_subscription_requests');
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) {
+    return [];
+  }
+}
+
+function saveAllSubscriptionRequests(list) {
+  try {
+    localStorage.setItem('baby_subscription_requests', JSON.stringify(list));
+  } catch(e) {}
+}
+
+function getSubscriptionRecord(userId, email) {
+  const normEmail = (email || '').toLowerCase().trim();
+  const approvedMap = getAllApprovedRegistry();
+  
+  // 1. Cek dari daftar disetujui (ACC)
+  if (approvedMap[normEmail]) {
+    return approvedMap[normEmail];
+  }
+
+  // 2. Cek dari daftar pengajuan aktif/pending
+  const requests = getAllSubscriptionRequests();
+  const found = requests.find(r => (r.email || '').toLowerCase().trim() === normEmail || (userId && r.user_id === userId));
+  if (found) return found;
+
+  // 3. Cek dari user_metadata Supabase
+  if (currentUser && currentUser.user_metadata && currentUser.user_metadata.baby_subscription) {
+    return currentUser.user_metadata.baby_subscription;
+  }
+
+  // 4. Cek dari localStorage per user
+  try {
+    const local = localStorage.getItem('baby_sub_' + normEmail);
+    if (local) return JSON.parse(local);
+  } catch(e) {}
+
+  return null;
+}
+
+// ----------------------------------------------------
+// CEK STATUS TRIAL & SUBSCRIPTION
+// ----------------------------------------------------
+async function checkUserSubscriptionStatus(showAlert = false) {
+  if (!currentUser) return { canAccess: false };
+
+  checkAndShowAdminMenu();
+
+  const email = (currentUser.email || '').toLowerCase().trim();
+
+  // EXEMPTION KHUSUS: fienaakmala@gmail.com dan admin memiliki akses penuh permanen tanpa batas
+  if (ADMIN_EMAILS.some(a => a.toLowerCase().trim() === email)) {
+    window.isVipUser = true;
+    updateSubscriptionBadge('VIP');
+    hidePaywallModal();
+    if (showAlert) showToast('Akun VIP / Admin: Akses penuh tanpa batas waktu.');
+    return { canAccess: true, status: 'vip' };
+  }
+
+  // Hitung durasi sejak registrasi (1 bulan = 30 hari gratis trial)
+  const registeredAt = currentUser.created_at ? new Date(currentUser.created_at) : new Date();
+  const now = new Date();
+  const diffDays = (now.getTime() - registeredAt.getTime()) / (1000 * 60 * 60 * 24);
+  const trialDaysLeft = Math.max(0, Math.ceil(30 - diffDays));
+  const isTrialActive = diffDays <= 30;
+
+  const subRecord = getSubscriptionRecord(currentUser.id, email);
+
+  // Jika sudah di-ACC / aktif
+  if (subRecord && subRecord.status === 'active') {
+    const expiresAt = new Date(subRecord.until);
+    if (now.getTime() < expiresAt.getTime()) {
+      // Masih aktif dalam 1 tahun!
+      const daysLeft = Math.ceil((expiresAt.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+      updateSubscriptionBadge('Aktif (' + daysLeft + ' hr)');
+      hidePaywallModal();
+      if (showAlert) showToast('Langganan aktif hingga ' + formatDateTimeReadable(expiresAt.toISOString()));
+      return { canAccess: true, status: 'active', subRecord };
+    } else {
+      // Lebih dari 1 tahun! "nanti kalo dah setahun lagi lock lagi"
+      updateSubscriptionBadge('Kedaluwarsa');
+      lockAppWithPaywall({
+        reason: 'expired',
+        message: 'Masa berlangganan 1 tahun Anda telah berakhir pada ' + formatDateTimeReadable(expiresAt.toISOString()) + '. Silakan perpanjang untuk terus menggunakan Catatan Si Kecil.',
+        subRecord
+      });
+      return { canAccess: false, status: 'expired', subRecord };
+    }
+  }
+
+  // Jika sedang menunggu konfirmasi admin
+  if (subRecord && subRecord.status === 'pending') {
+    updateSubscriptionBadge('Menunggu ACC');
+    if (isTrialActive) {
+      // Masih dalam masa trial 30 hari, berikan akses penuh sambil menunggu admin
+      hidePaywallModal();
+      if (showAlert) showToast('Bukti transfer Anda sedang diverifikasi admin. Trial gratis aktif sisa ' + trialDaysLeft + ' hari.');
+      return { canAccess: true, status: 'pending_in_trial', subRecord };
+    } else {
+      // Masa trial sudah habis, kunci aplikasi dan tampilkan status verifikasi
+      lockAppWithPaywall({
+        reason: 'pending',
+        message: 'Masa trial 1 bulan Anda telah selesai. Bukti transfer Anda sudah diterima dan sedang menunggu verifikasi admin. Akun akan terbuka otomatis begitu di-ACC.',
+        subRecord
+      });
+      return { canAccess: false, status: 'pending_locked', subRecord };
+    }
+  }
+
+  // Belum ada bukti transfer / belum langganan:
+  if (isTrialActive) {
+    updateSubscriptionBadge('Trial (' + trialDaysLeft + ' hr)');
+    hidePaywallModal();
+    if (showAlert) showToast('Trial Gratis 1 Bulan Aktif (Sisa ' + trialDaysLeft + ' hari).');
+    return { canAccess: true, status: 'trial', trialDaysLeft };
+  } else {
+    // Masa trial 1 bulan sudah habis dan belum subscribe! Kunci aplikasi!
+    updateSubscriptionBadge('Habis Trial');
+    lockAppWithPaywall({
+      reason: 'trial_expired',
+      message: 'Masa gratis trial 1 bulan akun Anda telah berakhir. Silakan berlangganan Rp 250.000 / 1 tahun untuk terus menikmati fitur Catatan Si Kecil.'
+    });
+    return { canAccess: false, status: 'trial_expired' };
+  }
+}
+
+function updateSubscriptionBadge(label) {
+  const badge = document.getElementById('menuSubscribeBadge');
+  if (badge) badge.textContent = label;
+  const profileLabel = document.getElementById('profileSubscribeBtnLabel');
+  if (profileLabel) profileLabel.textContent = 'Langganan (' + label + ')';
+}
+
+function lockAppWithPaywall(options = {}) {
+  isAppLockedByPaywall = true;
+  openSubscribeModal(true, options);
+}
+
+function hidePaywallModal() {
+  isAppLockedByPaywall = false;
+  const closeBtn = document.getElementById('subscribeModalCloseBtn');
+  if (closeBtn) closeBtn.style.display = 'block';
+  const logoutBox = document.getElementById('paywallLogoutBox');
+  if (logoutBox) logoutBox.classList.add('hidden');
+}
+
+// ----------------------------------------------------
+// MODAL SUBSCRIBE / BUKA & TUTUP
+// ----------------------------------------------------
+function openSubscribeModal(forceLocked = false, options = {}) {
+  const modal = document.getElementById('subscribeModal');
+  if (!modal) return;
+
+  const closeBtn = document.getElementById('subscribeModalCloseBtn');
+  const logoutBox = document.getElementById('paywallLogoutBox');
+  const alertBox = document.getElementById('subscribeStatusAlert');
+
+  if (forceLocked || isAppLockedByPaywall) {
+    if (closeBtn) closeBtn.style.display = 'none';
+    if (logoutBox) logoutBox.classList.remove('hidden');
+  } else {
+    if (closeBtn) closeBtn.style.display = 'block';
+    if (logoutBox) logoutBox.classList.add('hidden');
+  }
+
+  // Set message alert jika ada
+  if (options.message) {
+    alertBox.textContent = options.message;
+    alertBox.className = 'subscribe-alert ' + (options.reason === 'expired' ? 'danger' : 'warning');
+    alertBox.classList.remove('hidden');
+  } else {
+    alertBox.classList.add('hidden');
+  }
+
+  // Tampilkan status bukti transfer yang sudah di-upload sebelumnya (jika ada)
+  refreshCurrentUploadedBox();
+
+  modal.classList.add('show');
+}
+
+function closeSubscribeModal() {
+  if (isAppLockedByPaywall) {
+    showToast('Silakan lakukan pembayaran atau keluar akun.');
+    return;
+  }
+  const modal = document.getElementById('subscribeModal');
+  if (modal) modal.classList.remove('show');
+}
+
+function refreshCurrentUploadedBox() {
+  const box = document.getElementById('currentUploadedBox');
+  if (!box || !currentUser) return;
+
+  const email = (currentUser.email || '').toLowerCase().trim();
+  const record = getSubscriptionRecord(currentUser.id, email);
+
+  if (record && record.proof) {
+    box.classList.remove('hidden');
+    const badge = document.getElementById('uploadedStatusBadge');
+    const dateSpan = document.getElementById('uploadedStatusDate');
+    const thumb = document.getElementById('uploadedThumbnail');
+
+    if (badge) {
+      if (record.status === 'active') {
+        badge.className = 'uploaded-badge active';
+        badge.innerHTML = '✅ Berlangganan Aktif (1 Tahun)';
+      } else {
+        badge.className = 'uploaded-badge pending';
+        badge.innerHTML = '⏳ Menunggu ACC Admin';
+      }
+    }
+
+    if (dateSpan) dateSpan.textContent = formatDateTimeReadable(record.requested_at);
+    if (thumb) thumb.src = record.proof;
+  } else {
+    box.classList.add('hidden');
+  }
+}
+
+function previewUploadedThumbnail() {
+  const thumb = document.getElementById('uploadedThumbnail');
+  if (thumb && thumb.src) {
+    previewLargeProof(thumb.src, 'Bukti Pembayaran Saya');
+  }
+}
+
+// ----------------------------------------------------
+// UPLOAD BUKTI TRANSFER HANDLERS
+// ----------------------------------------------------
+async function handleProofFileSelected(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    showToast('File harus berupa gambar (JPG, PNG, atau WebP).');
+    return;
+  }
+
+  try {
+    const compressed = await compressImageToDataUrl(file, 1000, 0.82);
+    selectedProofBase64 = compressed;
+
+    document.getElementById('dropzoneEmpty').classList.add('hidden');
+    document.getElementById('dropzonePreview').classList.remove('hidden');
+    document.getElementById('proofPreviewImg').src = compressed;
+    document.getElementById('proofFileName').textContent = file.name;
+    document.getElementById('proofDropzone').classList.add('has-file');
+  } catch(err) {
+    console.error('Compress error:', err);
+    showToast('Gagal memproses gambar. Coba file lain.');
+  }
+}
+
+function removeSelectedProof() {
+  selectedProofBase64 = null;
+  const input = document.getElementById('proofFileInput');
+  if (input) input.value = '';
+  document.getElementById('dropzoneEmpty').classList.remove('hidden');
+  document.getElementById('dropzonePreview').classList.add('hidden');
+  document.getElementById('proofPreviewImg').src = '';
+  document.getElementById('proofDropzone').classList.remove('has-file');
+}
+
+function compressImageToDataUrl(file, maxWidth = 1000, quality = 0.82) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, width, height);
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function submitPaymentProof() {
+  if (!currentUser) {
+    showToast('Silakan login terlebih dahulu.');
+    return;
+  }
+
+  if (!selectedProofBase64) {
+    showToast('Pilih foto/screenshot bukti transfer terlebih dahulu.');
+    return;
+  }
+
+  const submitBtn = document.getElementById('submitProofBtn');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim Bukti...';
+  }
+
+  const senderNote = (document.getElementById('proofSenderNote').value || '').trim();
+  const email = (currentUser.email || '').toLowerCase().trim();
+  const babyName = (profileData && profileData.babyName) || 'Adek Bayi';
+
+  const subRecord = {
+    user_id: currentUser.id,
+    email: email,
+    baby_name: babyName,
+    proof: selectedProofBase64,
+    note: senderNote,
+    amount: 250000,
+    status: 'pending',
+    requested_at: new Date().toISOString()
+  };
+
+  try {
+    // 1. Simpan di queue global requests
+    const requests = getAllSubscriptionRequests();
+    const existingIdx = requests.findIndex(r => (r.email || '').toLowerCase() === email);
+    if (existingIdx >= 0) {
+      requests[existingIdx] = subRecord;
+    } else {
+      requests.unshift(subRecord);
+    }
+    saveAllSubscriptionRequests(requests);
+
+    // 2. Simpan di localStorage user
+    localStorage.setItem('baby_sub_' + email, JSON.stringify(subRecord));
+
+    // 3. Simpan di auth user_metadata Supabase
+    try {
+      if (window.supabase && supabaseClient && supabaseClient.auth) {
+        await supabaseClient.auth.updateUser({
+          data: { baby_subscription: subRecord }
+        });
+      }
+    } catch(metaErr) {
+      console.warn('Update user_metadata warning:', metaErr);
+    }
+
+    // 4. Update data profile di Supabase (encode compact sub di avatar_url)
+    try {
+      const cleanAvatar = (profileData && profileData.avatarUrl) ? profileData.avatarUrl.split('###SUB###')[0] : 'https://cdn-icons-png.flaticon.com/512/4140/4140047.png';
+      const encodedSub = `${cleanAvatar}###SUB###${encodeURIComponent(JSON.stringify(subRecord))}`;
+      await supabaseClient.from('profiles').upsert({
+        user_id: currentUser.id,
+        baby_name: babyName,
+        avatar_url: encodedSub
+      }, { onConflict: 'user_id' });
+    } catch(profErr) {
+      console.warn('Profile avatar_url sub update warning:', profErr);
+    }
+
+    showToast('🎉 Bukti transfer berhasil dikirim! Sedang menunggu verifikasi admin.');
+    removeSelectedProof();
+    document.getElementById('proofSenderNote').value = '';
+
+    refreshCurrentUploadedBox();
+    await checkUserSubscriptionStatus();
+
+  } catch(err) {
+    console.error('Submit proof error:', err);
+    showToast('Gagal mengirim bukti: ' + getErrorMessage(err));
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Bukti Pembayaran';
+    }
+  }
+}
+
+// ----------------------------------------------------
+// LIGHTBOX PREVIEW & DOWNLOAD BUKTI
+// ----------------------------------------------------
+function previewLargeProof(imageUrl, title = 'Bukti Transfer') {
+  const modal = document.getElementById('proofLightboxModal');
+  const img = document.getElementById('proofLightboxImg');
+  const titleEl = document.getElementById('proofLightboxTitle');
+  const downloadBtn = document.getElementById('proofLightboxDownloadBtn');
+
+  if (!modal || !img) return;
+
+  img.src = imageUrl;
+  if (titleEl) titleEl.textContent = title;
+  if (downloadBtn) {
+    downloadBtn.href = imageUrl;
+    downloadBtn.download = `bukti-tf-${Date.now()}.jpg`;
+  }
+
+  modal.classList.add('show');
+}
+
+function closeProofLightbox() {
+  const modal = document.getElementById('proofLightboxModal');
+  if (modal) modal.classList.remove('show');
+}
+
+// ----------------------------------------------------
+// PANEL ADMIN (ACC SUBSCRIBE, PREVIEW/DOWNLOAD, HAPUS AKUN)
+// ----------------------------------------------------
+function openAdminPanel() {
+  if (!isCurrentUserAdmin()) {
+    showToast('Akses ditolak. Fitur ini hanya untuk akun admin.');
+    return;
+  }
+  const modal = document.getElementById('adminPanelModal');
   if (modal) {
     modal.classList.add('show');
+    switchAdminTab('subscriptions');
   }
 }
 
-function closeDonationModal() {
-  const modal = document.getElementById('donationModal');
-  if (modal) {
-    modal.classList.remove('show');
+function closeAdminPanel() {
+  const modal = document.getElementById('adminPanelModal');
+  if (modal) modal.classList.remove('show');
+}
+
+function switchAdminTab(tab) {
+  const subTab = document.getElementById('adminSubTab');
+  const usersTab = document.getElementById('adminUsersTab');
+  const tabSubBtn = document.getElementById('tabSubBtn');
+  const tabUsersBtn = document.getElementById('tabUsersBtn');
+
+  if (tab === 'subscriptions') {
+    if (subTab) subTab.classList.remove('hidden');
+    if (usersTab) usersTab.classList.add('hidden');
+    if (tabSubBtn) tabSubBtn.classList.add('active');
+    if (tabUsersBtn) tabUsersBtn.classList.remove('active');
+    renderAdminSubList();
+  } else {
+    if (subTab) subTab.classList.add('hidden');
+    if (usersTab) usersTab.classList.remove('hidden');
+    if (tabSubBtn) tabSubBtn.classList.remove('active');
+    if (tabUsersBtn) tabUsersBtn.classList.add('active');
+    renderAdminUsersList();
   }
 }
 
-function selectNominal(amount, btn) {
-  document.querySelectorAll('.nominal-pill').forEach(function(p) {
-    p.classList.remove('active');
+function renderAdminSubList() {
+  const container = document.getElementById('adminSubList');
+  if (!container) return;
+
+  const requests = getAllSubscriptionRequests();
+
+  if (!requests || requests.length === 0) {
+    container.innerHTML = `
+      <div style="text-align:center; padding:32px 16px; color:var(--muted); font-size:13px;">
+        <i class="fa-solid fa-inbox" style="font-size:32px; margin-bottom:8px; opacity:0.5;"></i>
+        <div>Belum ada bukti transfer yang di-upload oleh pengguna.</div>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = requests.map(req => {
+    const isAct = req.status === 'active';
+    const badgeClass = isAct ? 'uploaded-badge active' : 'uploaded-badge pending';
+    const badgeText = isAct ? '✅ Aktif (Disetujui 1 Thn)' : '⏳ Menunggu ACC';
+    const noteText = req.note ? `Catatan: "${escHtml(req.note)}"` : 'Tanpa catatan';
+
+    return `
+      <div class="admin-request-card">
+        <div class="admin-request-top">
+          <div>
+            <div class="admin-req-email">${escHtml(req.email)}</div>
+            <div class="admin-req-date">Upload: ${formatDateTimeReadable(req.requested_at)} • Bayi: ${escHtml(req.baby_name || '-')}</div>
+          </div>
+          <span class="${badgeClass}">${badgeText}</span>
+        </div>
+
+        <div class="admin-req-body">
+          <img
+            src="${req.proof || 'assets/qr_subscribe.png'}"
+            alt="Bukti Transfer"
+            class="admin-req-thumb"
+            onclick="previewLargeProof('${req.proof}', 'Bukti TF - ${escHtml(req.email)}')"
+            title="Klik untuk perbesar"
+          >
+          <div class="admin-req-meta">
+            <div><strong>Nominal:</strong> Rp 250.000 (1 Tahun)</div>
+            <div style="margin-top:2px;">${escHtml(noteText)}</div>
+            ${req.until ? `<div style="margin-top:2px; color:#10b981; font-weight:600;">Berlaku s/d: ${formatDateTimeReadable(req.until)}</div>` : ''}
+          </div>
+        </div>
+
+        <div class="admin-req-actions">
+          <button type="button" class="admin-btn preview" onclick="previewLargeProof('${req.proof}', 'Bukti TF - ${escHtml(req.email)}')">
+            <i class="fa-regular fa-eye"></i> Preview
+          </button>
+          <a href="${req.proof}" download="bukti-tf-${escHtml(req.email)}.jpg" class="admin-btn download">
+            <i class="fa-solid fa-download"></i> Unduh
+          </a>
+          <button type="button" class="admin-btn reject" onclick="adminRejectSubscription('${escHtml(req.email)}')">
+            <i class="fa-solid fa-xmark"></i> Tolak
+          </button>
+          <button type="button" class="admin-btn acc" onclick="adminApproveSubscription('${escHtml(req.email)}')">
+            <i class="fa-solid fa-check"></i> ${isAct ? 'Perpanjang 1 Thn Lagi' : 'ACC Subscribe (1 Thn)'}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Admin ACC Subscribe (Aktifkan 1 Tahun)
+async function adminApproveSubscription(email) {
+  if (!email) return;
+
+  const normEmail = email.toLowerCase().trim();
+
+  if (!confirm(`ACC langganan untuk "${normEmail}"?\nAkun ini akan aktif selama 1 tahun (365 hari) mulai hari ini.`)) {
+    return;
+  }
+
+  const now = new Date();
+  const expiresAt = new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000); // 1 tahun ke depan
+
+  // Update daftar approved global
+  const approvedMap = getAllApprovedRegistry();
+  approvedMap[normEmail] = {
+    email: normEmail,
+    status: 'active',
+    approved_at: now.toISOString(),
+    approved_by: currentUser ? currentUser.email : 'admin',
+    until: expiresAt.toISOString(),
+    amount: 250000
+  };
+  saveApprovedRegistry(approvedMap);
+
+  // Update status di daftar requests
+  const requests = getAllSubscriptionRequests();
+  const reqItem = requests.find(r => (r.email || '').toLowerCase().trim() === normEmail);
+  if (reqItem) {
+    reqItem.status = 'active';
+    reqItem.approved_at = now.toISOString();
+    reqItem.until = expiresAt.toISOString();
+    saveAllSubscriptionRequests(requests);
+  }
+
+  // Jika akun yang di-ACC adalah user yang sedang aktif di browser
+  if (currentUser && currentUser.email && currentUser.email.toLowerCase().trim() === normEmail) {
+    localStorage.setItem('baby_sub_' + normEmail, JSON.stringify(approvedMap[normEmail]));
+    await checkUserSubscriptionStatus();
+  }
+
+  showToast(`✅ Akun ${normEmail} BERHASIL DI-ACC! Aktif s/d ${formatDateTimeReadable(expiresAt.toISOString())}`);
+  renderAdminSubList();
+  renderAdminUsersList();
+}
+
+function adminManualApprove() {
+  const input = document.getElementById('manualAccEmail');
+  const email = (input ? input.value : '').trim();
+  if (!email) {
+    showToast('Masukkan email pengguna yang ingin di-ACC.');
+    return;
+  }
+  adminApproveSubscription(email);
+  if (input) input.value = '';
+}
+
+function adminRejectSubscription(email) {
+  if (!email) return;
+  const normEmail = email.toLowerCase().trim();
+
+  if (!confirm(`Tolak bukti transfer dari "${normEmail}"?`)) return;
+
+  const requests = getAllSubscriptionRequests();
+  const filtered = requests.filter(r => (r.email || '').toLowerCase().trim() !== normEmail);
+  saveAllSubscriptionRequests(filtered);
+
+  const approvedMap = getAllApprovedRegistry();
+  delete approvedMap[normEmail];
+  saveApprovedRegistry(approvedMap);
+
+  showToast(`Bukti transfer ${normEmail} telah ditolak.`);
+  renderAdminSubList();
+  renderAdminUsersList();
+}
+
+// Admin Hapus Akun
+async function adminDeleteAccount(targetEmail = null) {
+  const emailInput = document.getElementById('adminDeleteEmail');
+  const email = (targetEmail || (emailInput ? emailInput.value : '')).trim();
+
+  if (!email) {
+    showToast('Masukkan email akun yang ingin dihapus.');
+    return;
+  }
+
+  const normEmail = email.toLowerCase().trim();
+
+  if (ADMIN_EMAILS.some(a => a.toLowerCase().trim() === normEmail)) {
+    showToast('Akun Admin/VIP tidak boleh dihapus.');
+    return;
+  }
+
+  if (!confirm(`PERINGATAN: Apakah Anda yakin ingin menghapus akun "${normEmail}"?\nSemua riwayat dan data akun akan dihapus permanen.`)) {
+    return;
+  }
+
+  try {
+    // 1. Hapus dari registry langganan & request
+    const approvedMap = getAllApprovedRegistry();
+    delete approvedMap[normEmail];
+    saveApprovedRegistry(approvedMap);
+
+    const requests = getAllSubscriptionRequests();
+    saveAllSubscriptionRequests(requests.filter(r => (r.email || '').toLowerCase().trim() !== normEmail));
+
+    localStorage.removeItem('baby_sub_' + normEmail);
+
+    // 2. Jika user yang dihapus adalah user yang sedang login, lakukan sign out
+    if (currentUser && currentUser.email && currentUser.email.toLowerCase().trim() === normEmail) {
+      await supabaseClient.auth.signOut();
+      currentUser = null;
+      clearUserData();
+      showLogin();
+    }
+
+    showToast(`🗑️ Akun "${normEmail}" berhasil dihapus.`);
+    if (emailInput) emailInput.value = '';
+    renderAdminUsersList();
+    renderAdminSubList();
+
+  } catch(err) {
+    console.error('Delete account error:', err);
+    showToast('Gagal menghapus akun: ' + getErrorMessage(err));
+  }
+}
+
+function renderAdminUsersList() {
+  const container = document.getElementById('adminAllUsersList');
+  if (!container) return;
+
+  const approvedMap = getAllApprovedRegistry();
+  const requests = getAllSubscriptionRequests();
+
+  // Gabungkan semua email unik
+  const userMap = new Map();
+
+  ADMIN_EMAILS.forEach(em => {
+    userMap.set(em.toLowerCase().trim(), { email: em, type: 'Admin / VIP', status: 'VIP Selamanya', until: 'Tanpa Batas' });
   });
-  if (btn) {
-    btn.classList.add('active');
+
+  requests.forEach(r => {
+    const em = (r.email || '').toLowerCase().trim();
+    if (em && !userMap.has(em)) {
+      userMap.set(em, {
+        email: em,
+        type: 'Pengguna',
+        status: r.status === 'active' ? 'Aktif' : 'Menunggu ACC',
+        until: r.until ? formatDateTimeReadable(r.until) : 'Menunggu'
+      });
+    }
+  });
+
+  Object.values(approvedMap).forEach(a => {
+    const em = (a.email || '').toLowerCase().trim();
+    if (em) {
+      userMap.set(em, {
+        email: em,
+        type: 'Pengguna',
+        status: 'Aktif (1 Tahun)',
+        until: a.until ? formatDateTimeReadable(a.until) : '1 Tahun'
+      });
+    }
+  });
+
+  if (currentUser && currentUser.email) {
+    const myEm = currentUser.email.toLowerCase().trim();
+    if (!userMap.has(myEm)) {
+      userMap.set(myEm, { email: myEm, type: 'Pengguna', status: 'Trial', until: 'Trial 1 Bulan' });
+    }
   }
+
+  const list = Array.from(userMap.values());
+
+  container.innerHTML = `
+    <table class="admin-users-table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Tipe</th>
+          <th>Status</th>
+          <th>Berlaku Sampai</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${list.map(u => {
+          const isAdmin = ADMIN_EMAILS.some(a => a.toLowerCase().trim() === u.email.toLowerCase().trim());
+          return `
+            <tr>
+              <td><strong>${escHtml(u.email)}</strong></td>
+              <td>${escHtml(u.type)}</td>
+              <td><span class="uploaded-badge ${u.status.includes('Aktif') || u.status.includes('VIP') ? 'active' : 'pending'}">${escHtml(u.status)}</span></td>
+              <td>${escHtml(u.until)}</td>
+              <td>
+                ${isAdmin ? '<span style="color:var(--muted); font-size:11px;">Admin</span>' : `
+                  <div style="display:flex; gap:6px;">
+                    <button type="button" class="admin-btn acc" style="padding:3px 8px; font-size:11px;" onclick="adminApproveSubscription('${escHtml(u.email)}')">ACC</button>
+                    <button type="button" class="admin-btn reject" style="padding:3px 8px; font-size:11px;" onclick="adminDeleteAccount('${escHtml(u.email)}')">Hapus</button>
+                  </div>
+                `}
+              </td>
+            </tr>
+          `;
+        }).join('')}
+      </tbody>
+    </table>
+  `;
 }
 
 

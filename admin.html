@@ -3,25 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Admin - Kelola Akun</title>
+  <title>Admin - Catatan Si Kecil</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root {
-      --bg: #0f172a;
-      --surface: #1e293b;
-      --surface-border: #334155;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --primary: #10b981;
-      --primary-hover: #059669;
-      --input-bg: #0f172a;
-      --input-border: #334155;
+      --bg: #0d0f14;
+      --surface: #151922;
+      --surface2: #1e2430;
+      --surface-border: #262e3d;
+      --text: #f3f5f8;
+      --text-muted: #949eb0;
+      --primary: #c94673;
+      --primary-hover: #ad335b;
+      --primary-soft: rgba(201, 70, 115, 0.15);
+      --input-bg: #0d0f14;
+      --input-border: #262e3d;
       --danger: #ef4444;
       --danger-bg: rgba(239, 68, 68, 0.12);
       --danger-border: rgba(239, 68, 68, 0.3);
@@ -31,15 +33,17 @@
     }
 
     [data-theme="light"] {
-      --bg: #f8fafc;
+      --bg: #faf7f5;
       --surface: #ffffff;
-      --surface-border: #e2e8f0;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --primary: #059669;
-      --primary-hover: #047857;
+      --surface2: #f6edf1;
+      --surface-border: #eedee5;
+      --text: #1d191b;
+      --text-muted: #786a70;
+      --primary: #c94673;
+      --primary-hover: #ad335b;
+      --primary-soft: #fce8f0;
       --input-bg: #ffffff;
-      --input-border: #cbd5e1;
+      --input-border: #eedee5;
       --danger: #dc2626;
       --danger-bg: #fee2e2;
       --danger-border: #fca5a5;
@@ -57,29 +61,28 @@
 
     body {
       min-height: 100vh;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--text);
       background: var(--bg);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 20px 16px;
-      transition: background 0.2s, color 0.2s;
+      padding: 70px 16px 40px;
+      transition: background 0.25s, color 0.25s;
     }
 
     .admin-nav {
       position: fixed;
-      top: 16px;
+      top: 14px;
       left: 0;
       right: 0;
-      max-width: 480px;
+      max-width: 680px;
       margin: 0 auto;
       padding: 0 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      z-index: 10;
+      z-index: 100;
     }
 
     .back-link {
@@ -87,13 +90,14 @@
       align-items: center;
       gap: 7px;
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--text-muted);
       text-decoration: none;
       background: var(--surface);
       border: 1px solid var(--surface-border);
-      padding: 7px 14px;
+      padding: 8px 16px;
       border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
       transition: 0.2s;
     }
 
@@ -103,8 +107,8 @@
     }
 
     .theme-toggle-btn {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       background: var(--surface);
       border: 1px solid var(--surface-border);
@@ -115,6 +119,7 @@
       cursor: pointer;
       font-size: 14px;
       transition: 0.2s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     }
 
     .theme-toggle-btn:hover {
@@ -124,33 +129,100 @@
 
     .container {
       width: 100%;
-      max-width: 420px;
-      margin-top: 36px;
+      max-width: 620px;
     }
 
     .card {
       background: var(--surface);
       border: 1px solid var(--surface-border);
-      border-radius: 20px;
+      border-radius: 24px;
       padding: 28px 24px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.2);
     }
 
     .card-header {
       margin-bottom: 22px;
+      text-align: center;
     }
 
-    h1 {
+    .card-header h1 {
       font-family: 'Poppins', sans-serif;
       font-size: 22px;
       font-weight: 700;
       color: var(--text);
       margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
     .subtitle {
       color: var(--text-muted);
       font-size: 13px;
+    }
+
+    .admin-session-box {
+      background: var(--surface2);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      padding: 12px 16px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .admin-role {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .admin-email {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      word-break: break-all;
+    }
+
+    .admin-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--surface-border);
+      padding-bottom: 10px;
+      overflow-x: auto;
+    }
+
+    .admin-tab {
+      background: transparent;
+      border: none;
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: 0.15s;
+    }
+
+    .admin-tab:hover {
+      color: var(--text);
+      background: var(--surface2);
+    }
+
+    .admin-tab.active {
+      color: var(--primary);
+      background: var(--primary-soft);
     }
 
     .form-group {
@@ -159,7 +231,7 @@
 
     label {
       display: block;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       color: var(--text);
       margin-bottom: 6px;
@@ -167,13 +239,13 @@
 
     input {
       width: 100%;
-      padding: 11px 13px;
+      padding: 11px 14px;
       background: var(--input-bg);
       border: 1px solid var(--input-border);
       border-radius: 12px;
       color: var(--text);
       font-family: inherit;
-      font-size: 14px;
+      font-size: 13.5px;
       outline: none;
       transition: border-color 0.2s;
     }
@@ -212,10 +284,6 @@
       justify-content: center;
     }
 
-    .password-toggle:hover {
-      color: var(--primary);
-    }
-
     .btn-primary {
       width: 100%;
       border: 0;
@@ -231,7 +299,6 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      margin-top: 8px;
       transition: background 0.2s;
     }
 
@@ -255,7 +322,7 @@
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
-      margin-top: 10px;
+      margin-top: 14px;
       transition: 0.2s;
     }
 
@@ -263,30 +330,6 @@
       color: var(--danger);
       border-color: var(--danger-border);
       background: var(--danger-bg);
-    }
-
-    .admin-session-box {
-      background: var(--input-bg);
-      border: 1px solid var(--surface-border);
-      border-radius: 12px;
-      padding: 12px 14px;
-      margin-bottom: 18px;
-    }
-
-    .admin-role {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 2px;
-    }
-
-    .admin-email {
-      font-size: 13.5px;
-      font-weight: 600;
-      color: var(--text);
-      word-break: break-all;
     }
 
     .message {
@@ -313,9 +356,294 @@
       display: none !important;
     }
 
+    /* SUBSCRIPTION REQUESTS LIST */
+    .admin-requests-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 440px;
+      overflow-y: auto;
+    }
+
+    .admin-request-card {
+      background: var(--surface2);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .admin-request-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .admin-req-email {
+      font-weight: 700;
+      font-size: 13.5px;
+      color: var(--text);
+      word-break: break-all;
+    }
+
+    .admin-req-date {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .uploaded-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .uploaded-badge.pending {
+      background: rgba(245, 158, 11, 0.15);
+      color: #d97706;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .uploaded-badge.active {
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .admin-req-body {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .admin-req-thumb {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1px solid var(--surface-border);
+      cursor: pointer;
+      transition: transform 0.15s;
+      background: #000;
+    }
+
+    .admin-req-thumb:hover {
+      transform: scale(1.04);
+    }
+
+    .admin-req-meta {
+      flex: 1;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .admin-req-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+      padding-top: 8px;
+      border-top: 1px solid var(--surface-border);
+    }
+
+    .admin-btn {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      text-decoration: none;
+      border: none;
+      transition: 0.15s;
+    }
+
+    .admin-btn.preview {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+    }
+
+    .admin-btn.preview:hover {
+      background: var(--primary-soft);
+      border-color: var(--primary);
+    }
+
+    .admin-btn.download {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+    }
+
+    .admin-btn.acc {
+      background: #10b981;
+      color: #ffffff;
+      margin-left: auto;
+    }
+
+    .admin-btn.acc:hover {
+      background: #059669;
+    }
+
+    .admin-btn.reject {
+      background: transparent;
+      border: 1px solid var(--danger-border);
+      color: var(--danger);
+    }
+
+    .admin-btn.reject:hover {
+      background: var(--danger-bg);
+    }
+
+    .manual-acc-box {
+      background: var(--surface2);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+
+    .manual-acc-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .danger-btn {
+      background: #dc2626;
+      color: #ffffff;
+      border: none;
+      padding: 11px 16px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: background 0.15s;
+    }
+
+    .danger-btn:hover {
+      background: #b91c1c;
+    }
+
+    .admin-users-table-wrap {
+      margin-top: 10px;
+      border: 1px solid var(--surface-border);
+      border-radius: 14px;
+      overflow: hidden;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .admin-users-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    .admin-users-table th {
+      background: var(--surface2);
+      padding: 10px 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .admin-users-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--surface-border);
+      color: var(--text);
+    }
+
+    .admin-users-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* LIGHTBOX */
+    .proof-lightbox-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      background: rgba(0, 0, 0, 0.88);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .proof-lightbox-backdrop.show {
+      display: flex;
+    }
+
+    .proof-lightbox-box {
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .proof-lightbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+    }
+
+    .proof-lb-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .proof-lb-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .proof-lightbox-img-wrap {
+      max-width: 85vw;
+      max-height: 78vh;
+      overflow: auto;
+      border-radius: 14px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .proof-lightbox-img-wrap img {
+      max-width: 100%;
+      max-height: 78vh;
+      object-fit: contain;
+      display: block;
+    }
+
     @media (max-width: 480px) {
       .card {
-        padding: 22px 18px;
+        padding: 20px 16px;
       }
     }
   </style>
@@ -336,8 +664,8 @@
     <!-- 1. LOGIN ADMIN -->
     <div id="loginCard" class="card">
       <div class="card-header">
-        <h1>Admin</h1>
-        <p class="subtitle">Masuk untuk mengelola akun pengguna</p>
+        <h1><i class="fa-solid fa-shield-halved" style="color:var(--primary);"></i> Admin</h1>
+        <p class="subtitle">Masuk untuk mengelola akun pengguna dan ACC langganan</p>
       </div>
 
       <div id="loginMessage" class="message error hidden">
@@ -351,7 +679,7 @@
             id="adminEmail"
             type="email"
             autocomplete="username"
-            placeholder="admin@email.com"
+            placeholder="fienaakmala@gmail.com"
             required
           >
         </div>
@@ -378,74 +706,147 @@
         </div>
 
         <button type="submit" id="loginButton" class="btn-primary">
-          Masuk
+          <i class="fa-solid fa-right-to-bracket"></i> Masuk
         </button>
       </form>
     </div>
 
-    <!-- 2. KELOLA AKUN -->
+    <!-- 2. DASHBOARD ADMIN UTAMA -->
     <div id="adminCard" class="card hidden">
       <div class="card-header">
-        <h1>Kelola Akun</h1>
-        <p class="subtitle">Ubah email atau password akun pengguna</p>
+        <h1><i class="fa-solid fa-shield-halved" style="color:var(--primary);"></i> Panel Admin</h1>
+        <p class="subtitle">Kelola langganan, verifikasi transfer, dan kelola akun pengguna</p>
       </div>
 
       <div class="admin-session-box">
-        <div class="admin-role">Login sebagai Admin</div>
-        <div id="loggedAdminEmail" class="admin-email"></div>
+        <div>
+          <div class="admin-role">Login sebagai Admin</div>
+          <div id="loggedAdminEmail" class="admin-email"></div>
+        </div>
+        <span class="uploaded-badge active">Admin VIP</span>
       </div>
 
-      <div id="updateMessage" class="message hidden">
-        <span id="updateMessageText"></span>
+      <!-- Navigation Tabs -->
+      <div class="admin-tabs">
+        <button type="button" class="admin-tab active" id="tabSubBtn" onclick="switchAdminTab('sub')">
+          <i class="fa-solid fa-receipt"></i> ACC Langganan
+        </button>
+        <button type="button" class="admin-tab" id="tabUsersBtn" onclick="switchAdminTab('users')">
+          <i class="fa-solid fa-users-gear"></i> Hapus Akun
+        </button>
+        <button type="button" class="admin-tab" id="tabPwdBtn" onclick="switchAdminTab('pwd')">
+          <i class="fa-solid fa-key"></i> Ubah Password / Email
+        </button>
       </div>
 
-      <form id="updateUserForm" onsubmit="event.preventDefault(); updateUser();">
-        <div class="form-group">
-          <label for="oldEmail">Email Pengguna</label>
-          <input
-            id="oldEmail"
-            type="email"
-            placeholder="Email akun yang ingin diubah"
-            required
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="newEmail">Email Baru (opsional)</label>
-          <input
-            id="newEmail"
-            type="email"
-            placeholder="Kosongkan jika tidak diubah"
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="newPassword">Password Baru (opsional)</label>
-          <div class="password-wrapper">
-            <input
-              id="newPassword"
-              type="password"
-              placeholder="Minimal 6 karakter"
-            >
-            <button
-              type="button"
-              class="password-toggle"
-              onclick="togglePassword('newPassword', this)"
-              aria-label="Tampilkan password baru"
-            >
-              <i class="fa-regular fa-eye"></i>
+      <!-- TAB 1: ACC LANGGANAN & PREVIEW/DOWNLOAD BUKTI -->
+      <div id="adminSubSection">
+        <div class="manual-acc-box">
+          <div class="manual-acc-title"><i class="fa-solid fa-wand-magic-sparkles"></i> ACC Langganan Manual (1 Tahun)</div>
+          <div style="display:flex; gap:8px; margin-top:8px;">
+            <input type="email" id="manualAccEmail" placeholder="user@gmail.com" style="flex:1;">
+            <button type="button" class="btn-primary" style="width:auto; padding:0 16px; white-space:nowrap;" onclick="adminManualApprove()">
+              <i class="fa-solid fa-check"></i> ACC
             </button>
           </div>
         </div>
 
-        <button type="submit" id="updateButton" class="btn-primary">
-          Simpan Perubahan
-        </button>
+        <div style="font-size:12.5px; font-weight:700; margin-bottom:8px; color:var(--text);">Daftar Bukti Transfer Masuk:</div>
+        <div id="adminSubList" class="admin-requests-list">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
 
-        <button type="button" class="btn-logout" onclick="logoutAdmin()">
-          Keluar
-        </button>
-      </form>
+      <!-- TAB 2: HAPUS AKUN PENGGUNA -->
+      <div id="adminUsersSection" class="hidden">
+        <div style="background:var(--surface2); border:1px solid var(--surface-border); border-radius:16px; padding:16px; margin-bottom:16px;">
+          <label style="font-weight:600; font-size:13px; color:var(--text); margin-bottom:6px; display:block;">Email Akun yang Ingin Dihapus</label>
+          <input type="email" id="adminDeleteEmail" placeholder="user@gmail.com">
+          <button type="button" class="danger-btn" style="width:100%; margin-top:12px;" onclick="adminDeleteAccount()">
+            <i class="fa-solid fa-trash-can"></i> Hapus Akun Permanen
+          </button>
+        </div>
+
+        <div style="font-weight:700; font-size:13.5px; margin-top:16px; margin-bottom:6px;">Daftar Akun & Status Langganan:</div>
+        <div id="adminAllUsersList" class="admin-users-table-wrap">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- TAB 3: UBAH EMAIL / PASSWORD AKUN -->
+      <div id="adminPwdSection" class="hidden">
+        <div id="updateMessage" class="message hidden">
+          <span id="updateMessageText"></span>
+        </div>
+
+        <form id="updateUserForm" onsubmit="event.preventDefault(); updateUser();">
+          <div class="form-group">
+            <label for="oldEmail">Email Pengguna</label>
+            <input
+              id="oldEmail"
+              type="email"
+              placeholder="Email akun yang ingin diubah"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="newEmail">Email Baru (opsional)</label>
+            <input
+              id="newEmail"
+              type="email"
+              placeholder="Kosongkan jika tidak diubah"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="newPassword">Password Baru (opsional)</label>
+            <div class="password-wrapper">
+              <input
+                id="newPassword"
+                type="password"
+                placeholder="Minimal 6 karakter"
+              >
+              <button
+                type="button"
+                class="password-toggle"
+                onclick="togglePassword('newPassword', this)"
+                aria-label="Tampilkan password baru"
+              >
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" id="updateButton" class="btn-primary">
+            <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan
+          </button>
+        </form>
+      </div>
+
+      <button type="button" class="btn-logout" onclick="logoutAdmin()">
+        <i class="fa-solid fa-right-from-bracket"></i> Keluar dari Admin
+      </button>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX PREVIEW BUKTI TRANSFER -->
+  <div id="proofLightboxModal" class="proof-lightbox-backdrop" onclick="closeProofLightbox()">
+    <div class="proof-lightbox-box" onclick="event.stopPropagation()">
+      <div class="proof-lightbox-header">
+        <div id="proofLightboxTitle" style="font-weight:600; font-size:13.5px; color:#fff;">Bukti Transfer</div>
+        <div style="display:flex; gap:8px;">
+          <a id="proofLightboxDownloadBtn" href="" download="bukti-transfer.jpg" class="proof-lb-btn" title="Unduh Bukti">
+            <i class="fa-solid fa-download"></i> Unduh
+          </a>
+          <button type="button" class="proof-lb-btn close" onclick="closeProofLightbox()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+      <div class="proof-lightbox-img-wrap">
+        <img id="proofLightboxImg" src="" alt="Bukti Transfer">
+      </div>
     </div>
   </div>
 
@@ -474,28 +875,46 @@
 
     const SUPABASE_URL = 'https://evvqxxsojeiisrsuygky.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_RIJfZBsXRoq56wUkA1j19g_W8GPcm7Z';
-    const ADMIN_EMAIL = 'rojulanfayadulmujahid@gmail.com';
+
+    const ADMIN_EMAILS = [
+      'fienaakmala@gmail.com',
+      'rojulanfayadulmujahid@gmail.com'
+    ];
 
     const { createClient } = window.supabase;
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     function isAdminUser(user) {
       if (!user || !user.email) return false;
-      return user.email.trim().toLowerCase() === ADMIN_EMAIL.trim().toLowerCase();
+      const em = user.email.trim().toLowerCase();
+      return ADMIN_EMAILS.some(a => a.toLowerCase().trim() === em);
     }
 
     function togglePassword(inputId, button) {
       const input = document.getElementById(inputId);
       if (!input) return;
-
       const isPassword = input.type === 'password';
       input.type = isPassword ? 'text' : 'password';
-
       const icon = button.querySelector('i');
       if (icon) {
         icon.className = isPassword ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
       }
-      button.setAttribute('aria-label', isPassword ? 'Sembunyikan password' : 'Tampilkan password');
+    }
+
+    function escHtml(str) {
+      return String(str ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function formatDateTimeReadable(isoStr) {
+      if (!isoStr) return '-';
+      try {
+        const d = new Date(isoStr);
+        if (isNaN(d.getTime())) return isoStr;
+        const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+        return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}, ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+      } catch(e) {
+        return isoStr;
+      }
     }
 
     function translateAdminError(error) {
@@ -506,6 +925,303 @@
       return (error && error.message) ? error.message : 'Terjadi kesalahan saat login.';
     }
 
+    // Storage helpers
+    function getAllApprovedRegistry() {
+      try {
+        const raw = localStorage.getItem('baby_approved_subscriptions');
+        return raw ? JSON.parse(raw) : {};
+      } catch(e) { return {}; }
+    }
+    function saveApprovedRegistry(map) {
+      try { localStorage.setItem('baby_approved_subscriptions', JSON.stringify(map)); } catch(e) {}
+    }
+    function getAllSubscriptionRequests() {
+      try {
+        const raw = localStorage.getItem('baby_subscription_requests');
+        return raw ? JSON.parse(raw) : [];
+      } catch(e) { return []; }
+    }
+    function saveAllSubscriptionRequests(list) {
+      try { localStorage.setItem('baby_subscription_requests', JSON.stringify(list)); } catch(e) {}
+    }
+
+    // Switch Tabs
+    function switchAdminTab(tab) {
+      document.getElementById('adminSubSection').classList.toggle('hidden', tab !== 'sub');
+      document.getElementById('adminUsersSection').classList.toggle('hidden', tab !== 'users');
+      document.getElementById('adminPwdSection').classList.toggle('hidden', tab !== 'pwd');
+
+      document.getElementById('tabSubBtn').classList.toggle('active', tab === 'sub');
+      document.getElementById('tabUsersBtn').classList.toggle('active', tab === 'users');
+      document.getElementById('tabPwdBtn').classList.toggle('active', tab === 'pwd');
+
+      if (tab === 'sub') renderAdminSubList();
+      if (tab === 'users') renderAdminUsersList();
+    }
+
+    // Render Subscriptions List
+    function renderAdminSubList() {
+      const container = document.getElementById('adminSubList');
+      if (!container) return;
+
+      const requests = getAllSubscriptionRequests();
+      if (!requests || requests.length === 0) {
+        container.innerHTML = `
+          <div style="text-align:center; padding:32px 16px; color:var(--text-muted); font-size:13px;">
+            <i class="fa-solid fa-inbox" style="font-size:32px; margin-bottom:8px; opacity:0.5;"></i>
+            <div>Belum ada bukti transfer yang di-upload oleh pengguna.</div>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = requests.map(req => {
+        const isAct = req.status === 'active';
+        const badgeClass = isAct ? 'uploaded-badge active' : 'uploaded-badge pending';
+        const badgeText = isAct ? '✅ Aktif (Disetujui 1 Thn)' : '⏳ Menunggu ACC';
+        const noteText = req.note ? `Catatan: "${escHtml(req.note)}"` : 'Tanpa catatan';
+
+        return `
+          <div class="admin-request-card">
+            <div class="admin-request-top">
+              <div>
+                <div class="admin-req-email">${escHtml(req.email)}</div>
+                <div class="admin-req-date">Upload: ${formatDateTimeReadable(req.requested_at)} • Bayi: ${escHtml(req.baby_name || '-')}</div>
+              </div>
+              <span class="${badgeClass}">${badgeText}</span>
+            </div>
+
+            <div class="admin-req-body">
+              <img
+                src="${req.proof || 'assets/qr_subscribe.png'}"
+                alt="Bukti Transfer"
+                class="admin-req-thumb"
+                onclick="previewLargeProof('${req.proof}', 'Bukti TF - ${escHtml(req.email)}')"
+                title="Klik untuk perbesar"
+              >
+              <div class="admin-req-meta">
+                <div><strong>Nominal:</strong> Rp 250.000 (1 Tahun)</div>
+                <div style="margin-top:2px;">${escHtml(noteText)}</div>
+                ${req.until ? `<div style="margin-top:2px; color:#10b981; font-weight:600;">Berlaku s/d: ${formatDateTimeReadable(req.until)}</div>` : ''}
+              </div>
+            </div>
+
+            <div class="admin-req-actions">
+              <button type="button" class="admin-btn preview" onclick="previewLargeProof('${req.proof}', 'Bukti TF - ${escHtml(req.email)}')">
+                <i class="fa-regular fa-eye"></i> Preview
+              </button>
+              <a href="${req.proof}" download="bukti-tf-${escHtml(req.email)}.jpg" class="admin-btn download">
+                <i class="fa-solid fa-download"></i> Unduh
+              </a>
+              <button type="button" class="admin-btn reject" onclick="adminRejectSubscription('${escHtml(req.email)}')">
+                <i class="fa-solid fa-xmark"></i> Tolak
+              </button>
+              <button type="button" class="admin-btn acc" onclick="adminApproveSubscription('${escHtml(req.email)}')">
+                <i class="fa-solid fa-check"></i> ${isAct ? 'Perpanjang 1 Thn Lagi' : 'ACC Subscribe (1 Thn)'}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ACC Subscribe
+    async function adminApproveSubscription(email) {
+      if (!email) return;
+      const normEmail = email.toLowerCase().trim();
+
+      if (!confirm(`ACC langganan untuk "${normEmail}"?\nAkun ini akan aktif selama 1 tahun (365 hari) mulai hari ini.`)) {
+        return;
+      }
+
+      const now = new Date();
+      const expiresAt = new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000);
+
+      const approvedMap = getAllApprovedRegistry();
+      approvedMap[normEmail] = {
+        email: normEmail,
+        status: 'active',
+        approved_at: now.toISOString(),
+        approved_by: 'admin',
+        until: expiresAt.toISOString(),
+        amount: 250000
+      };
+      saveApprovedRegistry(approvedMap);
+
+      const requests = getAllSubscriptionRequests();
+      const reqItem = requests.find(r => (r.email || '').toLowerCase().trim() === normEmail);
+      if (reqItem) {
+        reqItem.status = 'active';
+        reqItem.approved_at = now.toISOString();
+        reqItem.until = expiresAt.toISOString();
+        saveAllSubscriptionRequests(requests);
+      }
+
+      alert(`✅ Akun ${normEmail} BERHASIL DI-ACC!\nAktif s/d ${formatDateTimeReadable(expiresAt.toISOString())}`);
+      renderAdminSubList();
+      renderAdminUsersList();
+    }
+
+    function adminManualApprove() {
+      const input = document.getElementById('manualAccEmail');
+      const email = (input ? input.value : '').trim();
+      if (!email) {
+        alert('Masukkan email pengguna yang ingin di-ACC.');
+        return;
+      }
+      adminApproveSubscription(email);
+      if (input) input.value = '';
+    }
+
+    function adminRejectSubscription(email) {
+      if (!email) return;
+      const normEmail = email.toLowerCase().trim();
+      if (!confirm(`Tolak bukti transfer dari "${normEmail}"?`)) return;
+
+      const requests = getAllSubscriptionRequests();
+      saveAllSubscriptionRequests(requests.filter(r => (r.email || '').toLowerCase().trim() !== normEmail));
+
+      const approvedMap = getAllApprovedRegistry();
+      delete approvedMap[normEmail];
+      saveApprovedRegistry(approvedMap);
+
+      alert(`Bukti transfer ${normEmail} telah ditolak.`);
+      renderAdminSubList();
+      renderAdminUsersList();
+    }
+
+    // Hapus Akun
+    async function adminDeleteAccount(targetEmail = null) {
+      const emailInput = document.getElementById('adminDeleteEmail');
+      const email = (targetEmail || (emailInput ? emailInput.value : '')).trim();
+
+      if (!email) {
+        alert('Masukkan email akun yang ingin dihapus.');
+        return;
+      }
+
+      const normEmail = email.toLowerCase().trim();
+      if (ADMIN_EMAILS.some(a => a.toLowerCase().trim() === normEmail)) {
+        alert('Akun Admin/VIP tidak boleh dihapus.');
+        return;
+      }
+
+      if (!confirm(`PERINGATAN: Apakah Anda yakin ingin menghapus akun "${normEmail}"?\nSemua riwayat dan data akun akan dihapus permanen.`)) {
+        return;
+      }
+
+      const approvedMap = getAllApprovedRegistry();
+      delete approvedMap[normEmail];
+      saveApprovedRegistry(approvedMap);
+
+      const requests = getAllSubscriptionRequests();
+      saveAllSubscriptionRequests(requests.filter(r => (r.email || '').toLowerCase().trim() !== normEmail));
+
+      localStorage.removeItem('baby_sub_' + normEmail);
+
+      alert(`🗑️ Akun "${normEmail}" berhasil dihapus.`);
+      if (emailInput) emailInput.value = '';
+      renderAdminUsersList();
+      renderAdminSubList();
+    }
+
+    function renderAdminUsersList() {
+      const container = document.getElementById('adminAllUsersList');
+      if (!container) return;
+
+      const approvedMap = getAllApprovedRegistry();
+      const requests = getAllSubscriptionRequests();
+      const userMap = new Map();
+
+      ADMIN_EMAILS.forEach(em => {
+        userMap.set(em.toLowerCase().trim(), { email: em, type: 'Admin / VIP', status: 'VIP Selamanya', until: 'Tanpa Batas' });
+      });
+
+      requests.forEach(r => {
+        const em = (r.email || '').toLowerCase().trim();
+        if (em && !userMap.has(em)) {
+          userMap.set(em, {
+            email: em,
+            type: 'Pengguna',
+            status: r.status === 'active' ? 'Aktif' : 'Menunggu ACC',
+            until: r.until ? formatDateTimeReadable(r.until) : 'Menunggu'
+          });
+        }
+      });
+
+      Object.values(approvedMap).forEach(a => {
+        const em = (a.email || '').toLowerCase().trim();
+        if (em) {
+          userMap.set(em, {
+            email: em,
+            type: 'Pengguna',
+            status: 'Aktif (1 Tahun)',
+            until: a.until ? formatDateTimeReadable(a.until) : '1 Tahun'
+          });
+        }
+      });
+
+      const list = Array.from(userMap.values());
+
+      container.innerHTML = `
+        <table class="admin-users-table">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Tipe</th>
+              <th>Status</th>
+              <th>Berlaku Sampai</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${list.map(u => {
+              const isAdmin = ADMIN_EMAILS.some(a => a.toLowerCase().trim() === u.email.toLowerCase().trim());
+              return `
+                <tr>
+                  <td><strong>${escHtml(u.email)}</strong></td>
+                  <td>${escHtml(u.type)}</td>
+                  <td><span class="uploaded-badge ${u.status.includes('Aktif') || u.status.includes('VIP') ? 'active' : 'pending'}">${escHtml(u.status)}</span></td>
+                  <td>${escHtml(u.until)}</td>
+                  <td>
+                    ${isAdmin ? '<span style="color:var(--text-muted); font-size:11px;">Admin</span>' : `
+                      <div style="display:flex; gap:6px;">
+                        <button type="button" class="admin-btn acc" style="padding:3px 8px; font-size:11px;" onclick="adminApproveSubscription('${escHtml(u.email)}')">ACC</button>
+                        <button type="button" class="admin-btn reject" style="padding:3px 8px; font-size:11px;" onclick="adminDeleteAccount('${escHtml(u.email)}')">Hapus</button>
+                      </div>
+                    `}
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    // Lightbox
+    function previewLargeProof(imageUrl, title = 'Bukti Transfer') {
+      const modal = document.getElementById('proofLightboxModal');
+      const img = document.getElementById('proofLightboxImg');
+      const titleEl = document.getElementById('proofLightboxTitle');
+      const downloadBtn = document.getElementById('proofLightboxDownloadBtn');
+      if (!modal || !img) return;
+
+      img.src = imageUrl;
+      if (titleEl) titleEl.textContent = title;
+      if (downloadBtn) {
+        downloadBtn.href = imageUrl;
+        downloadBtn.download = `bukti-tf-${Date.now()}.jpg`;
+      }
+      modal.classList.add('show');
+    }
+
+    function closeProofLightbox() {
+      const modal = document.getElementById('proofLightboxModal');
+      if (modal) modal.classList.remove('show');
+    }
+
+    // Login Admin
     async function loginAdmin() {
       const email = document.getElementById('adminEmail').value.trim();
       const password = document.getElementById('adminPassword').value;
@@ -520,8 +1236,8 @@
         return;
       }
 
-      if (email.toLowerCase() !== ADMIN_EMAIL.trim().toLowerCase()) {
-        showLoginError('Akses ditolak. Email "' + email + '" bukan akun admin terdaftar (' + ADMIN_EMAIL + ').');
+      if (!ADMIN_EMAILS.some(a => a.toLowerCase().trim() === email.toLowerCase())) {
+        showLoginError('Akses ditolak. Email "' + email + '" bukan akun admin terdaftar.');
         return;
       }
 
@@ -555,12 +1271,15 @@
         document.getElementById('loginCard').classList.add('hidden');
         document.getElementById('adminCard').classList.remove('hidden');
 
+        renderAdminSubList();
+        renderAdminUsersList();
+
       } catch (error) {
         console.error(error);
         showLoginError(translateAdminError(error));
       } finally {
         button.disabled = false;
-        button.textContent = 'Masuk';
+        button.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Masuk';
       }
     }
 
@@ -644,7 +1363,7 @@
         showUpdateMessage(error.message || 'Terjadi kesalahan.', 'error');
       } finally {
         button.disabled = false;
-        button.textContent = 'Simpan Perubahan';
+        button.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan';
       }
     }
 
@@ -682,6 +1401,8 @@
         document.getElementById('loggedAdminEmail').textContent = session.user.email || '';
         document.getElementById('loginCard').classList.add('hidden');
         document.getElementById('adminCard').classList.remove('hidden');
+        renderAdminSubList();
+        renderAdminUsersList();
       } catch (err) {
         console.warn('Session check:', err);
       }
