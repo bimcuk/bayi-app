@@ -1,6 +1,6 @@
 /*******************************************************
  * MIGRASI GOOGLE SHEETS → SUPABASE
- * Catatan Si Kecil
+ * Tumbangkan Adek
  *
  * PENTING:
  * - Tidak menghapus data Spreadsheet

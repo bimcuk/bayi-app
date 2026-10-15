@@ -1,7 +1,7 @@
 function doGet() {
   return HtmlService.createTemplateFromFile('Index')
     .evaluate()
-    .setTitle('Catatan Si Kecil 🍼')
+    .setTitle('Tumbangkan Adek 🍼')
     .addMetaTag(
       'viewport',
       'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
@@ -73,7 +73,7 @@ function ambilProfilData() {
   var birthVal = row[1];
   var avatarVal = row[2];
 
-  if (row.length >= 4 && (row[0] === 'Catatan Si Kecil' || row[0] === 'App Title' || row[0].toString().length > 30)) {
+  if (row.length >= 4 && (row[0] === 'Tumbangkan Adek' || row[0] === 'App Title' || row[0].toString().length > 30)) {
     babyNameVal = row[1] || 'Adek Bayi';
     birthVal = row[2];
     avatarVal = row[3];

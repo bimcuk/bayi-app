@@ -142,16 +142,27 @@
     .history-filter-btn {
       text-transform: uppercase !important;
       letter-spacing: 0.03em;
+      transition: all 0.12s cubic-bezier(0, 0, 0.2, 1) !important;
     }
 
-    /* THEME & MODE SWEEP ANIMATION: TOP-RIGHT TO BOTTOM-LEFT (GENTLE & SILKY) */
+    /* THEME & MODE SWEEP ANIMATION: MOBILE-OPTIMIZED (SILKY & SMOOTH) */
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: 0.38s;
+      animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: clip-path, opacity;
+    }
     ::view-transition-old(root) {
-      animation: none;
+      animation: themeFadeOld 0.38s ease forwards;
       mix-blend-mode: normal;
     }
     ::view-transition-new(root) {
-      animation: themeSweepTRtoBL 1.0s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      animation: themeSweepTRtoBL 0.38s cubic-bezier(0.25, 1, 0.5, 1) forwards;
       mix-blend-mode: normal;
+    }
+
+    @keyframes themeFadeOld {
+      to { opacity: 0.9; }
     }
 
     @keyframes themeSweepTRtoBL {
@@ -159,7 +170,7 @@
         clip-path: circle(0% at 100% 0%);
       }
       to {
-        clip-path: circle(160% at 100% 0%);
+        clip-path: circle(150% at 100% 0%);
       }
     }
 
@@ -169,13 +180,14 @@
       inset: 0;
       z-index: 9999999;
       pointer-events: none;
-      background: var(--bg);
-      clip-path: circle(0% at 100% 0%);
-      transition: clip-path 1.0s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+      background: var(--surface);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      will-change: opacity;
     }
 
     .theme-corner-sweep.active {
-      clip-path: circle(160% at 100% 0%);
+      opacity: 0.7;
     }
 
     .theme-corner-sweep.fade-out {
@@ -871,21 +883,28 @@
     }
 
     .promo-close-link {
-      display: block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
       text-align: center;
-      background: none;
-      border: none;
-      font-size: 12px;
-      color: var(--muted);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
       margin-top: 10px;
       cursor: pointer;
-      text-decoration: underline;
-      padding: 4px;
+      text-decoration: none !important;
+      transition: all 0.15s ease;
     }
 
     .promo-close-link:hover {
-      color: var(--text);
+      background: var(--surface);
+      border-color: var(--primary-soft);
+      transform: translateY(-1px);
     }
 
     /* Memory Mode Modal */
@@ -1261,23 +1280,61 @@
       min-width:0;
     }
 
-    select {
-      appearance:none;
-      -webkit-appearance:none;
-      -moz-appearance:none;
-      padding-right:38px;
-      background-repeat:no-repeat;
-      background-position:right 14px center;
-      background-size:14px;
-      cursor:pointer;
+    select,
+    input[type="date"],
+    input[type="time"],
+    input[type="datetime-local"] {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      position: relative;
+      padding-right: 38px;
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 14px 14px;
+      cursor: pointer;
     }
 
+    /* Sembunyikan panah/arrow bawaan browser mobile Chrome/Safari */
+    input[type="date"]::-webkit-calendar-picker-indicator,
+    input[type="time"]::-webkit-calendar-picker-indicator,
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 38px;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    /* Icon Dropdown Select (Panah Halus) */
     :root[data-color="pink"] select {
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23e95d8c' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23e95d8c' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
     }
 
     :root[data-color="blue"] select {
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234d8fe8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234d8fe8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    }
+
+    /* Icon Input Tanggal (Kalender Presisi 14px di Kanan 14px) */
+    :root[data-color="pink"] input[type="date"],
+    :root[data-color="pink"] input[type="datetime-local"] {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23e95d8c' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
+    }
+
+    :root[data-color="blue"] input[type="date"],
+    :root[data-color="blue"] input[type="datetime-local"] {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234d8fe8' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
+    }
+
+    /* Icon Input Jam (Jam Dinding Presisi 14px di Kanan 14px) */
+    :root[data-color="pink"] input[type="time"] {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23e95d8c' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cpolyline points='12 6 12 12 16 14'%3E%3C/polyline%3E%3C/svg%3E");
+    }
+
+    :root[data-color="blue"] input[type="time"] {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234d8fe8' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cpolyline points='12 6 12 12 16 14'%3E%3C/polyline%3E%3C/svg%3E");
     }
 
     .stopwatch-card {
@@ -1425,11 +1482,26 @@
       gap:12px;
     }
 
-    .chart-card { min-width:0; }
+    .chart-card {
+      min-width: 0;
+      background: var(--surface) !important;
+      background-color: var(--surface) !important;
+      isolation: isolate;
+      contain: paint;
+    }
 
     .chart-wrap {
-      height:270px;
-      position:relative;
+      height: 270px;
+      position: relative;
+      background: var(--surface) !important;
+      background-color: var(--surface) !important;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .chart-wrap canvas {
+      background: transparent;
+      display: block;
     }
 
     .recap-list {
@@ -1955,24 +2027,30 @@
 
     .current-uploaded-box {
       margin-top: 14px;
-      padding: 12px;
+      padding: 14px;
       border-radius: 14px;
       background: var(--surface2);
       border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
     .uploaded-header {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
     }
 
     .uploaded-badge {
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 700;
-      padding: 3px 8px;
+      padding: 4px 10px;
       border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .uploaded-badge.pending {
@@ -1994,24 +2072,92 @@
 
     .uploaded-content {
       display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .uploaded-content img {
-      width: 52px;
-      height: 52px;
-      object-fit: cover;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      cursor: pointer;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      width: 100%;
     }
 
     .uploaded-text {
-      flex: 1;
-      font-size: 11.5px;
+      width: 100%;
+      font-size: 12px;
       color: var(--text);
-      line-height: 1.4;
+      line-height: 1.45;
+    }
+
+    /* IMUNISASI CHECKLIST GRID & HEALTH STYLES */
+    .imun-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .imun-pill {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .imun-pill:hover {
+      border-color: var(--primary-soft);
+      background: var(--surface);
+    }
+
+    .imun-pill input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      margin: 0;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    .imun-pill.checked,
+    .imun-pill:has(input:checked) {
+      background: var(--primary-soft);
+      border-color: var(--primary);
+      color: var(--primary-strong);
+      font-weight: 700;
+    }
+
+    .temp-status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .temp-status-normal { background: rgba(34, 197, 94, 0.15); color: #16a34a; }
+    .temp-status-warm { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+    .temp-status-fever { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+
+    .memory-banner {
+      display: none !important;
+    }
+
+    .user-tier-badge.memory {
+      background: linear-gradient(135deg, #ec4899, #db2777);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(236, 72, 153, 0.35);
+    }
+    .user-tier-badge.input-mode {
+      background: var(--surface2);
+      color: var(--primary-strong);
+      border: 1px solid var(--border);
     }
 
     .btn-refresh-status {
@@ -3055,6 +3201,8 @@
         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
           <h2 class="baby-name" id="displayBabyName" style="margin:0;">Adek Bayi</h2>
           <span id="userTierBadge" class="user-tier-badge hidden"></span>
+          <span id="memoryBadgeIndicator" class="user-tier-badge memory hidden"><i class="fa-solid fa-heart"></i> <span id="memoryBadgeText">Mode Kenangan</span></span>
+          <span id="inputModeBadgeIndicator" class="user-tier-badge input-mode hidden"><i class="fa-solid fa-pen-to-square"></i> <span id="inputModeBadgeText">Mode Input</span></span>
         </div>
         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:2px;">
           <div class="age" id="displayAge">-</div>
@@ -3113,14 +3261,6 @@
             <span class="menu-badge" id="menuSubscribeBadge">Trial</span>
           </button>
 
-          <!-- 5b. Chat dengan Admin (Pusat Bantuan) -->
-          <button class="menu-item" id="menuChatBtn" onclick="openUserChat(); closeHamburgerMenu();">
-            <div class="menu-item-left">
-              <i class="fa-solid fa-comments" style="color: var(--primary);"></i>
-              <span data-i18n="menuChat">Chat Admin</span>
-            </div>
-            <span class="menu-badge hidden" id="menuChatBadge" style="background:#ef4444; color:#fff;">0</span>
-          </button>
 
           <!-- 5c. Berhenti Gunakan (Mode Kenangan 2 Tahun) -->
           <button class="menu-item" id="menuMemoryModeBtn" onclick="openMemoryModePrompt(); closeHamburgerMenu();">
@@ -3193,22 +3333,13 @@
   <!-- INPUT -->
   <section id="sectionInput" class="section active">
 
-    <!-- MEMORY MODE BANNER -->
-    <div id="memoryModeBanner" class="memory-banner hidden">
-      <div class="memory-banner-icon">
-        <i class="fa-solid fa-heart"></i>
-      </div>
-      <div class="memory-banner-text">
-        <h4 data-i18n="memoryBannerTitle">Mode Kenangan Aktif (Usia 0-2 Tahun)</h4>
-        <p data-i18n="memoryBannerDesc">Seluruh riwayat masa emas si kecil telah disimpan permanen sebagai album kenangan. Anda dapat melihat grafik & rekapan di menu DASBOR dan HISTORI.</p>
-      </div>
-    </div>
-
     <div class="sub-nav" style="margin-top:12px;">
       <button id="inputSubDBF" class="sub-btn active" onclick="showInputPanel('dbf')">DBF</button>
       <button id="inputSubSusu" class="sub-btn" onclick="showInputPanel('susu')">SUSU</button>
       <button id="inputSubPopok" class="sub-btn" onclick="showInputPanel('popok')">POPOK</button>
       <button id="inputSubFisik" class="sub-btn" onclick="showInputPanel('fisik')">BB & PB</button>
+      <button id="inputSubHealth" class="sub-btn" onclick="showInputPanel('health')">OBAT & SUHU</button>
+      <button id="inputSubImun" class="sub-btn" onclick="showInputPanel('imun')">IMUNISASI</button>
     </div>
 
     <!-- DBF -->
@@ -3410,6 +3541,122 @@
       </div>
     </div>
 
+    <!-- OBAT & SUHU -->
+    <div id="panelInputHealth" class="panel">
+      <div class="card">
+        <h2 class="card-title"><i class="fa-solid fa-notes-medical" style="color:var(--primary); margin-right:6px;"></i> Catat Pemantau Obat & Suhu Tubuh</h2>
+
+        <form id="healthForm" action="javascript:void(0);" onsubmit="event.preventDefault(); submitHealth(event);">
+          <div class="form-grid">
+
+            <div class="form-group">
+              <label>Waktu Pencatatan</label>
+              <input type="datetime-local" id="waktuHealth" required>
+            </div>
+
+            <div class="form-group">
+              <label>Suhu Tubuh (°C)</label>
+              <input type="number" id="suhuTubuh" step="0.1" min="34" max="43" placeholder="Contoh: 36.8" oninput="updateTempStatusDisplay(this.value)">
+              <div id="tempStatusHint" style="font-size:11px; margin-top:3px; color:var(--muted);">Normal: 36.5°C - 37.2°C</div>
+            </div>
+
+            <div class="form-group">
+              <label>Nama Obat / Vitamin</label>
+              <input type="text" id="namaObat" placeholder="Contoh: Paracetamol Drop, Tempra, Sanmol, Vitamin D3">
+            </div>
+
+            <div class="form-group">
+              <label>Dosis / Aturan Pakai</label>
+              <input type="text" id="dosisObat" placeholder="Contoh: 0.6 ml, 1 sendok takar, 3x sehari">
+            </div>
+
+            <div class="form-group full">
+              <label>Gejala / Catatan Tambahan</label>
+              <textarea id="catatanHealth" placeholder="Contoh: Agak rewel setelah imunisasi, kompres hangat di dahi..."></textarea>
+            </div>
+
+          </div>
+
+          <button type="submit" class="primary-btn">
+            <i class="fa-solid fa-floppy-disk"></i> Simpan Catatan Obat & Suhu
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- IMUNISASI -->
+    <div id="panelInputImun" class="panel">
+      <div class="card">
+        <h2 class="card-title"><i class="fa-solid fa-syringe" style="color:var(--primary); margin-right:6px;"></i> Catat Jadwal & Jenis Imunisasi</h2>
+
+        <form id="imunForm" action="javascript:void(0);" onsubmit="event.preventDefault(); submitImunisasi(event);">
+          <div class="form-grid">
+
+            <div class="form-group">
+              <label>Tanggal Imunisasi</label>
+              <input type="date" id="tglImun" required>
+            </div>
+
+            <div class="form-group">
+              <label>Jam Pemberian</label>
+              <input type="time" id="jamImun" required>
+            </div>
+
+            <div class="form-group full">
+              <label>Tempat Imunisasi / Faskes (Opsional)</label>
+              <input type="text" id="faskesImun" placeholder="Contoh: Puskesmas, Posyandu Melati, RSIA Bunda, Dokter Anak">
+            </div>
+
+            <div class="form-group full">
+              <label style="margin-bottom:6px; font-weight:700;">Pilih Jenis Imunisasi yang Diberikan (Centang pilihan):</label>
+              <div class="imun-grid">
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="Hepatitis B0 (Baru Lahir)"> Hepatitis B0 (HB0)</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="BCG (Tuberkulosis)"> BCG</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="Polio 1 (Tetes OPV)"> Polio 1 (OPV)</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="Polio 2 (Tetes OPV)"> Polio 2 (OPV)</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="Polio 3 (Tetes OPV)"> Polio 3 (OPV)</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="Polio 4 (Tetes OPV)"> Polio 4 (OPV)</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="IPV 1 (Polio Suntik)"> IPV 1 (Suntik)</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="IPV 2 (Polio Suntik)"> IPV 2 (Suntik)</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="DPT-HB-Hib 1 (Pentavalen 1)"> DPT-HB-Hib 1</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="DPT-HB-Hib 2 (Pentavalen 2)"> DPT-HB-Hib 2</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="DPT-HB-Hib 3 (Pentavalen 3)"> DPT-HB-Hib 3</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="PCV 1 (Pneumokokus)"> PCV 1</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="PCV 2 (Pneumokokus)"> PCV 2</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="PCV 3 (Pneumokokus)"> PCV 3 (Booster)</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="Rotavirus 1 (Diare)"> Rotavirus 1</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="Rotavirus 2 (Diare)"> Rotavirus 2</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="Rotavirus 3 (Diare)"> Rotavirus 3</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="Campak-Rubela (MR / MMR 1)"> Campak / MR 1</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="DPT-HB-Hib Booster (18 Bln)"> DPT Booster (18 Bln)</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="Campak-Rubela Booster (18 Bln)"> MR Booster (18 Bln)</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="Japanese Encephalitis (JE)"> JE (9 Bln)</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="Varisela (Cacar Air)"> Varisela</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="Hepatitis A"> Hepatitis A</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="Influenza"> Influenza</label>
+                <label class="imun-pill"><input type="checkbox" name="jenisImun" value="Lainnya" id="imunChkLainnya" onchange="toggleImunCustomInput(this)"> Vaksin Lainnya</label>
+              </div>
+            </div>
+
+            <div class="form-group full hidden" id="wrapImunLainnya">
+              <label>Tulis Jenis Vaksin Lainnya</label>
+              <input type="text" id="imunLainnyaText" placeholder="Nama vaksin lainnya...">
+            </div>
+
+            <div class="form-group full">
+              <label>Catatan / Reaksi Pasca Imunisasi (KIPI)</label>
+              <textarea id="catatanImun" placeholder="Contoh: Kondisi sehat, sedikit hangat pada malam hari, kompres dan beri paracetamol..."></textarea>
+            </div>
+
+          </div>
+
+          <button type="submit" class="primary-btn">
+            <i class="fa-solid fa-floppy-disk"></i> Simpan Catatan Imunisasi
+          </button>
+        </form>
+      </div>
+    </div>
+
   </section>
 
   <!-- DASHBOARD -->
@@ -3420,6 +3667,8 @@
       <button id="dashSubSusu" class="sub-btn" onclick="showDashboardPanel('susu')">SUSU</button>
       <button id="dashSubPopok" class="sub-btn" onclick="showDashboardPanel('popok')">POPOK</button>
       <button id="dashSubFisik" class="sub-btn" onclick="showDashboardPanel('fisik')">BB & PB</button>
+      <button id="dashSubHealth" class="sub-btn" onclick="showDashboardPanel('health')">OBAT & SUHU</button>
+      <button id="dashSubImun" class="sub-btn" onclick="showDashboardPanel('imun')">IMUNISASI</button>
     </div>
 
     <!-- DASHBOARD DBF -->
@@ -3647,6 +3896,86 @@
 
     </div>
 
+    <!-- DASHBOARD OBAT & SUHU -->
+    <div id="panelDashHealth" class="panel">
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-icon" style="color:#ef4444; background:rgba(239,68,68,0.12);"><i class="fa-solid fa-temperature-half"></i></div>
+          <div class="stat-label">Suhu Terakhir</div>
+          <div class="stat-value" id="healthLatestTemp">-</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="color:#3b82f6; background:rgba(59,130,246,0.12);"><i class="fa-solid fa-pills"></i></div>
+          <div class="stat-label">Obat Terakhir</div>
+          <div class="stat-value" id="healthLatestMeds" style="font-size:12.5px; font-weight:700; line-height:1.2;">-</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="color:#10b981; background:rgba(16,185,129,0.12);"><i class="fa-solid fa-notes-medical"></i></div>
+          <div class="stat-label">Total Medis</div>
+          <div class="stat-value" id="healthTotalCount">0</div>
+        </div>
+
+      </div>
+
+      <div class="card chart-card">
+        <h2 class="card-title"><i class="fa-solid fa-chart-line" style="color:var(--primary); margin-right:6px;"></i> Grafik Tren Suhu Tubuh (°C)</h2>
+        <div class="chart-wrap">
+          <canvas id="healthChartSuhu"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Riwayat Obat & Suhu</h2>
+        <div id="healthRecap" class="recap-list"></div>
+      </div>
+
+    </div>
+
+    <!-- DASHBOARD IMUNISASI -->
+    <div id="panelDashImun" class="panel">
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-icon" style="color:#10b981; background:rgba(16,185,129,0.12);"><i class="fa-solid fa-shield-virus"></i></div>
+          <div class="stat-label">Total Imunisasi</div>
+          <div class="stat-value" id="imunTotalCount">0</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="color:#8b5cf6; background:rgba(139,92,246,0.12);"><i class="fa-solid fa-syringe"></i></div>
+          <div class="stat-label">Vaksin Terakhir</div>
+          <div class="stat-value" id="imunLatestName" style="font-size:12px; font-weight:700; line-height:1.2;">-</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="color:#f59e0b; background:rgba(245,158,11,0.12);"><i class="fa-solid fa-calendar-check"></i></div>
+          <div class="stat-label">Tanggal Terakhir</div>
+          <div class="stat-value" id="imunLatestDate" style="font-size:12.5px;">-</div>
+        </div>
+
+      </div>
+
+      <!-- Tracker Checklist Imunisasi Standar KIA/Kemenkes -->
+      <div class="card">
+        <h2 class="card-title"><i class="fa-solid fa-list-check" style="color:var(--primary); margin-right:6px;"></i> Rekomendasi Jadwal & Ceklis Imunisasi (Buku KIA)</h2>
+        <p style="font-size:12px; color:var(--muted); margin:-8px 0 14px;">Pemantau status kelengkapan vaksinasi buah hati Anda secara otomatis:</p>
+        <div id="imunTrackerList" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:10px;">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Riwayat Log Imunisasi</h2>
+        <div id="imunRecap" class="recap-list"></div>
+      </div>
+
+    </div>
+
   </section>
 
   <!-- HISTORY -->
@@ -3658,6 +3987,8 @@
       <button class="history-filter-btn" data-filter="dbf" onclick="setHistoryFilter('dbf')" data-i18n="histDBF">DBF</button>
       <button class="history-filter-btn" data-filter="popok" onclick="setHistoryFilter('popok')" data-i18n="histDiaper">Popok</button>
       <button class="history-filter-btn" data-filter="fisik" onclick="setHistoryFilter('fisik')" data-i18n="histGrowth">BB & PB</button>
+      <button class="history-filter-btn" data-filter="health" onclick="setHistoryFilter('health')">Obat & Suhu</button>
+      <button class="history-filter-btn" data-filter="imun" onclick="setHistoryFilter('imun')">Imunisasi</button>
     </div>
 
     <div class="card">
@@ -3698,7 +4029,7 @@
     <div class="modal-header">
       <div style="display:flex; align-items:center; gap:8px;">
         <span style="font-size:20px;">👑</span>
-        <h3 id="subscribeModalTitle" data-i18n="subscribeTitle">Langganan Catatan Si Kecil</h3>
+        <h3 id="subscribeModalTitle" data-i18n="subscribeTitle">Langganan Tumbangkan Adek</h3>
       </div>
       <button type="button" class="modal-close" id="subscribeModalCloseBtn" onclick="closeSubscribeModal()">
         <i class="fa-solid fa-xmark"></i>
@@ -3710,16 +4041,21 @@
 
     <!-- Pricing Card -->
     <div class="subscribe-price-card">
-      <div class="subscribe-badge">Langganan 1 Tahun</div>
-      <div class="subscribe-price-value">
-        <span class="currency">Rp</span>
-        <span class="amount">250.000</span>
-        <span class="period">/ tahun</span>
+      <div class="subscribe-badge">Langganan VIP 1 Tahun • PROMO HEMAT</div>
+      <div class="subscribe-price-value" style="display:flex; flex-direction:column; align-items:center;">
+        <div style="font-size:13px; color:var(--muted); text-decoration:line-through; margin-bottom:2px;">
+          Rp 500.000 <span style="font-size:10.5px; background:rgba(239,68,68,0.15); color:#ef4444; padding:2px 6px; border-radius:6px; font-weight:700; text-decoration:none; display:inline-block; margin-left:4px;">DISC 50%</span>
+        </div>
+        <div style="display:flex; align-items:baseline; justify-content:center; gap:3px;">
+          <span class="currency">Rp</span>
+          <span class="amount">250.000</span>
+          <span class="period">/ tahun</span>
+        </div>
       </div>
       <div class="subscribe-features">
         <div class="feat-item"><i class="fa-solid fa-circle-check"></i> Akses tanpa batas pemantau ASIP, Sufor, & DBF</div>
         <div class="feat-item"><i class="fa-solid fa-circle-check"></i> Grafik lengkap berat, tinggi, & lingkar kepala bayi</div>
-        <div class="feat-item"><i class="fa-solid fa-circle-check"></i> Catatan popok dan riwayat tak terbatas</div>
+        <div class="feat-item"><i class="fa-solid fa-circle-check"></i> Pemantau obat, suhu tubuh, & jadwal imunisasi</div>
         <div class="feat-item"><i class="fa-solid fa-circle-check"></i> Sinkronisasi Cloud otomatis & aman</div>
       </div>
     </div>
@@ -3756,11 +4092,11 @@
       </p>
 
       <div class="upload-dropzone" id="proofDropzone" onclick="document.getElementById('proofFileInput').click()">
-        <input type="file" id="proofFileInput" accept="image/*" style="display:none;" onchange="handleProofFileSelected(event)">
+        <input type="file" id="proofFileInput" accept="image/jpeg,image/png" style="display:none;" onchange="handleProofFileSelected(event)">
         <div id="dropzoneEmpty">
           <i class="fa-solid fa-cloud-arrow-up" style="font-size:28px; color:var(--primary); margin-bottom:8px;"></i>
           <div><strong>Klik untuk pilih foto / screenshot</strong></div>
-          <div style="font-size:11px; color:var(--muted); margin-top:4px;">Format JPG, PNG, atau WebP</div>
+          <div style="font-size:11px; color:var(--muted); margin-top:4px;">Format hanya JPG atau PNG</div>
         </div>
         <div id="dropzonePreview" class="hidden">
           <img id="proofPreviewImg" src="" alt="Bukti Transfer">
@@ -3774,22 +4110,26 @@
       </div>
 
       <div class="form-group" style="margin-top:12px;">
-        <label for="proofSenderNote" style="font-size:12px; margin-bottom:4px; font-weight:600; color:var(--text);">Nama Pengirim / Catatan (Opsional)</label>
-        <input type="text" id="proofSenderNote" placeholder="Contoh: Rekening BCA a.n. Fiena">
+        <label for="proofSenderNote" style="font-size:12px; margin-bottom:4px; font-weight:600; color:var(--text);">Nama Pengirim Rekening / E-Wallet <span style="color:#ef4444;">*</span></label>
+        <input type="text" id="proofSenderNote" placeholder="Nama pemilik rekening / e-wallet pengirim" required>
+      </div>
+
+      <div class="form-group" style="margin-top:10px;">
+        <label for="proofSenderEmail" style="font-size:12px; margin-bottom:4px; font-weight:600; color:var(--text);">Email Pengirim (Akun Terdaftar) <span style="color:#ef4444;">*</span></label>
+        <input type="email" id="proofSenderEmail" placeholder="email@gmail.com" required>
       </div>
 
       <button type="button" id="submitProofBtn" class="primary-btn" style="width:100%; margin-top:14px;" onclick="submitPaymentProof()">
         <i class="fa-solid fa-paper-plane"></i> Kirim Bukti Pembayaran
       </button>
 
-      <!-- Status Upload Saat Ini (jika sudah upload sebelumnya) -->
+      <!-- Status Upload Saat Ini (jika sudah upload sebelumnya - Layout Vertikal) -->
       <div id="currentUploadedBox" class="current-uploaded-box hidden">
         <div class="uploaded-header">
           <span class="uploaded-badge pending" id="uploadedStatusBadge">⏳ Menunggu Verifikasi Admin</span>
           <span class="uploaded-date" id="uploadedStatusDate"></span>
         </div>
         <div class="uploaded-content">
-          <img id="uploadedThumbnail" src="" alt="Bukti" onclick="previewUploadedThumbnail()" title="Klik untuk perbesar">
           <div class="uploaded-text">
             <div>Bukti transfer sudah terkirim. Admin akan memeriksa dan meng-ACC akun Anda.</div>
             <button type="button" class="btn-refresh-status" onclick="checkUserSubscriptionStatus(true)">
@@ -3798,13 +4138,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Keluar Akun (tampil saat terkunci paywall) -->
-    <div id="paywallLogoutBox" class="paywall-logout-box hidden">
-      <button type="button" class="secondary-btn" style="width:100%;" onclick="confirmLogout()">
-        <i class="fa-solid fa-right-from-bracket"></i> Keluar Akun
-      </button>
     </div>
   </div>
 </div>
@@ -3815,7 +4148,7 @@
     <div class="modal-header">
       <div style="display:flex; align-items:center; gap:8px;">
         <i class="fa-solid fa-shield-halved" style="color:var(--primary); font-size:20px;"></i>
-        <h3>Panel Admin - Catatan Si Kecil</h3>
+        <h3>Panel Admin - Tumbangkan Adek</h3>
       </div>
       <button type="button" class="modal-close" onclick="closeAdminPanel()">
         <i class="fa-solid fa-xmark"></i>
@@ -3965,25 +4298,6 @@
           <i class="fa-solid fa-floppy-disk"></i> Simpan Profil
         </button>
 
-        <button type="button" class="secondary-btn" style="width:100%; margin-top:12px;" onclick="closeProfile(); openSubscribeModal();" data-i18n="btnOpenSubscribe">
-          <i class="fa-solid fa-crown" style="color:#f59e0b; margin-right:6px;"></i> <span id="profileSubscribeBtnLabel">Langganan (1 Tahun)</span>
-        </button>
-
-        <div style="margin-top:14px; padding:12px 14px; background:var(--surface2); border:1px solid var(--border); border-radius:14px;">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div>
-              <div style="font-size:12.5px; font-weight:700; color:var(--text);">
-                <i class="fa-solid fa-heart" style="color:#ec4899; margin-right:4px;"></i> <span data-i18n="memoryModeProfileTitle">Mode Kenangan (0-2 Thn)</span>
-              </div>
-              <div id="memoryModeStatusText" style="font-size:11px; color:var(--muted); margin-top:2px;">
-                Status: Aktif Mencatat
-              </div>
-            </div>
-            <button type="button" id="toggleMemoryModeBtn" class="admin-btn reject" style="padding:4px 10px; font-size:11px;" onclick="toggleMemoryModeFromProfile()">
-              Berhenti Gunakan
-            </button>
-          </div>
-        </div>
       </form>
     </div>
 
@@ -4132,7 +4446,7 @@
   <div id="userChatMessages" class="user-chat-messages">
     <div class="chat-empty-hint" data-i18n="chatEmptyHint">
       <i class="fa-regular fa-comments"></i>
-      Halo! Ada yang bisa kami bantu seputar Catatan Si Kecil atau langganan? Tulis pesan di bawah.
+      Halo! Ada yang bisa kami bantu seputar Tumbangkan Adek atau langganan? Tulis pesan di bawah.
     </div>
   </div>
 
@@ -4144,18 +4458,15 @@
   </form>
 </div>
 
-<!-- PROMOTIONAL SPLASH SCREEN (Tampil Sehari Sekali saat Login) -->
+<!-- PROMOTIONAL SPLASH SCREEN (Tampil Setiap Habis Login) -->
 <div id="promoSplashModal" class="modal-backdrop-custom" onclick="if(event.target===this)closePromoSplash()">
   <div class="modal-box promo-splash-box" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closePromoSplash()" aria-label="Tutup Promosi" data-i18n-aria="promoCloseAria">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
     <div class="promo-splash-header">
       <div class="promo-splash-crown">
         <i class="fa-solid fa-crown"></i>
       </div>
-      <div class="promo-badge-tag" data-i18n="promoTag">Promo Eksklusif</div>
-      <h2 class="promo-splash-title" data-i18n="promoTitle">Catatan Si Kecil Premium</h2>
+      <div class="promo-badge-tag" data-i18n="promoTag">Promo VIP Eksklusif</div>
+      <h2 class="promo-splash-title" data-i18n="promoTitle">Promo VIP</h2>
       <p class="promo-splash-subtitle" data-i18n="promoSubtitle">Temani setiap detik tumbuh kembang buah hati tercinta dengan fitur lengkap tanpa batas.</p>
     </div>
 
@@ -4168,6 +4479,7 @@
         </div>
         <div class="promo-card vip">
           <div class="promo-card-icon"><i class="fa-solid fa-gem"></i></div>
+          <div style="font-size:11px; text-decoration:line-through; opacity:0.6; margin-bottom:1px;">Rp 500.000 <span style="font-size:9.5px; background:rgba(239,68,68,0.15); color:#ef4444; padding:1px 4px; border-radius:4px; font-weight:700; text-decoration:none; display:inline-block;">DISC 50%</span></div>
           <h4 data-i18n="promoVipTitle">Rp 250.000 / 1 Tahun</h4>
           <p data-i18n="promoVipDesc">Langganan 365 hari penuh, hemat & dapatkan badge VIP berkilau.</p>
         </div>
@@ -4178,7 +4490,6 @@
         <li data-i18n="promoFeature2"><i class="fa-solid fa-circle-check"></i> Grafik Kurva Pertumbuhan Standar WHO & KMS</li>
         <li data-i18n="promoFeature3"><i class="fa-solid fa-circle-check"></i> Pemantau Obat, Suhu, Feses & Jadwal Imunisasi</li>
         <li data-i18n="promoFeature4"><i class="fa-solid fa-circle-check"></i> Konsultasi Langsung via Chat Inbox Admin</li>
-        <li data-i18n="promoFeature5"><i class="fa-solid fa-circle-check"></i> Backup Otomatis & Ekspor Data Kapan Saja</li>
       </ul>
     </div>
 
@@ -4386,7 +4697,7 @@ const translations = {
     menuLogout: "Keluar",
     defaultBabyName: "Adek Bayi",
     btnOpenSubscribe: "Langganan (1 Tahun)",
-    subscribeTitle: "Langganan Catatan Si Kecil",
+    subscribeTitle: "Langganan Tumbangkan Adek",
     subscribeSubtitle: "Akses penuh fitur pemantau buah hati Anda selama 1 tahun.",
 
     // Global Filter
@@ -4618,8 +4929,8 @@ const translations = {
     memoryConfirmReactivate: "Apakah Anda ingin kembali ke Mode Aktif untuk menambah atau mengedit catatan?",
 
     // Promo Splash Screen Modal
-    promoTag: "Promo Eksklusif",
-    promoTitle: "Catatan Si Kecil Premium",
+    promoTag: "Promo VIP Eksklusif",
+    promoTitle: "Promo VIP",
     promoSubtitle: "Temani setiap detik tumbuh kembang buah hati tercinta dengan fitur lengkap tanpa batas.",
     promoTrialTitle: "Gratis Trial 30 Hari",
     promoTrialDesc: "Nikmati seluruh fitur premium gratis 1 bulan pertama sejak pendaftaran.",
@@ -4639,7 +4950,7 @@ const translations = {
     chatSupportTitle: "Admin Support",
     chatOnline: "Online",
     chatPlaceholder: "Tulis pesan ke admin...",
-    chatEmptyHint: "Halo! Ada yang bisa kami bantu seputar Catatan Si Kecil atau langganan? Tulis pesan di bawah.",
+    chatEmptyHint: "Halo! Ada yang bisa kami bantu seputar Tumbangkan Adek atau langganan? Tulis pesan di bawah.",
     chatConfirmClear: "Hapus seluruh riwayat chat Anda dengan admin?",
     chatClearSuccess: "Riwayat chat berhasil dibersihkan."
   },
@@ -4658,7 +4969,7 @@ const translations = {
     menuLogout: "Logout",
     defaultBabyName: "Little Baby",
     btnOpenSubscribe: "Subscribe (1 Year)",
-    subscribeTitle: "Catatan Si Kecil Subscription",
+    subscribeTitle: "Tumbangkan Adek Subscription",
     subscribeSubtitle: "Full access to your baby tracking features for 1 year.",
 
     // Global Filter
@@ -4890,8 +5201,8 @@ const translations = {
     memoryConfirmReactivate: "Do you want to return to Active Mode to add or edit records?",
 
     // Promo Splash Screen Modal
-    promoTag: "Exclusive Promo",
-    promoTitle: "Catatan Si Kecil Premium",
+    promoTag: "Exclusive VIP Promo",
+    promoTitle: "Promo VIP",
     promoSubtitle: "Cherish every second of your little one's growth with unlimited premium features.",
     promoTrialTitle: "Free 30-Day Trial",
     promoTrialDesc: "Enjoy all premium features free for your first month after registration.",
@@ -4911,7 +5222,7 @@ const translations = {
     chatSupportTitle: "Admin Support",
     chatOnline: "Online",
     chatPlaceholder: "Write a message to admin...",
-    chatEmptyHint: "Hi! How can we help you regarding Catatan Si Kecil or subscriptions? Send a message below.",
+    chatEmptyHint: "Hi! How can we help you regarding Tumbangkan Adek or subscriptions? Send a message below.",
     chatConfirmClear: "Delete all your chat history with admin?",
     chatClearSuccess: "Chat history has been cleared."
   }
@@ -5121,6 +5432,8 @@ let allData = [];
 let dbfData = [];
 let popokData = [];
 let fisikData = [];
+let healthData = [];
+let imunData = [];
 
 let currentInputPanel = 'dbf';
 let currentDashPanel = 'dbf';
@@ -5131,7 +5444,9 @@ let currentPages = {
   recapDbf: 1,
   recapSusu: 1,
   recapPopok: 1,
-  recapFisik: 1
+  recapFisik: 1,
+  recapHealth: 1,
+  recapImun: 1
 };
 const PAGE_SIZE = 10;
 
@@ -5141,6 +5456,8 @@ function resetPageLimits() {
   currentPages.recapSusu = 1;
   currentPages.recapPopok = 1;
   currentPages.recapFisik = 1;
+  currentPages.recapHealth = 1;
+  currentPages.recapImun = 1;
 }
 
 let editing = {
@@ -5641,7 +5958,7 @@ async function enterApp(isManualLogin = false) {
   // Inisialisasi fitur lokal secara instan sebelum network await
   initMemoryMode();
   initUserChat();
-  checkAndShowPromoSplash(isManualLogin);
+  checkAndShowPromoSplash(true);
 
   try {
     await loadAllData();
@@ -5810,10 +6127,20 @@ function applyTheme(color,mode) {
   }
 
   setTimeout(
-    renderAllDashboards,
-    50
+    renderActiveDashboardOnly,
+    350
   );
 
+}
+
+function renderActiveDashboardOnly() {
+  if (currentDashPanel === 'dbf') renderDBFDashboard();
+  else if (currentDashPanel === 'susu') renderSusuDashboard();
+  else if (currentDashPanel === 'popok') renderPopokDashboard();
+  else if (currentDashPanel === 'fisik') renderFisikDashboard();
+  else if (currentDashPanel === 'health') renderHealthDashboard();
+  else if (currentDashPanel === 'imun') renderImunisasiDashboard();
+  else renderAllDashboards();
 }
 
 function togglePassword(inputId, button) {
@@ -5833,29 +6160,29 @@ function togglePassword(inputId, button) {
 }
 
 function animateThemeSweep(changeThemeCallback) {
-  // Animasi transisi visual menyapu dari pojok kanan atas ke pojok kiri bawah (tenang, halus, tidak mengagetkan)
+  // Animasi transisi visual menyapu (silky-smooth di HP maupun PC)
   if (document.startViewTransition) {
-    document.startViewTransition(() => {
-      changeThemeCallback();
-    });
-    return;
+    try {
+      document.startViewTransition(() => {
+        changeThemeCallback();
+      });
+      return;
+    } catch(e) {}
   }
 
-  // Fallback overlay menyapu melingkar dari pojok kanan atas (100% 0%)
+  // Fallback overlay halus dan ringan
   const sweep = document.createElement('div');
   sweep.className = 'theme-corner-sweep';
   document.body.appendChild(sweep);
 
-  void sweep.offsetWidth;
-  sweep.classList.add('active');
-
-  setTimeout(() => {
-    changeThemeCallback();
+  requestAnimationFrame(() => {
+    sweep.classList.add('active');
     setTimeout(() => {
+      changeThemeCallback();
       sweep.classList.add('fade-out');
-      setTimeout(() => sweep.remove(), 400);
-    }, 650);
-  }, 400);
+      setTimeout(() => sweep.remove(), 320);
+    }, 180);
+  });
 }
 
 function toggleColorTheme() {
@@ -5869,9 +6196,11 @@ function toggleColorTheme() {
       'data-mode'
     ) || 'light';
 
-  animateThemeSweep(() => {
-    applyTheme(nextColor, currentMode);
-    closeHamburgerMenu();
+  closeHamburgerMenu();
+  requestAnimationFrame(() => {
+    animateThemeSweep(() => {
+      applyTheme(nextColor, currentMode);
+    });
   });
 }
 
@@ -5886,9 +6215,11 @@ function toggleMode() {
     ) || 'light';
   const nextMode = current === 'light' ? 'dark' : 'light';
 
-  animateThemeSweep(() => {
-    applyTheme(currentColor, nextMode);
-    closeHamburgerMenu();
+  closeHamburgerMenu();
+  requestAnimationFrame(() => {
+    animateThemeSweep(() => {
+      applyTheme(currentColor, nextMode);
+    });
   });
 }
 
@@ -5944,7 +6275,7 @@ function showMainSection(section) {
       filterBar.style.display = 'grid';
     }
 
-    renderAllDashboards();
+    renderActiveDashboardOnly();
 
   }
 
@@ -5986,26 +6317,47 @@ function showInputPanel(panel) {
   });
 
   const panelMap = {
-    dbf:'panelInputDBF',
-    susu:'panelInputSusu',
-    popok:'panelInputPopok',
-    fisik:'panelInputFisik'
+    dbf: 'panelInputDBF',
+    susu: 'panelInputSusu',
+    popok: 'panelInputPopok',
+    fisik: 'panelInputFisik',
+    health: 'panelInputHealth',
+    imun: 'panelInputImun'
   };
 
   const btnMap = {
-    dbf:'inputSubDBF',
-    susu:'inputSubSusu',
-    popok:'inputSubPopok',
-    fisik:'inputSubFisik'
+    dbf: 'inputSubDBF',
+    susu: 'inputSubSusu',
+    popok: 'inputSubPopok',
+    fisik: 'inputSubFisik',
+    health: 'inputSubHealth',
+    imun: 'inputSubImun'
   };
 
-  document.getElementById(
-    panelMap[panel]
-  ).classList.add('active');
+  if (panelMap[panel] && document.getElementById(panelMap[panel])) {
+    document.getElementById(panelMap[panel]).classList.add('active');
+  }
 
-  document.getElementById(
-    btnMap[panel]
-  ).classList.add('active');
+  if (btnMap[panel] && document.getElementById(btnMap[panel])) {
+    document.getElementById(btnMap[panel]).classList.add('active');
+  }
+
+  if (panel === 'health') {
+    const waktuInput = document.getElementById('waktuHealth');
+    if (waktuInput && !waktuInput.value) {
+      waktuInput.value = currentDateTimeLocal();
+    }
+  }
+
+  if (panel === 'imun') {
+    const tglInput = document.getElementById('tglImun');
+    const jamInput = document.getElementById('jamImun');
+    if (tglInput && !tglInput.value) tglInput.value = todayString();
+    if (jamInput && !jamInput.value) {
+      const now = new Date();
+      jamInput.value = pad2(now.getHours()) + ':' + pad2(now.getMinutes());
+    }
+  }
 
 }
 
@@ -6027,28 +6379,38 @@ function showDashboardPanel(panel) {
   });
 
   const panelMap = {
-    dbf:'panelDashDBF',
-    susu:'panelDashSusu',
-    popok:'panelDashPopok',
-    fisik:'panelDashFisik'
+    dbf: 'panelDashDBF',
+    susu: 'panelDashSusu',
+    popok: 'panelDashPopok',
+    fisik: 'panelDashFisik',
+    health: 'panelDashHealth',
+    imun: 'panelDashImun'
   };
 
   const btnMap = {
-    dbf:'dashSubDBF',
-    susu:'dashSubSusu',
-    popok:'dashSubPopok',
-    fisik:'dashSubFisik'
+    dbf: 'dashSubDBF',
+    susu: 'dashSubSusu',
+    popok: 'dashSubPopok',
+    fisik: 'dashSubFisik',
+    health: 'dashSubHealth',
+    imun: 'dashSubImun'
   };
 
-  document.getElementById(
-    panelMap[panel]
-  ).classList.add('active');
+  if (panelMap[panel] && document.getElementById(panelMap[panel])) {
+    document.getElementById(panelMap[panel]).classList.add('active');
+  }
 
-  document.getElementById(
-    btnMap[panel]
-  ).classList.add('active');
+  if (btnMap[panel] && document.getElementById(btnMap[panel])) {
+    document.getElementById(btnMap[panel]).classList.add('active');
+  }
 
-  renderAllDashboards();
+  // Render HANYA panel yang aktif agar pergantian sangat cepat & instan tanpa lelet
+  if (panel === 'dbf') renderDBFDashboard();
+  else if (panel === 'susu') renderSusuDashboard();
+  else if (panel === 'popok') renderPopokDashboard();
+  else if (panel === 'fisik') renderFisikDashboard();
+  else if (panel === 'health') renderHealthDashboard();
+  else if (panel === 'imun') renderImunisasiDashboard();
 
 }
 
@@ -6258,7 +6620,9 @@ async function loadAllData() {
     loadRiwayat(),
     loadDBFData(),
     loadPopokData(),
-    loadFisikData()
+    loadFisikData(),
+    loadHealthData(),
+    loadImunData()
   ]);
 
   populateDashboardYears();
@@ -6551,16 +6915,10 @@ function openProfile() {
    ========================================================= */
 
 function checkAndShowPromoSplash(forceShow = false) {
-  const todayStr = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-  const userKey = 'baby_promo_splash_v4_' + ((currentUser && (currentUser.id || currentUser.email)) || 'user');
-  const lastShown = localStorage.getItem(userKey);
-
-  if (forceShow || lastShown !== todayStr) {
-    setTimeout(() => {
-      openPromoSplash();
-      localStorage.setItem(userKey, todayStr);
-    }, 450);
-  }
+  // Splash screen muncul setiap habis login
+  setTimeout(() => {
+    openPromoSplash();
+  }, 400);
 }
 
 function openPromoSplash() {
@@ -6640,30 +6998,82 @@ function toggleMemoryModeFromProfile() {
   }
 }
 
+function getBadgeConfig() {
+  try {
+    const raw = localStorage.getItem('baby_badge_config');
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return {
+    memoryBadge: 'Mode Kenangan',
+    inputBadge: 'Mode Input',
+    showInputBadge: false
+  };
+}
+
+try {
+  const babyBadgeBus = new BroadcastChannel('baby_badge_bus');
+  babyBadgeBus.onmessage = function(ev) {
+    if (ev.data && ev.data.type === 'BADGE_UPDATED') {
+      applyMemoryModeUI();
+    }
+  };
+} catch(e) {}
+
+window.addEventListener('storage', function(ev) {
+  if (ev.key === 'baby_badge_config') {
+    applyMemoryModeUI();
+  }
+});
+
 function applyMemoryModeUI() {
   const banner = document.getElementById('memoryModeBanner');
   const profileToggleBtn = document.getElementById('toggleMemoryModeBtn');
   const profileStatusText = document.getElementById('memoryModeStatusText');
   const menuMemoryBadge = document.getElementById('menuMemoryBadge');
+  const headerMemoryBadge = document.getElementById('memoryBadgeIndicator');
+  const headerInputBadge = document.getElementById('inputModeBadgeIndicator');
+  const memoryBadgeText = document.getElementById('memoryBadgeText');
+  const inputBadgeText = document.getElementById('inputModeBadgeText');
+
+  const badgeConfig = getBadgeConfig();
+
+  // Selalu sembunyikan banner di entri form input sesuai req #6
+  if (banner) banner.style.display = 'none';
 
   if (isMemoryModeActive) {
     document.body.classList.add('memory-mode-active');
-    if (banner) banner.classList.remove('hidden');
+    if (headerMemoryBadge) {
+      headerMemoryBadge.classList.remove('hidden');
+      if (memoryBadgeText) memoryBadgeText.textContent = badgeConfig.memoryBadge || 'Mode Kenangan';
+    }
+    if (headerInputBadge) {
+      headerInputBadge.classList.add('hidden');
+    }
     if (profileToggleBtn) {
       profileToggleBtn.textContent = t('btnReactivate');
       profileToggleBtn.className = 'admin-btn acc';
     }
     if (profileStatusText) {
-      profileStatusText.innerHTML = '<span style="color:#ec4899; font-weight:700;">' + t('memoryModeStatusActive') + '</span>';
+      profileStatusText.innerHTML = '<span style="color:#ec4899; font-weight:700;">' + (badgeConfig.memoryBadge || t('memoryModeStatusActive')) + '</span>';
     }
     if (menuMemoryBadge) {
-      menuMemoryBadge.textContent = t('menuMemoryBadgeActive');
+      menuMemoryBadge.textContent = badgeConfig.memoryBadge || 'Aktif Kenangan';
       menuMemoryBadge.style.background = '#ec4899';
       menuMemoryBadge.style.color = '#fff';
     }
   } else {
     document.body.classList.remove('memory-mode-active');
-    if (banner) banner.classList.add('hidden');
+    if (headerMemoryBadge) {
+      headerMemoryBadge.classList.add('hidden');
+    }
+    if (headerInputBadge) {
+      if (badgeConfig.showInputBadge) {
+        headerInputBadge.classList.remove('hidden');
+        if (inputBadgeText) inputBadgeText.textContent = badgeConfig.inputBadge || 'Mode Input';
+      } else {
+        headerInputBadge.classList.add('hidden');
+      }
+    }
     if (profileToggleBtn) {
       profileToggleBtn.textContent = t('btnStopUsing');
       profileToggleBtn.className = 'admin-btn reject';
@@ -6672,7 +7082,7 @@ function applyMemoryModeUI() {
       profileStatusText.textContent = t('memoryModeStatusInactive');
     }
     if (menuMemoryBadge) {
-      menuMemoryBadge.textContent = t('menuMemoryBadgeInactive');
+      menuMemoryBadge.textContent = '0-2 Thn';
       menuMemoryBadge.style.background = 'rgba(236,72,153,0.15)';
       menuMemoryBadge.style.color = '#ec4899';
     }
@@ -6823,7 +7233,7 @@ function renderUserChatMessages() {
     container.innerHTML = `
       <div class="chat-empty-hint">
         <i class="fa-regular fa-comments"></i>
-        Halo ${escHtml((profileData && profileData.babyName) || 'Bunda/Ayah')}! Ada yang bisa kami bantu seputar fitur Catatan Si Kecil atau langganan? Tulis pesan di bawah.
+        Halo ${escHtml((profileData && profileData.babyName) || 'Bunda/Ayah')}! Ada yang bisa kami bantu seputar fitur Tumbangkan Adek atau langganan? Tulis pesan di bawah.
       </div>
     `;
     return;
@@ -7102,7 +7512,7 @@ async function checkUserSubscriptionStatus(showAlert = false) {
       updateSubscriptionBadge('Kedaluwarsa', 'expired');
       lockAppWithPaywall({
         reason: 'expired',
-        message: 'Masa berlangganan VIP 1 tahun Anda telah berakhir pada ' + formatDateTimeReadable(expiresAt.toISOString()) + '. Silakan perpanjang untuk terus menggunakan Catatan Si Kecil.',
+        message: 'Masa berlangganan VIP 1 tahun Anda telah berakhir pada ' + formatDateTimeReadable(expiresAt.toISOString()) + '. Silakan perpanjang untuk terus menggunakan Tumbangkan Adek.',
         subRecord
       });
       return { canAccess: false, status: 'expired', subRecord };
@@ -7139,7 +7549,7 @@ async function checkUserSubscriptionStatus(showAlert = false) {
     updateSubscriptionBadge('Habis Trial', 'expired');
     lockAppWithPaywall({
       reason: 'trial_expired',
-      message: 'Masa gratis trial 1 bulan akun Anda telah berakhir. Silakan berlangganan Rp 250.000 / 1 tahun untuk mendapatkan badge VIP dan akses penuh Catatan Si Kecil.'
+      message: 'Masa gratis trial 1 bulan akun Anda telah berakhir. Silakan berlangganan Rp 250.000 / 1 tahun untuk mendapatkan badge VIP dan akses penuh Tumbangkan Adek.'
     });
     return { canAccess: false, status: 'trial_expired' };
   }
@@ -7266,6 +7676,11 @@ function openSubscribeModal(forceLocked = false, options = {}) {
   // Tampilkan status bukti transfer yang sudah di-upload sebelumnya (jika ada)
   refreshCurrentUploadedBox();
 
+  const emailField = document.getElementById('proofSenderEmail');
+  if (emailField && currentUser && currentUser.email) {
+    if (!emailField.value) emailField.value = currentUser.email;
+  }
+
   modal.classList.add('show');
 }
 
@@ -7302,7 +7717,14 @@ function refreshCurrentUploadedBox() {
     }
 
     if (dateSpan) dateSpan.textContent = formatDateTimeReadable(record.requested_at);
-    if (thumb) thumb.src = record.proof;
+    if (thumb) {
+      if (record.proof) {
+        thumb.src = record.proof;
+        thumb.style.display = 'block';
+      } else {
+        thumb.style.display = 'none';
+      }
+    }
   } else {
     box.classList.add('hidden');
   }
@@ -7310,7 +7732,7 @@ function refreshCurrentUploadedBox() {
 
 function previewUploadedThumbnail() {
   const thumb = document.getElementById('uploadedThumbnail');
-  if (thumb && thumb.src) {
+  if (thumb && thumb.src && thumb.style.display !== 'none') {
     previewLargeProof(thumb.src, 'Bukti Pembayaran Saya');
   }
 }
@@ -7322,8 +7744,11 @@ async function handleProofFileSelected(event) {
   const file = event.target.files && event.target.files[0];
   if (!file) return;
 
-  if (!file.type.startsWith('image/')) {
-    showToast('File harus berupa gambar (JPG, PNG, atau WebP).');
+  const validTypes = ['image/jpeg', 'image/png'];
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!validTypes.includes(file.type) && !['jpg', 'jpeg', 'png'].includes(ext)) {
+    showToast('Format tidak didukung. Semua file bukti hanya boleh JPG dan PNG.');
+    event.target.value = '';
     return;
   }
 
@@ -7387,8 +7812,30 @@ async function submitPaymentProof() {
     return;
   }
 
+  const senderName = (document.getElementById('proofSenderNote').value || '').trim();
+  const emailInput = document.getElementById('proofSenderEmail');
+  const senderEmail = (emailInput ? emailInput.value : (currentUser.email || '')).trim().toLowerCase();
+
+  if (!senderName) {
+    showToast('Nama pengirim rekening / e-wallet wajib diisi.');
+    if (document.getElementById('proofSenderNote')) document.getElementById('proofSenderNote').focus();
+    return;
+  }
+
+  if (!senderEmail) {
+    showToast('Email pengirim akun terdaftar wajib diisi.');
+    if (emailInput) emailInput.focus();
+    return;
+  }
+
+  if (senderEmail !== (currentUser.email || '').toLowerCase().trim()) {
+    showToast('Email pengirim harus sesuai akun yang sedang login (' + currentUser.email + ').');
+    if (emailInput) emailInput.focus();
+    return;
+  }
+
   if (!selectedProofBase64) {
-    showToast('Pilih foto/screenshot bukti transfer terlebih dahulu.');
+    showToast('Pilih foto/screenshot bukti transfer (JPG/PNG) terlebih dahulu.');
     return;
   }
 
@@ -7398,8 +7845,7 @@ async function submitPaymentProof() {
     submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim Bukti...';
   }
 
-  const senderNote = (document.getElementById('proofSenderNote').value || '').trim();
-  const email = (currentUser.email || '').toLowerCase().trim();
+  const email = senderEmail;
   const babyName = (profileData && profileData.babyName) || 'Adek Bayi';
 
   const subRecord = {
@@ -7407,7 +7853,7 @@ async function submitPaymentProof() {
     email: email,
     baby_name: babyName,
     proof: selectedProofBase64,
-    note: senderNote,
+    note: senderName,
     amount: 250000,
     status: 'pending',
     requested_at: new Date().toISOString()
@@ -9150,6 +9596,300 @@ async function loadFisikData() {
 
 
 /* =========================================================
+   OBAT & SUHU (HEALTH)
+========================================================= */
+let isSubmittingHealth = false;
+
+function updateTempStatusDisplay(val) {
+  const hint = document.getElementById('tempStatusHint');
+  if (!hint) return;
+  const num = parseFloat(val);
+  if (isNaN(num) || !val) {
+    hint.innerHTML = '<span style="color:var(--muted);">Normal: 36.5°C - 37.2°C</span>';
+    return;
+  }
+  if (num < 36.0) {
+    hint.innerHTML = '<span style="color:#0284c7; font-weight:700;"><i class="fa-solid fa-snowflake"></i> Hipotermia / Dingin (< 36.0°C)</span>';
+  } else if (num >= 36.0 && num <= 37.5) {
+    hint.innerHTML = '<span style="color:#10b981; font-weight:700;"><i class="fa-solid fa-circle-check"></i> Suhu Normal (36.0°C - 37.5°C)</span>';
+  } else if (num > 37.5 && num < 38.0) {
+    hint.innerHTML = '<span style="color:#f59e0b; font-weight:700;"><i class="fa-solid fa-temperature-arrow-up"></i> Hangat / Subfebris (37.6°C - 37.9°C)</span>';
+  } else {
+    hint.innerHTML = '<span style="color:#ef4444; font-weight:700;"><i class="fa-solid fa-triangle-exclamation"></i> Demam Tinggi (≥ 38.0°C)</span>';
+  }
+}
+
+async function submitHealth(e) {
+  if (e && typeof e.preventDefault === 'function') e.preventDefault();
+  if (isSubmittingHealth) return;
+
+  if (typeof isMemoryModeActive !== 'undefined' && isMemoryModeActive) {
+    showToast(t('memoryToastBlockedAdd'));
+    return;
+  }
+
+  const waktuInput = document.getElementById('waktuHealth');
+  const waktuVal = waktuInput ? waktuInput.value : '';
+  const suhuInput = document.getElementById('suhuTubuh');
+  const suhuVal = suhuInput && suhuInput.value ? parseFloat(suhuInput.value) : null;
+  const obatInput = document.getElementById('namaObat');
+  const obatVal = obatInput ? obatInput.value.trim() : '';
+  const dosisInput = document.getElementById('dosisObat');
+  const dosisVal = dosisInput ? dosisInput.value.trim() : '';
+  const catatanInput = document.getElementById('catatanHealth');
+  const catatanVal = catatanInput ? catatanInput.value.trim() : '';
+
+  if (!waktuVal) {
+    showToast('Waktu pencatatan wajib diisi.');
+    return;
+  }
+
+  if (suhuVal === null && !obatVal) {
+    showToast('Masukkan setidaknya suhu tubuh atau nama obat.');
+    return;
+  }
+
+  isSubmittingHealth = true;
+  const submitBtn = document.querySelector('#healthForm button[type="submit"]');
+  if (submitBtn) submitBtn.disabled = true;
+
+  try {
+    const isEditing = editing && editing.type === 'health' && typeof editing.index === 'number';
+    const recordId = isEditing && healthData[editing.index] ? healthData[editing.index].id : ('hlth_' + Date.now());
+
+    const record = {
+      id: recordId,
+      user_id: currentUser ? currentUser.id : 'guest',
+      waktu: waktuVal,
+      suhu: suhuVal,
+      obat: obatVal,
+      dosis: dosisVal,
+      catatan: catatanVal,
+      created_at: new Date().toISOString()
+    };
+
+    if (isEditing) {
+      healthData[editing.index] = record;
+      editing = null;
+    } else {
+      healthData.unshift(record);
+    }
+
+    const uKey = 'baby_health_' + ((currentUser && currentUser.id) || 'local');
+    try {
+      localStorage.setItem(uKey, JSON.stringify(healthData));
+    } catch(err) {}
+
+    if (currentUser && supabaseClient) {
+      try {
+        await supabaseClient.from('health_records').upsert(record);
+      } catch (sbErr) {}
+    }
+
+    showToast('Catatan obat & suhu berhasil disimpan!');
+    document.getElementById('healthForm').reset();
+    if (waktuInput) waktuInput.value = currentDateTimeLocal();
+    updateTempStatusDisplay('');
+
+    populateDashboardYears();
+    renderHealthDashboard();
+    renderHistory();
+  } catch (err) {
+    console.error('Error submitHealth:', err);
+    showToast('Gagal menyimpan: ' + (err.message || 'Error'));
+  } finally {
+    isSubmittingHealth = false;
+    if (submitBtn) submitBtn.disabled = false;
+  }
+}
+
+async function loadHealthData() {
+  const uKey = 'baby_health_' + ((currentUser && currentUser.id) || 'local');
+  let localItems = [];
+  try {
+    const raw = localStorage.getItem(uKey);
+    if (raw) localItems = JSON.parse(raw);
+  } catch(e) {}
+
+  if (currentUser && supabaseClient) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('health_records')
+        .select('*')
+        .eq('user_id', currentUser.id)
+        .order('waktu', { ascending: false });
+
+      if (!error && Array.isArray(data) && data.length > 0) {
+        healthData = data;
+        try { localStorage.setItem(uKey, JSON.stringify(healthData)); } catch(e) {}
+        return;
+      }
+    } catch(e) {}
+  }
+
+  healthData = Array.isArray(localItems) ? localItems : [];
+}
+
+/* =========================================================
+   IMUNISASI
+========================================================= */
+let isSubmittingImun = false;
+
+function toggleImunCustomInput(chk) {
+  const wrap = document.getElementById('wrapImunLainnya');
+  if (!wrap) return;
+  if (chk && chk.checked) {
+    wrap.classList.remove('hidden');
+    const txt = document.getElementById('imunLainnyaText');
+    if (txt) txt.focus();
+  } else {
+    wrap.classList.add('hidden');
+    const txt = document.getElementById('imunLainnyaText');
+    if (txt) txt.value = '';
+  }
+}
+
+async function submitImunisasi(e) {
+  if (e && typeof e.preventDefault === 'function') e.preventDefault();
+  if (isSubmittingImun) return;
+
+  if (typeof isMemoryModeActive !== 'undefined' && isMemoryModeActive) {
+    showToast(t('memoryToastBlockedAdd'));
+    return;
+  }
+
+  const tglInput = document.getElementById('tglImun');
+  const tglVal = tglInput ? tglInput.value : '';
+  const jamInput = document.getElementById('jamImun');
+  const jamVal = jamInput ? jamInput.value : '';
+  const faskesInput = document.getElementById('faskesImun');
+  const faskesVal = faskesInput ? faskesInput.value.trim() : '';
+  const catatanInput = document.getElementById('catatanImun');
+  const catatanVal = catatanInput ? catatanInput.value.trim() : '';
+
+  if (!tglVal) {
+    showToast('Tanggal imunisasi wajib diisi.');
+    return;
+  }
+  if (!jamVal) {
+    showToast('Jam imunisasi wajib diisi.');
+    return;
+  }
+
+  const checkedBoxes = Array.from(document.querySelectorAll('input[name="jenisImun"]:checked'));
+  let jenisList = checkedBoxes.map(chk => chk.value).filter(val => val !== 'Lainnya');
+
+  const chkLainnya = document.getElementById('imunChkLainnya');
+  if (chkLainnya && chkLainnya.checked) {
+    const customTxt = (document.getElementById('imunLainnyaText')?.value || '').trim();
+    if (customTxt) jenisList.push(customTxt);
+    else jenisList.push('Lainnya');
+  }
+
+  if (jenisList.length === 0) {
+    showToast('Pilih setidaknya satu jenis imunisasi yang diberikan.');
+    return;
+  }
+
+  isSubmittingImun = true;
+  const submitBtn = document.querySelector('#imunForm button[type="submit"]');
+  if (submitBtn) submitBtn.disabled = true;
+
+  try {
+    const isEditing = editing && editing.type === 'imun' && typeof editing.index === 'number';
+    const recordId = isEditing && imunData[editing.index] ? imunData[editing.index].id : ('imun_' + Date.now());
+
+    const record = {
+      id: recordId,
+      user_id: currentUser ? currentUser.id : 'guest',
+      tanggal: tglVal,
+      jam: jamVal,
+      faskes: faskesVal,
+      jenis: jenisList,
+      catatan: catatanVal,
+      created_at: new Date().toISOString()
+    };
+
+    if (isEditing) {
+      imunData[editing.index] = record;
+      editing = null;
+    } else {
+      imunData.unshift(record);
+    }
+
+    const uKey = 'baby_imun_' + ((currentUser && currentUser.id) || 'local');
+    try {
+      localStorage.setItem(uKey, JSON.stringify(imunData));
+    } catch(err) {}
+
+    if (currentUser && supabaseClient) {
+      try {
+        await supabaseClient.from('immunization_records').upsert(record);
+      } catch(sbErr) {}
+    }
+
+    showToast('Data imunisasi berhasil dicatat!');
+    document.getElementById('imunForm').reset();
+    toggleImunCustomInput(null);
+    if (tglInput) tglInput.value = todayString();
+    if (jamInput) {
+      const now = new Date();
+      jamInput.value = pad2(now.getHours()) + ':' + pad2(now.getMinutes());
+    }
+
+    populateDashboardYears();
+    renderImunisasiDashboard();
+    renderHistory();
+  } catch (err) {
+    console.error('Error submitImunisasi:', err);
+    showToast('Gagal menyimpan: ' + (err.message || 'Error'));
+  } finally {
+    isSubmittingImun = false;
+    if (submitBtn) submitBtn.disabled = false;
+  }
+}
+
+async function loadImunData() {
+  const uKey = 'baby_imun_' + ((currentUser && currentUser.id) || 'local');
+  let localItems = [];
+  try {
+    const raw = localStorage.getItem(uKey);
+    if (raw) localItems = JSON.parse(raw);
+  } catch(e) {}
+
+  if (currentUser && supabaseClient) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('immunization_records')
+        .select('*')
+        .eq('user_id', currentUser.id)
+        .order('tanggal', { ascending: false });
+
+      if (!error && Array.isArray(data) && data.length > 0) {
+        imunData = data;
+        try { localStorage.setItem(uKey, JSON.stringify(imunData)); } catch(e) {}
+        return;
+      }
+    } catch(e) {}
+  }
+
+  imunData = Array.isArray(localItems) ? localItems : [];
+}
+
+function getFilteredHealth() {
+  return healthData.filter(function(item) {
+    return inSelectedPeriod(item.waktu);
+  });
+}
+
+function getFilteredImun() {
+  return imunData.filter(function(item) {
+    return inSelectedPeriod(item.tanggal + ' ' + (item.jam || '00:00'));
+  });
+}
+
+
+/* =========================================================
    FILTER
 ========================================================= */
 
@@ -9341,6 +10081,20 @@ function collectYears() {
 
   });
 
+  healthData.forEach(function(item) {
+    const d = valueDate(item.waktu);
+    if (d) {
+      years.add(d.getFullYear());
+    }
+  });
+
+  imunData.forEach(function(item) {
+    const d = valueDate(item.tanggal + ' ' + (item.jam || '00:00'));
+    if (d) {
+      years.add(d.getFullYear());
+    }
+  });
+
   return Array.from(years)
     .sort(function(a,b) {
       return b-a;
@@ -9413,6 +10167,10 @@ function renderAllDashboards() {
   renderPopokDashboard();
 
   renderFisikDashboard();
+
+  renderHealthDashboard();
+
+  renderImunisasiDashboard();
 
 }
 
@@ -9571,6 +10329,18 @@ function safeCreateChart(key, canvasId, config) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return null;
   try {
+    // Pastikan parent container fixed load & tidak transparan/nyatu dengan background
+    const parentWrap = canvas.closest('.chart-wrap') || canvas.parentElement;
+    if (parentWrap) {
+      parentWrap.style.background = 'var(--surface)';
+      parentWrap.style.backgroundColor = 'var(--surface)';
+    }
+
+    if (!config.options) config.options = {};
+    if (!config.options.animation) {
+      config.options.animation = { duration: 250, easing: 'easeOutQuart' };
+    }
+
     charts[key] = new Chart(canvas, config);
     return charts[key];
   } catch(err) {
@@ -11284,11 +12054,295 @@ function renderFisikRecap(data) {
 
 }
 
+/* =========================================================
+   DASHBOARD & RECAP: OBAT & SUHU
+========================================================= */
+function renderHealthDashboard() {
+  const data = getFilteredHealth();
+  const sorted = data.slice().sort(function(a, b) {
+    return parseLocalDateTime(b.waktu) - parseLocalDateTime(a.waktu);
+  });
+
+  const countEl = document.getElementById('healthTotalCount');
+  if (countEl) countEl.textContent = data.length;
+
+  const latestTempEl = document.getElementById('healthLatestTemp');
+  const latestMedsEl = document.getElementById('healthLatestMeds');
+
+  const withTemp = sorted.find(it => it.suhu !== null && it.suhu !== undefined && !isNaN(Number(it.suhu)));
+  if (latestTempEl) {
+    if (withTemp) {
+      const s = Number(withTemp.suhu);
+      let color = '#10b981';
+      if (s >= 38.0) color = '#ef4444';
+      else if (s > 37.5) color = '#f59e0b';
+      else if (s < 36.0) color = '#0284c7';
+      latestTempEl.innerHTML = `<span style="color:${color}; font-weight:800;">${s.toFixed(1)}°C</span>`;
+    } else {
+      latestTempEl.textContent = '-';
+    }
+  }
+
+  const withMeds = sorted.find(it => it.obat && it.obat.trim());
+  if (latestMedsEl) {
+    if (withMeds) {
+      latestMedsEl.textContent = withMeds.obat + (withMeds.dosis ? ` (${withMeds.dosis})` : '');
+    } else {
+      latestMedsEl.textContent = '-';
+    }
+  }
+
+  renderHealthSuhuChart(sorted);
+  renderHealthRecap(sorted);
+}
+
+function renderHealthSuhuChart(data) {
+  const canvas = document.getElementById('healthChartSuhu');
+  if (!canvas) return;
+
+  const rows = data.filter(function(item) {
+    return item.suhu !== null && item.suhu !== undefined && !isNaN(Number(item.suhu));
+  }).sort(function(a, b) {
+    return parseLocalDateTime(a.waktu) - parseLocalDateTime(b.waktu);
+  });
+
+  const labels = rows.map(function(item) {
+    return formatDateTime(item.waktu);
+  });
+  const values = rows.map(function(item) {
+    return Number(item.suhu);
+  });
+
+  safeCreateChart('healthSuhu', 'healthChartSuhu', {
+    type: 'line',
+    data: {
+      labels: labels.length ? labels : ['Belum ada data'],
+      datasets: [{
+        label: 'Suhu Tubuh (°C)',
+        data: values.length ? values : [null],
+        borderColor: '#ef4444',
+        backgroundColor: 'rgba(239, 68, 68, 0.12)',
+        pointBackgroundColor: '#ef4444',
+        pointRadius: 4,
+        tension: 0.3,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          min: 35,
+          max: 41,
+          ticks: { stepSize: 0.5 }
+        }
+      }
+    }
+  });
+}
+
+function renderHealthRecap(data) {
+  const box = document.getElementById('healthRecap');
+  if (!box) return;
+
+  if (!data.length) {
+    box.innerHTML = '<div class="empty" style="padding:18px 0; text-align:center; color:var(--muted); font-size:13px;">Belum ada catatan obat & suhu pada periode ini.</div>';
+    return;
+  }
+
+  const totalPages = Math.ceil(data.length / PAGE_SIZE) || 1;
+  const page = Math.max(1, Math.min(totalPages, currentPages.recapHealth || 1));
+  currentPages.recapHealth = page;
+  const start = (page - 1) * PAGE_SIZE;
+  const visible = data.slice(start, start + PAGE_SIZE);
+
+  let html = visible.map(function(item) {
+    let tempBadge = '';
+    if (item.suhu !== null && item.suhu !== undefined && item.suhu !== '') {
+      const s = Number(item.suhu);
+      let bg = 'rgba(16,185,129,0.12)';
+      let col = '#10b981';
+      if (s >= 38.0) { bg = 'rgba(239,68,68,0.15)'; col = '#ef4444'; }
+      else if (s > 37.5) { bg = 'rgba(245,158,11,0.15)'; col = '#f59e0b'; }
+      else if (s < 36.0) { bg = 'rgba(2,132,199,0.15)'; col = '#0284c7'; }
+      tempBadge = `<span style="display:inline-block; padding:2px 8px; border-radius:999px; background:${bg}; color:${col}; font-weight:700; font-size:11.5px; margin-right:6px;"><i class="fa-solid fa-temperature-half"></i> ${s.toFixed(1)}°C</span>`;
+    }
+
+    let medsHtml = '';
+    if (item.obat) {
+      medsHtml = `<div style="font-size:12.5px; font-weight:600; color:var(--text); margin-top:3px;"><i class="fa-solid fa-pills" style="color:var(--primary); margin-right:4px;"></i> ${escHtml(item.obat)}${item.dosis ? ' • <span style="color:var(--muted); font-weight:500;">' + escHtml(item.dosis) + '</span>' : ''}</div>`;
+    }
+
+    let notesHtml = item.catatan ? `<div style="font-size:11.5px; color:var(--muted); margin-top:3px; font-style:italic;">"${escHtml(item.catatan)}"</div>` : '';
+
+    return `
+      <div class="recap-item" style="padding:10px 0; border-bottom:1px solid var(--border-soft);">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="font-size:11.5px; color:var(--muted); font-weight:600;">${escHtml(formatDateTime(item.waktu))}</div>
+          <div>${tempBadge}</div>
+        </div>
+        ${medsHtml}
+        ${notesHtml}
+      </div>
+    `;
+  }).join('');
+
+  if (totalPages > 1) {
+    html += `
+      <div class="pagination-wrap">
+        <button type="button" class="pagination-btn" onclick="changeRecapPage('health', -1)" ${page <= 1 ? 'disabled' : ''}><i class="fa-solid fa-chevron-left"></i></button>
+        <span class="pagination-info">${page} / ${totalPages}</span>
+        <button type="button" class="pagination-btn" onclick="changeRecapPage('health', 1)" ${page >= totalPages ? 'disabled' : ''}><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    `;
+  }
+
+  box.innerHTML = html;
+}
+
+/* =========================================================
+   DASHBOARD & RECAP: IMUNISASI
+========================================================= */
+const KIA_RECOMMENDED_VACCINES = [
+  { id: 'hb0', name: 'Hepatitis B0', matchKey: 'Hepatitis B0', age: '0 Bulan (Saat Lahir)', wajib: true },
+  { id: 'bcg', name: 'BCG (Tuberkulosis)', matchKey: 'BCG', age: '1 Bulan', wajib: true },
+  { id: 'polio1', name: 'Polio 1 (Tetes OPV)', matchKey: 'Polio 1', age: '1 Bulan', wajib: true },
+  { id: 'dpt1', name: 'DPT-HB-Hib 1', matchKey: 'DPT-HB-Hib 1', age: '2 Bulan', wajib: true },
+  { id: 'polio2', name: 'Polio 2 (Tetes OPV)', matchKey: 'Polio 2', age: '2 Bulan', wajib: true },
+  { id: 'pcv1', name: 'PCV 1 (Pneumokokus)', matchKey: 'PCV 1', age: '2 Bulan', wajib: true },
+  { id: 'rv1', name: 'Rotavirus 1', matchKey: 'Rotavirus 1', age: '2 Bulan', wajib: true },
+  { id: 'dpt2', name: 'DPT-HB-Hib 2', matchKey: 'DPT-HB-Hib 2', age: '3 Bulan', wajib: true },
+  { id: 'polio3', name: 'Polio 3 (Tetes OPV)', matchKey: 'Polio 3', age: '3 Bulan', wajib: true },
+  { id: 'pcv2', name: 'PCV 2 (Pneumokokus)', matchKey: 'PCV 2', age: '3 Bulan', wajib: true },
+  { id: 'rv2', name: 'Rotavirus 2', matchKey: 'Rotavirus 2', age: '3 Bulan', wajib: true },
+  { id: 'dpt3', name: 'DPT-HB-Hib 3', matchKey: 'DPT-HB-Hib 3', age: '4 Bulan', wajib: true },
+  { id: 'polio4', name: 'Polio 4 (Tetes OPV)', matchKey: 'Polio 4', age: '4 Bulan', wajib: true },
+  { id: 'ipv1', name: 'IPV 1 (Polio Suntik)', matchKey: 'IPV 1', age: '4 Bulan', wajib: true },
+  { id: 'rv3', name: 'Rotavirus 3', matchKey: 'Rotavirus 3', age: '4 Bulan', wajib: true },
+  { id: 'mr1', name: 'Campak-Rubela (MR 1)', matchKey: 'Campak', age: '9 Bulan', wajib: true },
+  { id: 'ipv2', name: 'IPV 2 (Polio Suntik 2)', matchKey: 'IPV 2', age: '9 Bulan', wajib: true },
+  { id: 'je', name: 'Japanese Encephalitis', matchKey: 'Japanese Encephalitis', age: '9 Bulan', wajib: false },
+  { id: 'pcv3', name: 'PCV 3 (Booster 12 Bln)', matchKey: 'PCV 3', age: '12 Bulan', wajib: true },
+  { id: 'dpt_boost', name: 'DPT-HB-Hib Booster', matchKey: 'DPT-HB-Hib Booster', age: '18 Bulan', wajib: true },
+  { id: 'mr_boost', name: 'Campak-Rubela Booster', matchKey: 'Campak-Rubela Booster', age: '18 Bulan', wajib: true }
+];
+
+function renderImunisasiDashboard() {
+  const data = getFilteredImun();
+  const sorted = data.slice().sort(function(a, b) {
+    const da = (a.tanggal || '') + ' ' + (a.jam || '00:00');
+    const db = (b.tanggal || '') + ' ' + (b.jam || '00:00');
+    return db.localeCompare(da);
+  });
+
+  const countEl = document.getElementById('imunTotalCount');
+  if (countEl) countEl.textContent = imunData.length;
+
+  const latestNameEl = document.getElementById('imunLatestName');
+  const latestDateEl = document.getElementById('imunLatestDate');
+
+  const latest = sorted.length ? sorted[0] : (imunData.length ? imunData[0] : null);
+  if (latest) {
+    const arr = Array.isArray(latest.jenis) ? latest.jenis : [latest.jenis];
+    if (latestNameEl) latestNameEl.textContent = arr.join(', ') || '-';
+    if (latestDateEl) latestDateEl.textContent = formatDateOnly(latest.tanggal);
+  } else {
+    if (latestNameEl) latestNameEl.textContent = '-';
+    if (latestDateEl) latestDateEl.textContent = '-';
+  }
+
+  renderImunTrackerList(imunData);
+  renderImunRecap(sorted);
+}
+
+function renderImunTrackerList(allRecords) {
+  const container = document.getElementById('imunTrackerList');
+  if (!container) return;
+
+  const allGivenVaccines = [];
+  allRecords.forEach(rec => {
+    const list = Array.isArray(rec.jenis) ? rec.jenis : [rec.jenis];
+    list.forEach(j => {
+      allGivenVaccines.push({ name: String(j), date: rec.tanggal });
+    });
+  });
+
+  container.innerHTML = KIA_RECOMMENDED_VACCINES.map(vac => {
+    const given = allGivenVaccines.find(g => g.name.toLowerCase().includes(vac.matchKey.toLowerCase()));
+    const isDone = !!given;
+
+    const badgeBg = isDone ? 'rgba(16,185,129,0.12)' : 'var(--surface2)';
+    const badgeBorder = isDone ? '#10b981' : 'var(--surface-border)';
+    const icon = isDone ? '<i class="fa-solid fa-circle-check" style="color:#10b981; font-size:16px;"></i>' : '<i class="fa-regular fa-circle" style="color:var(--text-muted); font-size:16px;"></i>';
+    const statusText = isDone ? `<span style="color:#10b981; font-size:11px; font-weight:700;">Sudah (${formatDateOnly(given.date)})</span>` : '<span style="color:var(--text-muted); font-size:11px;">Belum dicatat</span>';
+
+    return `
+      <div style="background:${badgeBg}; border:1px solid ${badgeBorder}; border-radius:12px; padding:10px 12px; display:flex; align-items:center; gap:10px; transition:0.2s;">
+        <div>${icon}</div>
+        <div style="flex:1; min-width:0;">
+          <div style="font-size:12.5px; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${vac.name}</div>
+          <div style="font-size:11px; color:var(--muted);">${vac.age}</div>
+          <div style="margin-top:2px;">${statusText}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderImunRecap(data) {
+  const box = document.getElementById('imunRecap');
+  if (!box) return;
+
+  if (!data.length) {
+    box.innerHTML = '<div class="empty" style="padding:18px 0; text-align:center; color:var(--muted); font-size:13px;">Belum ada log imunisasi pada periode ini.</div>';
+    return;
+  }
+
+  const totalPages = Math.ceil(data.length / PAGE_SIZE) || 1;
+  const page = Math.max(1, Math.min(totalPages, currentPages.recapImun || 1));
+  currentPages.recapImun = page;
+  const start = (page - 1) * PAGE_SIZE;
+  const visible = data.slice(start, start + PAGE_SIZE);
+
+  let html = visible.map(function(item) {
+    const list = Array.isArray(item.jenis) ? item.jenis : [item.jenis];
+    const pills = list.map(j => `<span style="display:inline-block; padding:2px 8px; border-radius:999px; background:rgba(139,92,246,0.12); color:#8b5cf6; font-size:11px; font-weight:700; margin:2px 4px 2px 0;"><i class="fa-solid fa-syringe"></i> ${escHtml(j)}</span>`).join('');
+    const faskesHtml = item.faskes ? `<span style="font-size:11.5px; color:var(--muted); font-weight:600;"><i class="fa-solid fa-location-dot" style="margin-right:4px;"></i>${escHtml(item.faskes)}</span>` : '';
+    const notesHtml = item.catatan ? `<div style="font-size:11.5px; color:var(--muted); margin-top:4px; font-style:italic;">KIPI: "${escHtml(item.catatan)}"</div>` : '';
+
+    return `
+      <div class="recap-item" style="padding:10px 0; border-bottom:1px solid var(--border-soft);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px; margin-bottom:4px;">
+          <div style="font-size:11.5px; color:var(--muted); font-weight:600;">${escHtml(formatDateOnly(item.tanggal))} • ${escHtml(item.jam || '')}</div>
+          <div>${faskesHtml}</div>
+        </div>
+        <div style="margin:4px 0;">${pills}</div>
+        ${notesHtml}
+      </div>
+    `;
+  }).join('');
+
+  if (totalPages > 1) {
+    html += `
+      <div class="pagination-wrap">
+        <button type="button" class="pagination-btn" onclick="changeRecapPage('imun', -1)" ${page <= 1 ? 'disabled' : ''}><i class="fa-solid fa-chevron-left"></i></button>
+        <span class="pagination-info">${page} / ${totalPages}</span>
+        <button type="button" class="pagination-btn" onclick="changeRecapPage('imun', 1)" ${page >= totalPages ? 'disabled' : ''}><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    `;
+  }
+
+  box.innerHTML = html;
+}
+
 function clearUserData() {
   allData = [];
   dbfData = [];
   popokData = [];
   fisikData = [];
+  healthData = [];
+  imunData = [];
 
   profileData = {
     babyName: 'Adek Bayi',
@@ -11366,6 +12420,30 @@ function buildHistory() {
         ' • ' + t('lblLength') + ': ' + (item.panjang !== '' ? item.panjang + ' ' + t('unitCm') : '-') +
         ' • ' + t('lblHeadCirc') + ': ' + (item.lingkarKepala !== '' ? item.lingkarKepala + ' ' + t('unitCm') : '-'),
       catatan: t('histGrowth')
+    });
+  });
+
+  healthData.forEach(function(item, index) {
+    let detailParts = [];
+    if (item.suhu !== null && item.suhu !== undefined && item.suhu !== '') detailParts.push('Suhu: ' + Number(item.suhu).toFixed(1) + ' °C');
+    if (item.obat) detailParts.push('Obat: ' + item.obat + (item.dosis ? ' (' + item.dosis + ')' : ''));
+    history.push({
+      type: 'health',
+      index: index,
+      waktu: item.waktu,
+      detail: detailParts.join(' • ') || 'Pemeriksaan Kesehatan',
+      catatan: item.catatan || ''
+    });
+  });
+
+  imunData.forEach(function(item, index) {
+    const listStr = Array.isArray(item.jenis) ? item.jenis.join(', ') : (item.jenis || '-');
+    history.push({
+      type: 'imun',
+      index: index,
+      waktu: item.tanggal + (item.jam ? ' ' + item.jam : ' 08:00'),
+      detail: 'Imunisasi: ' + listStr + (item.faskes ? ' • Faskes: ' + item.faskes : ''),
+      catatan: item.catatan || ''
     });
   });
 
@@ -11465,7 +12543,9 @@ function renderHistory() {
           susu: t('subSusu'),
           dbf: t('subDBF'),
           popok: t('subPopok'),
-          fisik: t('subFisik')
+          fisik: t('subFisik'),
+          health: 'Obat & Suhu',
+          imun: 'Imunisasi'
         }[item.type] || item.type;
 
         return `
@@ -11601,6 +12681,12 @@ function changeRecapPage(type, delta) {
   } else if (type === 'fisik') {
     currentPages.recapFisik = Math.max(1, (currentPages.recapFisik || 1) + delta);
     renderFisikDashboard();
+  } else if (type === 'health') {
+    currentPages.recapHealth = Math.max(1, (currentPages.recapHealth || 1) + delta);
+    renderHealthDashboard();
+  } else if (type === 'imun') {
+    currentPages.recapImun = Math.max(1, (currentPages.recapImun || 1) + delta);
+    renderImunisasiDashboard();
   }
 }
 
@@ -11760,6 +12846,63 @@ function editHistory(type,index) {
 
   }
 
+  if (type === 'health') {
+    showInputPanel('health');
+    const item = healthData[index];
+    if (!item) return;
+    const wEl = document.getElementById('waktuHealth');
+    if (wEl) wEl.value = normalizeDateTimeInput(item.waktu);
+    const sEl = document.getElementById('suhuTubuh');
+    if (sEl) {
+      sEl.value = (item.suhu !== null && item.suhu !== undefined) ? item.suhu : '';
+      updateTempStatusDisplay(sEl.value);
+    }
+    const oEl = document.getElementById('namaObat');
+    if (oEl) oEl.value = item.obat || '';
+    const dEl = document.getElementById('dosisObat');
+    if (dEl) dEl.value = item.dosis || '';
+    const cEl = document.getElementById('catatanHealth');
+    if (cEl) cEl.value = item.catatan || '';
+  }
+
+  if (type === 'imun') {
+    showInputPanel('imun');
+    const item = imunData[index];
+    if (!item) return;
+    const tEl = document.getElementById('tglImun');
+    if (tEl) tEl.value = item.tanggal || '';
+    const jEl = document.getElementById('jamImun');
+    if (jEl) jEl.value = item.jam || '';
+    const fEl = document.getElementById('faskesImun');
+    if (fEl) fEl.value = item.faskes || '';
+    const cEl = document.getElementById('catatanImun');
+    if (cEl) cEl.value = item.catatan || '';
+
+    document.querySelectorAll('input[name="jenisImun"]').forEach(chk => { chk.checked = false; });
+    const list = Array.isArray(item.jenis) ? item.jenis : [item.jenis];
+    let customNames = [];
+    list.forEach(val => {
+      let matched = false;
+      document.querySelectorAll('input[name="jenisImun"]').forEach(chk => {
+        if (chk.value.toLowerCase() === String(val).toLowerCase()) {
+          chk.checked = true;
+          matched = true;
+        }
+      });
+      if (!matched && val && val !== 'Lainnya') customNames.push(val);
+    });
+    const chkLainnya = document.getElementById('imunChkLainnya');
+    if (customNames.length > 0 && chkLainnya) {
+      chkLainnya.checked = true;
+      toggleImunCustomInput(chkLainnya);
+      const txt = document.getElementById('imunLainnyaText');
+      if (txt) txt.value = customNames.join(', ');
+    } else if (chkLainnya) {
+      chkLainnya.checked = false;
+      toggleImunCustomInput(chkLainnya);
+    }
+  }
+
 }
 
 
@@ -11788,6 +12931,38 @@ async function deleteHistory(type,index) {
       'Sesi login tidak ditemukan.'
     );
 
+    return;
+  }
+
+  if (type === 'health') {
+    const item = healthData[index];
+    healthData.splice(index, 1);
+    const uKey = 'baby_health_' + ((currentUser && currentUser.id) || 'local');
+    try { localStorage.setItem(uKey, JSON.stringify(healthData)); } catch(e) {}
+    if (currentUser && supabaseClient && item && item.id) {
+      try {
+        await supabaseClient.from('health_records').delete().eq('id', item.id).eq('user_id', currentUser.id);
+      } catch(e) {}
+    }
+    renderHealthDashboard();
+    renderHistory();
+    showToast('Catatan obat & suhu dihapus.');
+    return;
+  }
+
+  if (type === 'imun') {
+    const item = imunData[index];
+    imunData.splice(index, 1);
+    const uKey = 'baby_imun_' + ((currentUser && currentUser.id) || 'local');
+    try { localStorage.setItem(uKey, JSON.stringify(imunData)); } catch(e) {}
+    if (currentUser && supabaseClient && item && item.id) {
+      try {
+        await supabaseClient.from('immunization_records').delete().eq('id', item.id).eq('user_id', currentUser.id);
+      } catch(e) {}
+    }
+    renderImunisasiDashboard();
+    renderHistory();
+    showToast('Data imunisasi dihapus.');
     return;
   }
 

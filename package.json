@@ -1,7 +1,7 @@
 {
-  "name": "catatan-si-kecil",
+  "name": "tumbangkan-adek",
   "version": "1.0.0",
-  "description": "Aplikasi Web Pemantau Tumbuh Kembang Bayi",
+  "description": "Tumbangkan Adek - Aplikasi Pemantau Tumbuh Kembang Bayi",
   "scripts": {
     "build": "echo 'Build complete'",
     "start": "node server.js",

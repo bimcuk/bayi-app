@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Admin - Catatan Si Kecil</title>
+  <title>Admin - Tumbangkan Adek</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -914,7 +914,7 @@
   <nav class="admin-nav">
     <a href="/" class="back-link">
       <i class="fa-solid fa-arrow-left"></i>
-      <span>Catatan Si Kecil</span>
+      <span>Tumbangkan Adek</span>
     </a>
     <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Ganti Tema">
       <i class="fa-solid fa-moon" id="themeIcon"></i>
@@ -999,6 +999,9 @@
         </button>
         <button type="button" class="admin-tab" id="tabPwdBtn" onclick="switchAdminTab('pwd')">
           <i class="fa-solid fa-key"></i> Ubah Password / Email
+        </button>
+        <button type="button" class="admin-tab" id="tabBadgeBtn" onclick="switchAdminTab('badge')">
+          <i class="fa-solid fa-tags"></i> Ubah Badge
         </button>
         <button type="button" class="admin-tab" id="tabChatBtn" onclick="switchAdminTab('chat')">
           <i class="fa-solid fa-comments"></i> Inbox Chat
@@ -1139,6 +1142,57 @@
         </div>
       </div>
 
+      <!-- TAB 5: UBAH BADGE MODE KENANGAN & MODE INPUT -->
+      <div id="adminBadgeSection" class="hidden">
+        <div style="background:var(--surface2); border:1px solid var(--surface-border); border-radius:16px; padding:18px; margin-bottom:16px;">
+          <h3 style="font-size:14.5px; font-weight:700; color:var(--text); margin-bottom:6px; display:flex; align-items:center; gap:8px;">
+            <i class="fa-solid fa-tags" style="color:var(--primary);"></i> Pengaturan Badge Mode Kenangan & Mode Input
+          </h3>
+          <p style="font-size:12px; color:var(--text-muted); margin-bottom:16px; line-height:1.5;">
+            Ubah nama badge yang ditampilkan pada header aplikasi Tumbangkan Adek saat Mode Kenangan atau Mode Input aktif.
+          </p>
+
+          <div id="badgeConfigMessage" class="message hidden">
+            <span id="badgeConfigMessageText"></span>
+          </div>
+
+          <form id="adminBadgeForm" onsubmit="event.preventDefault(); saveAdminBadgeConfig();">
+            <div class="form-group">
+              <label for="adminBadgeMemory">Teks Badge Mode Kenangan</label>
+              <input type="text" id="adminBadgeMemory" placeholder="Contoh: Mode Kenangan" required oninput="updateBadgePreviews()">
+            </div>
+
+            <div class="form-group">
+              <label for="adminBadgeInput">Teks Badge Mode Input</label>
+              <input type="text" id="adminBadgeInput" placeholder="Contoh: Mode Input" required oninput="updateBadgePreviews()">
+            </div>
+
+            <div class="form-group" style="display:flex; align-items:center; gap:10px; margin-top:8px;">
+              <input type="checkbox" id="adminBadgeShowInput" style="width:18px; height:18px; accent-color:var(--primary); cursor:pointer;" onchange="updateBadgePreviews()">
+              <label for="adminBadgeShowInput" style="margin:0; cursor:pointer; font-size:13px; font-weight:500;">
+                Tampilkan Badge Mode Input di Header saat mode input normal aktif
+              </label>
+            </div>
+
+            <div style="background:var(--bg); border:1px dashed var(--surface-border); border-radius:12px; padding:12px; margin:16px 0;">
+              <div style="font-size:11.5px; font-weight:600; color:var(--text-muted); margin-bottom:8px;">Preview Badge Header di Aplikasi:</div>
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <span id="previewMemoryBadge" style="display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px; background:#fce7f3; color:#ec4899; border:1px solid #fbcfe8;">
+                  <i class="fa-solid fa-heart"></i> <span id="previewMemoryText">Mode Kenangan</span>
+                </span>
+                <span id="previewInputBadge" style="display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px; background:#e0f2fe; color:#0284c7; border:1px solid #bae6fd;">
+                  <i class="fa-solid fa-pen-to-square"></i> <span id="previewInputText">Mode Input</span>
+                </span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary" style="margin-top:10px;">
+              <i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan Badge
+            </button>
+          </form>
+        </div>
+      </div>
+
       <button type="button" class="btn-logout" onclick="logoutAdmin()">
         <i class="fa-solid fa-right-from-bracket"></i> Keluar dari Admin
       </button>
@@ -1274,20 +1328,97 @@
       document.getElementById('adminSubSection').classList.toggle('hidden', tab !== 'sub');
       document.getElementById('adminUsersSection').classList.toggle('hidden', tab !== 'users');
       document.getElementById('adminPwdSection').classList.toggle('hidden', tab !== 'pwd');
+      const badgeSec = document.getElementById('adminBadgeSection');
+      if (badgeSec) badgeSec.classList.toggle('hidden', tab !== 'badge');
       const chatSec = document.getElementById('adminChatSection');
       if (chatSec) chatSec.classList.toggle('hidden', tab !== 'chat');
 
       document.getElementById('tabSubBtn').classList.toggle('active', tab === 'sub');
       document.getElementById('tabUsersBtn').classList.toggle('active', tab === 'users');
       document.getElementById('tabPwdBtn').classList.toggle('active', tab === 'pwd');
+      const tabBadgeBtn = document.getElementById('tabBadgeBtn');
+      if (tabBadgeBtn) tabBadgeBtn.classList.toggle('active', tab === 'badge');
       const tabChatBtn = document.getElementById('tabChatBtn');
       if (tabChatBtn) tabChatBtn.classList.toggle('active', tab === 'chat');
 
       if (tab === 'sub') renderAdminSubList();
       if (tab === 'users') renderAdminUsersList();
+      if (tab === 'badge') loadAdminBadgeConfig();
       if (tab === 'chat') {
         renderAdminChatThreads();
         updateAdminChatUnreadBadge();
+      }
+    }
+
+    /* =========================================================
+       BADGE CONFIGURATION (MODE KENANGAN & MODE INPUT)
+    ========================================================= */
+    function loadAdminBadgeConfig() {
+      try {
+        const raw = localStorage.getItem('baby_badge_config');
+        const cfg = raw ? JSON.parse(raw) : {
+          memoryBadge: 'Mode Kenangan',
+          inputBadge: 'Mode Input',
+          showInputBadge: false
+        };
+        const memInput = document.getElementById('adminBadgeMemory');
+        const inpInput = document.getElementById('adminBadgeInput');
+        const chkInput = document.getElementById('adminBadgeShowInput');
+        if (memInput) memInput.value = cfg.memoryBadge || 'Mode Kenangan';
+        if (inpInput) inpInput.value = cfg.inputBadge || 'Mode Input';
+        if (chkInput) chkInput.checked = !!cfg.showInputBadge;
+        updateBadgePreviews();
+      } catch(e) {}
+    }
+
+    function updateBadgePreviews() {
+      const memInput = document.getElementById('adminBadgeMemory');
+      const inpInput = document.getElementById('adminBadgeInput');
+      const chkInput = document.getElementById('adminBadgeShowInput');
+      const mem = (memInput ? memInput.value.trim() : '') || 'Mode Kenangan';
+      const inp = (inpInput ? inpInput.value.trim() : '') || 'Mode Input';
+      const showInp = chkInput ? chkInput.checked : false;
+
+      const pMem = document.getElementById('previewMemoryText');
+      const pInp = document.getElementById('previewInputText');
+      const pInpBadge = document.getElementById('previewInputBadge');
+      if (pMem) pMem.textContent = mem;
+      if (pInp) pInp.textContent = inp;
+      if (pInpBadge) pInpBadge.style.display = showInp ? 'inline-flex' : 'none';
+    }
+
+    function saveAdminBadgeConfig() {
+      const memInput = document.getElementById('adminBadgeMemory');
+      const inpInput = document.getElementById('adminBadgeInput');
+      const chkInput = document.getElementById('adminBadgeShowInput');
+
+      const mem = (memInput ? memInput.value.trim() : '') || 'Mode Kenangan';
+      const inp = (inpInput ? inpInput.value.trim() : '') || 'Mode Input';
+      const showInp = chkInput ? chkInput.checked : false;
+
+      const config = {
+        memoryBadge: mem,
+        inputBadge: inp,
+        showInputBadge: showInp
+      };
+
+      try {
+        localStorage.setItem('baby_badge_config', JSON.stringify(config));
+      } catch(e) {}
+
+      try {
+        const bc = new BroadcastChannel('baby_badge_bus');
+        bc.postMessage({ type: 'BADGE_UPDATED', config: config });
+        bc.close();
+      } catch(e) {}
+
+      const msgBox = document.getElementById('badgeConfigMessage');
+      const msgText = document.getElementById('badgeConfigMessageText');
+      if (msgBox && msgText) {
+        msgBox.className = 'message success';
+        msgText.textContent = 'Pengaturan badge berhasil disimpan dan langsung disinkronkan!';
+        msgBox.classList.remove('hidden');
+        setTimeout(() => { msgBox.classList.add('hidden'); }, 3500);
       }
     }
 
