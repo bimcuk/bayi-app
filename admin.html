@@ -415,6 +415,18 @@
       border: 1px solid rgba(16, 185, 129, 0.3);
     }
 
+    .uploaded-badge.vip {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(217, 119, 6, 0.18));
+      color: #d97706;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .uploaded-badge.vvip {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.18), rgba(236, 72, 153, 0.18));
+      color: #9333ea;
+      border: 1px solid rgba(236, 72, 153, 0.4);
+    }
+
     .admin-req-body {
       display: flex;
       align-items: center;
@@ -679,7 +691,7 @@
             id="adminEmail"
             type="email"
             autocomplete="username"
-            placeholder="fienaakmala@gmail.com"
+            placeholder="rojulanfayadulmujahid@gmail.com"
             required
           >
         </div>
@@ -877,8 +889,11 @@
     const SUPABASE_ANON_KEY = 'sb_publishable_RIJfZBsXRoq56wUkA1j19g_W8GPcm7Z';
 
     const ADMIN_EMAILS = [
-      'fienaakmala@gmail.com',
       'rojulanfayadulmujahid@gmail.com'
+    ];
+
+    const VVIP_EMAILS = [
+      'fienaakmala@gmail.com'
     ];
 
     const { createClient } = window.supabase;
@@ -888,6 +903,12 @@
       if (!user || !user.email) return false;
       const em = user.email.trim().toLowerCase();
       return ADMIN_EMAILS.some(a => a.toLowerCase().trim() === em);
+    }
+
+    function isVvipUser(user) {
+      if (!user || !user.email) return false;
+      const em = user.email.trim().toLowerCase();
+      return VVIP_EMAILS.some(v => v.toLowerCase().trim() === em);
     }
 
     function togglePassword(inputId, button) {
@@ -1057,7 +1078,7 @@
         saveAllSubscriptionRequests(requests);
       }
 
-      alert(`✅ Akun ${normEmail} BERHASIL DI-ACC!\nAktif s/d ${formatDateTimeReadable(expiresAt.toISOString())}`);
+      alert(`✅ Akun ${normEmail} BERHASIL DI-ACC!\nBadge VIP aktif selama 1 tahun s/d ${formatDateTimeReadable(expiresAt.toISOString())}`);
       renderAdminSubList();
       renderAdminUsersList();
     }
@@ -1101,8 +1122,8 @@
       }
 
       const normEmail = email.toLowerCase().trim();
-      if (ADMIN_EMAILS.some(a => a.toLowerCase().trim() === normEmail)) {
-        alert('Akun Admin/VIP tidak boleh dihapus.');
+      if (ADMIN_EMAILS.some(a => a.toLowerCase().trim() === normEmail) || VVIP_EMAILS.some(v => v.toLowerCase().trim() === normEmail)) {
+        alert('Akun Admin atau VVIP tidak boleh dihapus.');
         return;
       }
 
@@ -1134,7 +1155,11 @@
       const userMap = new Map();
 
       ADMIN_EMAILS.forEach(em => {
-        userMap.set(em.toLowerCase().trim(), { email: em, type: 'Admin / VIP', status: 'VIP Selamanya', until: 'Tanpa Batas' });
+        userMap.set(em.toLowerCase().trim(), { email: em, type: 'Admin', status: 'Admin Utama', until: 'Tanpa Batas', role: 'admin' });
+      });
+
+      VVIP_EMAILS.forEach(em => {
+        userMap.set(em.toLowerCase().trim(), { email: em, type: 'User (VVIP)', status: 'VVIP Selamanya', until: 'Tanpa Batas (Gratis)', role: 'vvip' });
       });
 
       requests.forEach(r => {
@@ -1143,20 +1168,22 @@
           userMap.set(em, {
             email: em,
             type: 'Pengguna',
-            status: r.status === 'active' ? 'Aktif' : 'Menunggu ACC',
-            until: r.until ? formatDateTimeReadable(r.until) : 'Menunggu'
+            status: r.status === 'active' ? 'VIP (1 Tahun)' : 'Menunggu ACC',
+            until: r.until ? formatDateTimeReadable(r.until) : 'Menunggu',
+            role: r.status === 'active' ? 'vip' : 'pending'
           });
         }
       });
 
       Object.values(approvedMap).forEach(a => {
         const em = (a.email || '').toLowerCase().trim();
-        if (em) {
+        if (em && !userMap.has(em)) {
           userMap.set(em, {
             email: em,
             type: 'Pengguna',
-            status: 'Aktif (1 Tahun)',
-            until: a.until ? formatDateTimeReadable(a.until) : '1 Tahun'
+            status: 'VIP (1 Tahun)',
+            until: a.until ? formatDateTimeReadable(a.until) : '1 Tahun',
+            role: 'vip'
           });
         }
       });
@@ -1176,15 +1203,24 @@
           </thead>
           <tbody>
             ${list.map(u => {
-              const isAdmin = ADMIN_EMAILS.some(a => a.toLowerCase().trim() === u.email.toLowerCase().trim());
+              const isAdmin = u.role === 'admin' || ADMIN_EMAILS.some(a => a.toLowerCase().trim() === u.email.toLowerCase().trim());
+              const isVvip = u.role === 'vvip' || VVIP_EMAILS.some(v => v.toLowerCase().trim() === u.email.toLowerCase().trim());
+              const isVip = u.role === 'vip' || u.status.includes('VIP');
+
+              let badgeClass = 'pending';
+              if (isVvip) badgeClass = 'vvip';
+              else if (isVip) badgeClass = 'vip';
+              else if (isAdmin || u.status.includes('Aktif')) badgeClass = 'active';
+
               return `
                 <tr>
                   <td><strong>${escHtml(u.email)}</strong></td>
                   <td>${escHtml(u.type)}</td>
-                  <td><span class="uploaded-badge ${u.status.includes('Aktif') || u.status.includes('VIP') ? 'active' : 'pending'}">${escHtml(u.status)}</span></td>
+                  <td><span class="uploaded-badge ${badgeClass}">${escHtml(u.status)}</span></td>
                   <td>${escHtml(u.until)}</td>
                   <td>
-                    ${isAdmin ? '<span style="color:var(--text-muted); font-size:11px;">Admin</span>' : `
+                    ${isAdmin ? '<span style="color:var(--text-muted); font-size:11px; font-weight:700;">Admin Utama</span>' :
+                      isVvip ? '<span class="uploaded-badge vvip" style="font-size:10px;">VVIP Permanen</span>' : `
                       <div style="display:flex; gap:6px;">
                         <button type="button" class="admin-btn acc" style="padding:3px 8px; font-size:11px;" onclick="adminApproveSubscription('${escHtml(u.email)}')">ACC</button>
                         <button type="button" class="admin-btn reject" style="padding:3px 8px; font-size:11px;" onclick="adminDeleteAccount('${escHtml(u.email)}')">Hapus</button>
@@ -1237,7 +1273,7 @@
       }
 
       if (!ADMIN_EMAILS.some(a => a.toLowerCase().trim() === email.toLowerCase())) {
-        showLoginError('Akses ditolak. Email "' + email + '" bukan akun admin terdaftar.');
+        showLoginError('Akses ditolak. Email "' + email + '" bukan akun admin terdaftar (Admin hanya rojulanfayadulmujahid@gmail.com).');
         return;
       }
 

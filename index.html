@@ -340,6 +340,74 @@
       background: var(--primary-soft);
       padding: 2px 8px;
       border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .menu-badge.tier-vvip {
+      background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+      color: #ffffff;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 6px rgba(236, 72, 153, 0.35);
+    }
+
+    .menu-badge.tier-vip {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #ffffff;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      box-shadow: 0 2px 6px rgba(245, 158, 11, 0.35);
+    }
+
+    .menu-badge.tier-admin {
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      color: #ffffff;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      box-shadow: 0 2px 6px rgba(59, 130, 246, 0.35);
+    }
+
+    .user-tier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      letter-spacing: 0.4px;
+      vertical-align: middle;
+      line-height: 1.3;
+      user-select: none;
+      animation: fadeInScale 0.3s ease;
+    }
+
+    .user-tier-badge.vvip {
+      background: linear-gradient(135deg, #7c3aed 0%, #ec4899 50%, #f59e0b 100%);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(236, 72, 153, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .user-tier-badge.vip {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .user-tier-badge.admin {
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .user-tier-badge.trial {
+      background: var(--surface2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      font-weight: 600;
     }
 
     .menu-divider {
@@ -2454,8 +2522,11 @@
            title="Lihat foto profil">
 
       <div class="profile-info">
-        <h2 class="baby-name" id="displayBabyName">Adek Bayi</h2>
         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <h2 class="baby-name" id="displayBabyName" style="margin:0;">Adek Bayi</h2>
+          <span id="userTierBadge" class="user-tier-badge hidden"></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:2px;">
           <div class="age" id="displayAge">-</div>
         </div>
       </div>
@@ -5620,8 +5691,11 @@ function openProfile() {
    ========================================================= */
 
 const ADMIN_EMAILS = [
-  'fienaakmala@gmail.com',
   'rojulanfayadulmujahid@gmail.com'
+];
+
+const VVIP_EMAILS = [
+  'fienaakmala@gmail.com'
 ];
 
 let selectedProofBase64 = null;
@@ -5631,6 +5705,12 @@ function isCurrentUserAdmin() {
   if (!currentUser || !currentUser.email) return false;
   const em = currentUser.email.toLowerCase().trim();
   return ADMIN_EMAILS.some(admin => admin.toLowerCase().trim() === em);
+}
+
+function isCurrentUserVVIP() {
+  if (!currentUser || !currentUser.email) return false;
+  const em = currentUser.email.toLowerCase().trim();
+  return VVIP_EMAILS.some(v => v.toLowerCase().trim() === em);
 }
 
 function checkAndShowAdminMenu() {
@@ -5733,16 +5813,25 @@ async function checkUserSubscriptionStatus(showAlert = false) {
 
   const email = (currentUser.email || '').toLowerCase().trim();
 
-  // EXEMPTION KHUSUS: fienaakmala@gmail.com dan admin memiliki akses penuh permanen tanpa batas
-  if (ADMIN_EMAILS.some(a => a.toLowerCase().trim() === email)) {
+  // 1. STATUS KHUSUS VVIP: fienaakmala@gmail.com (Bukan admin, user biasa, bebas selamanya tanpa subscribe)
+  if (isCurrentUserVVIP()) {
     window.isVipUser = true;
-    updateSubscriptionBadge('VIP');
+    updateSubscriptionBadge('VVIP', 'vvip');
     hidePaywallModal();
-    if (showAlert) showToast('Akun VIP / Admin: Akses penuh tanpa batas waktu.');
-    return { canAccess: true, status: 'vip' };
+    if (showAlert) showToast('💎 Akun VVIP: Akses penuh gratis tanpa batas waktu.');
+    return { canAccess: true, status: 'vvip', isVvip: true };
   }
 
-  // Hitung durasi sejak registrasi (1 bulan = 30 hari gratis trial)
+  // 2. STATUS ADMIN: rojulanfayadulmujahid@gmail.com
+  if (isCurrentUserAdmin()) {
+    window.isVipUser = true;
+    updateSubscriptionBadge('Admin', 'admin');
+    hidePaywallModal();
+    if (showAlert) showToast('🛡️ Akun Admin: Akses penuh sistem.');
+    return { canAccess: true, status: 'admin', isAdmin: true };
+  }
+
+  // 3. PENGGUNA REGULER: Cek masa aktif langganan & trial
   const registeredAt = currentUser.created_at ? new Date(currentUser.created_at) : new Date();
   const now = new Date();
   const diffDays = (now.getTime() - registeredAt.getTime()) / (1000 * 60 * 60 * 24);
@@ -5751,22 +5840,22 @@ async function checkUserSubscriptionStatus(showAlert = false) {
 
   const subRecord = getSubscriptionRecord(currentUser.id, email);
 
-  // Jika sudah di-ACC / aktif
+  // Jika sudah berlangganan dan di-ACC Admin -> BADGE VIP!
   if (subRecord && subRecord.status === 'active') {
     const expiresAt = new Date(subRecord.until);
     if (now.getTime() < expiresAt.getTime()) {
       // Masih aktif dalam 1 tahun!
       const daysLeft = Math.ceil((expiresAt.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-      updateSubscriptionBadge('Aktif (' + daysLeft + ' hr)');
+      updateSubscriptionBadge('VIP (' + daysLeft + ' hr)', 'vip', daysLeft);
       hidePaywallModal();
-      if (showAlert) showToast('Langganan aktif hingga ' + formatDateTimeReadable(expiresAt.toISOString()));
+      if (showAlert) showToast('Langganan VIP aktif hingga ' + formatDateTimeReadable(expiresAt.toISOString()));
       return { canAccess: true, status: 'active', subRecord };
     } else {
       // Lebih dari 1 tahun! "nanti kalo dah setahun lagi lock lagi"
-      updateSubscriptionBadge('Kedaluwarsa');
+      updateSubscriptionBadge('Kedaluwarsa', 'expired');
       lockAppWithPaywall({
         reason: 'expired',
-        message: 'Masa berlangganan 1 tahun Anda telah berakhir pada ' + formatDateTimeReadable(expiresAt.toISOString()) + '. Silakan perpanjang untuk terus menggunakan Catatan Si Kecil.',
+        message: 'Masa berlangganan VIP 1 tahun Anda telah berakhir pada ' + formatDateTimeReadable(expiresAt.toISOString()) + '. Silakan perpanjang untuk terus menggunakan Catatan Si Kecil.',
         subRecord
       });
       return { canAccess: false, status: 'expired', subRecord };
@@ -5775,7 +5864,7 @@ async function checkUserSubscriptionStatus(showAlert = false) {
 
   // Jika sedang menunggu konfirmasi admin
   if (subRecord && subRecord.status === 'pending') {
-    updateSubscriptionBadge('Menunggu ACC');
+    updateSubscriptionBadge('Menunggu ACC', 'pending');
     if (isTrialActive) {
       // Masih dalam masa trial 30 hari, berikan akses penuh sambil menunggu admin
       hidePaywallModal();
@@ -5794,26 +5883,67 @@ async function checkUserSubscriptionStatus(showAlert = false) {
 
   // Belum ada bukti transfer / belum langganan:
   if (isTrialActive) {
-    updateSubscriptionBadge('Trial (' + trialDaysLeft + ' hr)');
+    updateSubscriptionBadge('Trial (' + trialDaysLeft + ' hr)', 'trial', trialDaysLeft);
     hidePaywallModal();
     if (showAlert) showToast('Trial Gratis 1 Bulan Aktif (Sisa ' + trialDaysLeft + ' hari).');
     return { canAccess: true, status: 'trial', trialDaysLeft };
   } else {
     // Masa trial 1 bulan sudah habis dan belum subscribe! Kunci aplikasi!
-    updateSubscriptionBadge('Habis Trial');
+    updateSubscriptionBadge('Habis Trial', 'expired');
     lockAppWithPaywall({
       reason: 'trial_expired',
-      message: 'Masa gratis trial 1 bulan akun Anda telah berakhir. Silakan berlangganan Rp 250.000 / 1 tahun untuk terus menikmati fitur Catatan Si Kecil.'
+      message: 'Masa gratis trial 1 bulan akun Anda telah berakhir. Silakan berlangganan Rp 250.000 / 1 tahun untuk mendapatkan badge VIP dan akses penuh Catatan Si Kecil.'
     });
     return { canAccess: false, status: 'trial_expired' };
   }
 }
 
-function updateSubscriptionBadge(label) {
+function updateSubscriptionBadge(label, tier = 'normal', extraInfo = '') {
+  // 1. Menu hamburger badge
   const badge = document.getElementById('menuSubscribeBadge');
-  if (badge) badge.textContent = label;
+  if (badge) {
+    badge.textContent = label;
+    badge.className = 'menu-badge tier-' + tier;
+  }
+
+  // 2. Profile button label
   const profileLabel = document.getElementById('profileSubscribeBtnLabel');
-  if (profileLabel) profileLabel.textContent = 'Langganan (' + label + ')';
+  if (profileLabel) {
+    if (tier === 'vvip') {
+      profileLabel.innerHTML = '<i class="fa-solid fa-gem" style="color:#ec4899; margin-right:4px;"></i> Status: <strong>VVIP</strong> (Gratis Selamanya)';
+    } else if (tier === 'vip') {
+      profileLabel.innerHTML = '<i class="fa-solid fa-crown" style="color:#f59e0b; margin-right:4px;"></i> Status: <strong>VIP</strong>' + (extraInfo ? ` (${extraInfo} hr)` : '');
+    } else if (tier === 'admin') {
+      profileLabel.innerHTML = '<i class="fa-solid fa-shield-halved" style="color:#3b82f6; margin-right:4px;"></i> Status: <strong>Admin</strong>';
+    } else {
+      profileLabel.textContent = 'Langganan (' + label + ')';
+    }
+  }
+
+  // 3. Header badge next to baby name / age
+  const headerBadge = document.getElementById('userTierBadge');
+  if (headerBadge) {
+    headerBadge.classList.remove('hidden', 'vvip', 'vip', 'admin', 'trial', 'expired');
+    if (tier === 'vvip') {
+      headerBadge.className = 'user-tier-badge vvip';
+      headerBadge.innerHTML = '<i class="fa-solid fa-gem"></i> VVIP';
+      headerBadge.title = 'Akun VVIP: Akses Selamanya Tanpa Subscribe';
+    } else if (tier === 'vip') {
+      headerBadge.className = 'user-tier-badge vip';
+      headerBadge.innerHTML = '<i class="fa-solid fa-crown"></i> VIP';
+      headerBadge.title = 'Akun VIP: Langganan Aktif 1 Tahun';
+    } else if (tier === 'admin') {
+      headerBadge.className = 'user-tier-badge admin';
+      headerBadge.innerHTML = '<i class="fa-solid fa-shield-halved"></i> Admin';
+      headerBadge.title = 'Akun Administrator';
+    } else if (tier === 'trial') {
+      headerBadge.className = 'user-tier-badge trial';
+      headerBadge.innerHTML = '<i class="fa-regular fa-clock"></i> Trial';
+      headerBadge.title = label;
+    } else {
+      headerBadge.classList.add('hidden');
+    }
+  }
 }
 
 function lockAppWithPaywall(options = {}) {
@@ -5839,6 +5969,9 @@ function openSubscribeModal(forceLocked = false, options = {}) {
   const closeBtn = document.getElementById('subscribeModalCloseBtn');
   const logoutBox = document.getElementById('paywallLogoutBox');
   const alertBox = document.getElementById('subscribeStatusAlert');
+  const pricingCard = modal.querySelector('.subscribe-pricing-card');
+  const qrisWrap = modal.querySelector('.subscribe-qris-wrap');
+  const uploadSec = modal.querySelector('.subscribe-upload-section');
 
   if (forceLocked || isAppLockedByPaywall) {
     if (closeBtn) closeBtn.style.display = 'none';
@@ -5848,13 +5981,39 @@ function openSubscribeModal(forceLocked = false, options = {}) {
     if (logoutBox) logoutBox.classList.add('hidden');
   }
 
-  // Set message alert jika ada
-  if (options.message) {
-    alertBox.textContent = options.message;
-    alertBox.className = 'subscribe-alert ' + (options.reason === 'expired' ? 'danger' : 'warning');
+  // Khusus Akun VVIP (fienaakmala@gmail.com): Akun istimewa gratis selamanya
+  if (isCurrentUserVVIP()) {
+    if (closeBtn) closeBtn.style.display = 'block';
+    if (logoutBox) logoutBox.classList.add('hidden');
+    alertBox.innerHTML = '<i class="fa-solid fa-gem" style="margin-right:6px; color:#ec4899;"></i> <strong>Akun VVIP Selamanya</strong>: Anda memiliki akses premium gratis tanpa batas waktu dan tidak perlu berlangganan.';
+    alertBox.className = 'subscribe-alert success';
     alertBox.classList.remove('hidden');
+    if (pricingCard) pricingCard.style.display = 'none';
+    if (qrisWrap) qrisWrap.style.display = 'none';
+    if (uploadSec) uploadSec.style.display = 'none';
+  } else if (isCurrentUserAdmin()) {
+    // Khusus Admin
+    if (closeBtn) closeBtn.style.display = 'block';
+    if (logoutBox) logoutBox.classList.add('hidden');
+    alertBox.innerHTML = '<i class="fa-solid fa-shield-halved" style="margin-right:6px; color:#3b82f6;"></i> <strong>Akun Administrator</strong>: Akses penuh sistem tanpa batas waktu.';
+    alertBox.className = 'subscribe-alert info';
+    alertBox.classList.remove('hidden');
+    if (pricingCard) pricingCard.style.display = 'none';
+    if (qrisWrap) qrisWrap.style.display = 'none';
+    if (uploadSec) uploadSec.style.display = 'none';
   } else {
-    alertBox.classList.add('hidden');
+    // Pengguna Umum
+    if (pricingCard) pricingCard.style.display = 'block';
+    if (qrisWrap) qrisWrap.style.display = 'block';
+    if (uploadSec) uploadSec.style.display = 'block';
+
+    if (options.message) {
+      alertBox.textContent = options.message;
+      alertBox.className = 'subscribe-alert ' + (options.reason === 'expired' ? 'danger' : 'warning');
+      alertBox.classList.remove('hidden');
+    } else {
+      alertBox.classList.add('hidden');
+    }
   }
 
   // Tampilkan status bukti transfer yang sudah di-upload sebelumnya (jika ada)
@@ -6237,7 +6396,7 @@ async function adminApproveSubscription(email) {
     await checkUserSubscriptionStatus();
   }
 
-  showToast(`✅ Akun ${normEmail} BERHASIL DI-ACC! Aktif s/d ${formatDateTimeReadable(expiresAt.toISOString())}`);
+  showToast(`✅ Akun ${normEmail} BERHASIL DI-ACC! Badge VIP aktif selama 1 tahun s/d ${formatDateTimeReadable(expiresAt.toISOString())}`);
   renderAdminSubList();
   renderAdminUsersList();
 }
@@ -6284,8 +6443,8 @@ async function adminDeleteAccount(targetEmail = null) {
 
   const normEmail = email.toLowerCase().trim();
 
-  if (ADMIN_EMAILS.some(a => a.toLowerCase().trim() === normEmail)) {
-    showToast('Akun Admin/VIP tidak boleh dihapus.');
+  if (ADMIN_EMAILS.some(a => a.toLowerCase().trim() === normEmail) || VVIP_EMAILS.some(v => v.toLowerCase().trim() === normEmail)) {
+    showToast('Akun Admin atau VVIP tidak boleh dihapus.');
     return;
   }
 
@@ -6334,7 +6493,11 @@ function renderAdminUsersList() {
   const userMap = new Map();
 
   ADMIN_EMAILS.forEach(em => {
-    userMap.set(em.toLowerCase().trim(), { email: em, type: 'Admin / VIP', status: 'VIP Selamanya', until: 'Tanpa Batas' });
+    userMap.set(em.toLowerCase().trim(), { email: em, type: 'Admin', status: 'Admin Utama', until: 'Tanpa Batas', role: 'admin' });
+  });
+
+  VVIP_EMAILS.forEach(em => {
+    userMap.set(em.toLowerCase().trim(), { email: em, type: 'User (VVIP)', status: 'VVIP Selamanya', until: 'Tanpa Batas (Gratis)', role: 'vvip' });
   });
 
   requests.forEach(r => {
@@ -6343,20 +6506,22 @@ function renderAdminUsersList() {
       userMap.set(em, {
         email: em,
         type: 'Pengguna',
-        status: r.status === 'active' ? 'Aktif' : 'Menunggu ACC',
-        until: r.until ? formatDateTimeReadable(r.until) : 'Menunggu'
+        status: r.status === 'active' ? 'VIP (1 Tahun)' : 'Menunggu ACC',
+        until: r.until ? formatDateTimeReadable(r.until) : 'Menunggu',
+        role: r.status === 'active' ? 'vip' : 'pending'
       });
     }
   });
 
   Object.values(approvedMap).forEach(a => {
     const em = (a.email || '').toLowerCase().trim();
-    if (em) {
+    if (em && !userMap.has(em)) {
       userMap.set(em, {
         email: em,
         type: 'Pengguna',
-        status: 'Aktif (1 Tahun)',
-        until: a.until ? formatDateTimeReadable(a.until) : '1 Tahun'
+        status: 'VIP (1 Tahun)',
+        until: a.until ? formatDateTimeReadable(a.until) : '1 Tahun',
+        role: 'vip'
       });
     }
   });
@@ -6364,7 +6529,7 @@ function renderAdminUsersList() {
   if (currentUser && currentUser.email) {
     const myEm = currentUser.email.toLowerCase().trim();
     if (!userMap.has(myEm)) {
-      userMap.set(myEm, { email: myEm, type: 'Pengguna', status: 'Trial', until: 'Trial 1 Bulan' });
+      userMap.set(myEm, { email: myEm, type: 'Pengguna', status: 'Trial', until: 'Trial 1 Bulan', role: 'trial' });
     }
   }
 
@@ -6383,15 +6548,24 @@ function renderAdminUsersList() {
       </thead>
       <tbody>
         ${list.map(u => {
-          const isAdmin = ADMIN_EMAILS.some(a => a.toLowerCase().trim() === u.email.toLowerCase().trim());
+          const isAdmin = u.role === 'admin' || ADMIN_EMAILS.some(a => a.toLowerCase().trim() === u.email.toLowerCase().trim());
+          const isVvip = u.role === 'vvip' || VVIP_EMAILS.some(v => v.toLowerCase().trim() === u.email.toLowerCase().trim());
+          const isVip = u.role === 'vip' || u.status.includes('VIP');
+
+          let badgeClass = 'pending';
+          if (isVvip) badgeClass = 'vvip';
+          else if (isVip) badgeClass = 'vip';
+          else if (isAdmin || u.status.includes('Aktif')) badgeClass = 'active';
+
           return `
             <tr>
               <td><strong>${escHtml(u.email)}</strong></td>
               <td>${escHtml(u.type)}</td>
-              <td><span class="uploaded-badge ${u.status.includes('Aktif') || u.status.includes('VIP') ? 'active' : 'pending'}">${escHtml(u.status)}</span></td>
+              <td><span class="uploaded-badge ${badgeClass}">${escHtml(u.status)}</span></td>
               <td>${escHtml(u.until)}</td>
               <td>
-                ${isAdmin ? '<span style="color:var(--muted); font-size:11px;">Admin</span>' : `
+                ${isAdmin ? '<span style="color:var(--muted); font-size:11px; font-weight:700;">Admin Utama</span>' :
+                  isVvip ? '<span class="uploaded-badge vvip" style="font-size:10px;">VVIP Permanen</span>' : `
                   <div style="display:flex; gap:6px;">
                     <button type="button" class="admin-btn acc" style="padding:3px 8px; font-size:11px;" onclick="adminApproveSubscription('${escHtml(u.email)}')">ACC</button>
                     <button type="button" class="admin-btn reject" style="padding:3px 8px; font-size:11px;" onclick="adminDeleteAccount('${escHtml(u.email)}')">Hapus</button>
