@@ -29,7 +29,7 @@
       --border: #eddfe5;
       --shadow: rgba(180, 50, 95, 0.08);
       --card-glow: rgba(201, 70, 115, 0.05);
-      --dot: transparent;
+      --dot: rgba(201, 70, 115, 0.16);
     }
 
     :root[data-color="pink"][data-mode="light"] {
@@ -44,7 +44,7 @@
       --border: #eedee5;
       --shadow: rgba(180, 50, 95, 0.08);
       --card-glow: rgba(201, 70, 115, 0.05);
-      --dot: transparent;
+      --dot: rgba(201, 70, 115, 0.16);
     }
 
     :root[data-color="pink"][data-mode="dark"] {
@@ -59,7 +59,7 @@
       --border: #262e3d;
       --shadow: rgba(0, 0, 0, 0.45);
       --card-glow: rgba(240, 104, 151, 0.06);
-      --dot: transparent;
+      --dot: rgba(240, 104, 151, 0.18);
     }
 
     :root[data-color="blue"][data-mode="light"] {
@@ -74,7 +74,7 @@
       --border: #dbe4ef;
       --shadow: rgba(30, 80, 140, 0.08);
       --card-glow: rgba(43, 108, 176, 0.05);
-      --dot: transparent;
+      --dot: rgba(43, 108, 176, 0.16);
     }
 
     :root[data-color="blue"][data-mode="dark"] {
@@ -89,10 +89,98 @@
       --border: #222d42;
       --shadow: rgba(0, 0, 0, 0.45);
       --card-glow: rgba(82, 148, 226, 0.06);
-      --dot: transparent;
+      --dot: rgba(82, 148, 226, 0.18);
     }
 
-    * { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* SMOOTH INTEGRATED SCROLLBARS (VERTICAL & HORIZONTAL) */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 999px;
+      transition: background 0.2s ease;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--muted);
+    }
+
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    /* HORIZONTAL SCROLL CONTAINERS */
+    .main-nav,
+    .sub-nav,
+    .history-filters,
+    .dashboard-filter {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+    }
+
+    /* BUTTON TEXT CAPITALIZATION */
+    .sub-btn,
+    .nav-btn,
+    .history-filter-btn {
+      text-transform: uppercase !important;
+      letter-spacing: 0.03em;
+    }
+
+    /* THEME & MODE SWEEP ANIMATION: TOP-RIGHT TO BOTTOM-LEFT (GENTLE & SILKY) */
+    ::view-transition-old(root) {
+      animation: none;
+      mix-blend-mode: normal;
+    }
+    ::view-transition-new(root) {
+      animation: themeSweepTRtoBL 1.0s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      mix-blend-mode: normal;
+    }
+
+    @keyframes themeSweepTRtoBL {
+      from {
+        clip-path: circle(0% at 100% 0%);
+      }
+      to {
+        clip-path: circle(160% at 100% 0%);
+      }
+    }
+
+    /* Fallback sweep overlay for browsers without View Transitions */
+    .theme-corner-sweep {
+      position: fixed;
+      inset: 0;
+      z-index: 9999999;
+      pointer-events: none;
+      background: var(--bg);
+      clip-path: circle(0% at 100% 0%);
+      transition: clip-path 1.0s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+    }
+
+    .theme-corner-sweep.active {
+      clip-path: circle(160% at 100% 0%);
+    }
+
+    .theme-corner-sweep.fade-out {
+      opacity: 0;
+    }
 
     body {
       margin: 0;
@@ -100,21 +188,24 @@
       color: var(--text);
       background-color: var(--bg);
       background-image:
+        radial-gradient(circle at 14px 14px, var(--dot) 2.2px, transparent 2.6px),
+        radial-gradient(circle at 42px 42px, var(--dot) 2.2px, transparent 2.6px),
         radial-gradient(ellipse 70% 480px at 50% -80px, var(--card-glow), transparent 70%),
         radial-gradient(ellipse 50% 360px at 100% 100%, var(--card-glow), transparent 70%);
+      background-size: 56px 56px, 56px 56px, 100% 100%, 100% 100%;
       background-attachment: fixed;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      transition: background-color .25s ease, color .25s ease;
+      transition: background-color .35s ease, color .35s ease;
     }
 
     body.auth-loading {
-      overflow:hidden;
+      overflow: hidden;
     }
 
-    button,input,select,textarea { font-family:inherit; }
-    button { cursor:pointer; }
+    button, input, select, textarea { font-family: inherit; }
+    button { cursor: pointer; }
 
     /* =========================================================
    1. PENYESUAIAN LEBAR & PADDING LAYOUT (STEP 1)
@@ -1141,10 +1232,13 @@
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: var(--bg);
+      background-color: var(--bg);
       background-image:
+        radial-gradient(circle at 14px 14px, var(--dot) 2.2px, transparent 2.6px),
+        radial-gradient(circle at 42px 42px, var(--dot) 2.2px, transparent 2.6px),
         radial-gradient(ellipse 80% 500px at 50% 0%, var(--card-glow), transparent 75%),
         radial-gradient(ellipse 60% 400px at 50% 100%, var(--card-glow), transparent 75%);
+      background-size: 56px 56px, 56px 56px, 100% 100%, 100% 100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1185,48 +1279,7 @@
       margin-bottom: 22px;
     }
 
-    .auth-brand-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: var(--primary-soft);
-      color: var(--primary-strong);
-      padding: 4px 12px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
 
-    .supabase-live-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11.5px;
-      font-weight: 600;
-      color: #059669;
-      background: rgba(16, 185, 129, 0.09);
-      border: 1px solid rgba(16, 185, 129, 0.22);
-      padding: 4px 12px;
-      border-radius: 999px;
-      margin: 0 auto 16px;
-    }
-
-    .supabase-live-chip .pulse-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 8px #10b981;
-      animation: pulseGreen 2s infinite;
-    }
-
-    @keyframes pulseGreen {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
-    }
 
     .auth-logo {
       width: 58px;
@@ -1445,36 +1498,7 @@
       text-decoration: underline;
     }
 
-    .auth-cloud-badge {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 20px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-    }
 
-    .cloud-sync-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 500;
-      margin-top: 3px;
-    }
-
-    .cloud-sync-chip i {
-      color: #10b981;
-      font-size: 10px;
-    }
 
     /* MODAL TABS */
     .modal-tabs {
@@ -1686,16 +1710,6 @@
 <div id="authOverlay">
   <div class="auth-card">
     <div class="auth-header">
-      <div class="auth-brand-badge">
-        <i class="fa-solid fa-heart" style="font-size:10px;"></i>
-        <span>Jurnal Buah Hati</span>
-      </div>
-
-      <div class="supabase-live-chip">
-        <span class="pulse-dot"></span>
-        <span>Supabase Cloud Active</span>
-      </div>
-
       <div class="auth-logo">
         <i class="fa-solid fa-baby"></i>
       </div>
@@ -1755,11 +1769,6 @@
       <div class="auth-switch-text">
         <span data-i18n="authNeedAccount">Belum punya akun?</span>
         <a href="javascript:void(0)" onclick="switchAuthMode('register')" data-i18n="authToRegister">Daftar di sini</a>
-      </div>
-
-      <div class="auth-cloud-badge">
-        <i class="fa-solid fa-shield-heart" style="color:#10b981;"></i>
-        <span>Data tersimpan otomatis di Supabase Cloud</span>
       </div>
     </form>
 
@@ -1824,24 +1833,19 @@
       </button>
 
       <div class="auth-microcopy" style="text-align:center; margin-top:10px;">
-        <i class="fa-solid fa-check" style="color:#10b981;"></i> Otomatis tersinkronisasi ke akun Supabase Anda
+        <i class="fa-solid fa-check" style="color:#10b981;"></i> Akun tersimpan dengan aman
       </div>
 
       <div class="auth-switch-text">
         <span data-i18n="authHaveAccount">Sudah punya akun?</span>
         <a href="javascript:void(0)" onclick="switchAuthMode('login')" data-i18n="authToLogin">Masuk di sini</a>
       </div>
-
-      <div class="auth-cloud-badge">
-        <i class="fa-solid fa-shield-heart" style="color:#10b981;"></i>
-        <span>Data tersimpan otomatis di Supabase Cloud</span>
-      </div>
     </form>
 
     <!-- 3. FORM FORGOT PASSWORD -->
     <form id="forgotForm" style="display:none;" action="javascript:void(0);" onsubmit="event.preventDefault(); handleForgotPassword(event);">
       <p class="auth-helper-text" data-i18n="authForgotHelper">
-        Masukkan email Anda untuk menerima tautan reset password dari Supabase.
+        Masukkan email Anda untuk menerima tautan reset password.
       </p>
 
       <div class="auth-input-group">
@@ -1886,7 +1890,6 @@
         <h2 class="baby-name" id="displayBabyName">Adek Bayi</h2>
         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
           <div class="age" id="displayAge">-</div>
-          <span class="cloud-sync-chip" title="Data tersimpan otomatis di Supabase Cloud"><i class="fa-solid fa-cloud"></i> Supabase</span>
         </div>
       </div>
     </div>
@@ -1900,7 +1903,7 @@
 
         <div class="hamburger-menu" id="hamburgerMenu">
           <!-- 1. Tema (Badge menampilkan pilihan warna berikutnya) -->
-          <button class="menu-item" onclick="toggleColorTheme(); closeHamburgerMenu();">
+          <button class="menu-item" onclick="toggleColorTheme();">
             <div class="menu-item-left">
               <i class="fa-solid fa-palette"></i>
               <span data-i18n="menuTheme">Tema</span>
@@ -1909,7 +1912,7 @@
           </button>
 
           <!-- 2. Mode (Icon dinamis: Matahari saat Dark Mode, Bulan saat Light Mode) -->
-          <button class="menu-item" onclick="toggleMode(); closeHamburgerMenu();">
+          <button class="menu-item" onclick="toggleMode();">
             <div class="menu-item-left">
               <i class="fa-solid fa-moon" id="menuModeIcon"></i>
               <span data-i18n="menuMode">Mode</span>
@@ -1924,13 +1927,13 @@
             </div>
           </button>
 
-          <!-- 4. Bahasa -->
+          <!-- 4. Bahasa (Logo Bendera Indonesia & Inggris) -->
           <button class="menu-item" id="menuLangBtn" onclick="toggleLanguage(); closeHamburgerMenu();">
             <div class="menu-item-left">
-              <i class="fa-solid fa-globe"></i>
+              <span id="menuLangFlagIcon" style="font-size:18px; width:20px; text-align:center; display:inline-block; line-height:1;">🇮🇩</span>
               <span id="menuLangLabel">Bahasa</span>
             </div>
-            <span class="menu-badge" id="menuLangBadge">🇮🇩 ID</span>
+            <span class="menu-badge" id="menuLangBadge">🇬🇧 English</span>
           </button>
 
           <!-- 5. Donasi -->
@@ -2753,14 +2756,19 @@ function applyLanguage(lang) {
   currentLang = lang;
   document.documentElement.setAttribute('lang', lang);
 
-  // Reversi Badge: 
-  // Jika sedang Bahasa Indonesia ('id') -> Badge menampilkan '🇬🇧 EN'
-  // Jika sedang Bahasa Inggris ('en')   -> Badge menampilkan '🇮🇩 ID'
+  // Logo Bendera & Reversi Badge:
+  // Jika sedang Bahasa Indonesia ('id') -> Ikon '🇮🇩', Badge switch menampilkan '🇬🇧 English'
+  // Jika sedang Bahasa Inggris ('en')   -> Ikon '🇬🇧', Badge switch menampilkan '🇮🇩 Indonesia'
   const langBadge = document.getElementById('menuLangBadge');
   const langLabel = document.getElementById('menuLangLabel');
+  const langFlag = document.getElementById('menuLangFlagIcon');
+
+  if (langFlag) {
+    langFlag.textContent = (lang === 'id') ? '🇮🇩' : '🇬🇧';
+  }
 
   if (langBadge) {
-    langBadge.textContent = lang === 'id' ? '🇬🇧 EN' : '🇮🇩 ID';
+    langBadge.textContent = (lang === 'id') ? '🇬🇧 English' : '🇮🇩 Indonesia';
   }
 
   if (langLabel) {
@@ -2954,10 +2962,10 @@ const translations = {
     emptyFisikPeriod: "Belum ada data pertumbuhan pada periode ini.",
 
     // Histori Table
-    histAll: "Semua",
-    histMilk: "Susu",
+    histAll: "SEMUA",
+    histMilk: "SUSU",
     histDBF: "DBF",
-    histDiaper: "Popok",
+    histDiaper: "POPOK",
     histGrowth: "BB & PB",
     thTime: "Waktu",
     thType: "Jenis",
@@ -2966,7 +2974,7 @@ const translations = {
     thAction: "Aksi",
     btnEdit: "Edit",
     btnDelete: "Hapus",
-    confirmDelete: "Hapus data ini? Data akan dihapus permanen dari Supabase.",
+    confirmDelete: "Hapus data ini? Data akan dihapus secara permanen.",
     deletedSuccess: "Data berhasil dihapus.",
 
     // Modals & Profile
@@ -3175,11 +3183,11 @@ const translations = {
     emptyFisikPeriod: "No growth data for this period.",
 
     // Histori Table
-    histAll: "All",
-    histMilk: "Milk",
+    histAll: "ALL",
+    histMilk: "MILK",
     histDBF: "DBF",
-    histDiaper: "Diaper",
-    histGrowth: "Growth",
+    histDiaper: "DIAPERS",
+    histGrowth: "GROWTH",
     thTime: "Time",
     thType: "Type",
     thDetail: "Details",
@@ -3187,7 +3195,7 @@ const translations = {
     thAction: "Actions",
     btnEdit: "Edit",
     btnDelete: "Delete",
-    confirmDelete: "Delete this record? It will be permanently removed from Supabase.",
+    confirmDelete: "Delete this record? It will be permanently removed.",
     deletedSuccess: "Data deleted successfully.",
 
     // Modals & Profile
@@ -3645,7 +3653,7 @@ async function initAuth() {
 
   } catch(error) {
     console.error(error);
-    showAuthError('Gagal menghubungkan ke Supabase: ' + getErrorMessage(error));
+    showAuthError('Gagal menghubungkan ke server: ' + getErrorMessage(error));
     showLogin();
   }
 }
@@ -3679,7 +3687,7 @@ async function handleLogin(e) {
 
   try {
     if (!window.supabase || !supabaseClient) {
-      throw new Error('Layanan autentikasi Supabase belum siap. Periksa koneksi internet Anda.');
+      throw new Error('Layanan autentikasi belum siap. Periksa koneksi internet Anda.');
     }
 
     const { data, error } = await supabaseClient.auth.signInWithPassword({
@@ -3775,8 +3783,8 @@ async function handleRegister(e) {
       await enterApp();
       showToast(t('registerSuccess'));
     } else {
-      // Data pendaftaran berhasil masuk ke Supabase
-      showAuthSuccess('🎉 Akun Anda berhasil terdaftar di Supabase! Tautan aktivasi telah dikirim ke ' + email + '. Silakan periksa kotak masuk atau spam email Anda untuk mengaktifkan akun, lalu silakan masuk.');
+      // Data pendaftaran berhasil masuk ke sistem
+      showAuthSuccess('🎉 Akun Anda berhasil terdaftar! Tautan aktivasi telah dikirim ke ' + email + '. Silakan periksa kotak masuk atau spam email Anda untuk mengaktifkan akun, lalu silakan masuk.');
       switchAuthMode('login');
       const loginEmailInput = document.getElementById('loginEmail');
       if (loginEmailInput) {
@@ -4152,41 +4160,64 @@ function togglePassword(inputId, button) {
   button.setAttribute('aria-label', isPassword ? 'Sembunyikan password' : 'Tampilkan password');
 }
 
-function toggleColorTheme() {
+function animateThemeSweep(changeThemeCallback) {
+  // Animasi transisi visual menyapu dari pojok kanan atas ke pojok kiri bawah (tenang, halus, tidak mengagetkan)
+  if (document.startViewTransition) {
+    document.startViewTransition(() => {
+      changeThemeCallback();
+    });
+    return;
+  }
 
+  // Fallback overlay menyapu melingkar dari pojok kanan atas (100% 0%)
+  const sweep = document.createElement('div');
+  sweep.className = 'theme-corner-sweep';
+  document.body.appendChild(sweep);
+
+  void sweep.offsetWidth;
+  sweep.classList.add('active');
+
+  setTimeout(() => {
+    changeThemeCallback();
+    setTimeout(() => {
+      sweep.classList.add('fade-out');
+      setTimeout(() => sweep.remove(), 400);
+    }, 650);
+  }, 400);
+}
+
+function toggleColorTheme() {
   const current =
     document.documentElement.getAttribute(
       'data-color'
     ) || 'pink';
-
-  applyTheme(
-    current === 'pink'
-      ? 'blue'
-      : 'pink',
-    document.documentElement.getAttribute(
-      'data-mode'
-    ) || 'light'
-  );
-
-}
-
-
-function toggleMode() {
-
-  const current =
+  const nextColor = current === 'pink' ? 'blue' : 'pink';
+  const currentMode =
     document.documentElement.getAttribute(
       'data-mode'
     ) || 'light';
 
-  applyTheme(
+  animateThemeSweep(() => {
+    applyTheme(nextColor, currentMode);
+    closeHamburgerMenu();
+  });
+}
+
+function toggleMode() {
+  const currentColor =
     document.documentElement.getAttribute(
       'data-color'
-    ) || 'pink',
-    current === 'light'
-      ? 'dark'
-      : 'light'
-  );
+    ) || 'pink';
+  const current =
+    document.documentElement.getAttribute(
+      'data-mode'
+    ) || 'light';
+  const nextMode = current === 'light' ? 'dark' : 'light';
 
+  animateThemeSweep(() => {
+    applyTheme(currentColor, nextMode);
+    closeHamburgerMenu();
+  });
 }
 
 
@@ -8774,7 +8805,7 @@ async function deleteHistory(type,index) {
 
   if (
     !confirm(
-      'Hapus data ini? Data akan dihapus permanen dari Supabase.'
+      'Hapus data ini? Data akan dihapus secara permanen.'
     )
   ) {
     return;
