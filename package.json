@@ -5,6 +5,8 @@
   "scripts": {
     "build": "echo 'Build complete'",
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "push": "node autopush.js",
+    "autopush": "node autopush.js"
   }
 }
