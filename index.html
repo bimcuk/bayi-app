@@ -3117,7 +3117,7 @@
           <button class="menu-item" id="menuChatBtn" onclick="openUserChat(); closeHamburgerMenu();">
             <div class="menu-item-left">
               <i class="fa-solid fa-comments" style="color: var(--primary);"></i>
-              <span>Chat Admin</span>
+              <span data-i18n="menuChat">Chat Admin</span>
             </div>
             <span class="menu-badge hidden" id="menuChatBadge" style="background:#ef4444; color:#fff;">0</span>
           </button>
@@ -3126,7 +3126,7 @@
           <button class="menu-item" id="menuMemoryModeBtn" onclick="openMemoryModePrompt(); closeHamburgerMenu();">
             <div class="menu-item-left">
               <i class="fa-solid fa-heart" style="color: #ec4899;"></i>
-              <span>Mode Kenangan</span>
+              <span data-i18n="menuMemoryMode">Mode Kenangan</span>
             </div>
             <span class="menu-badge" id="menuMemoryBadge" style="font-size:10px; background:rgba(236,72,153,0.15); color:#ec4899;">0-2 Thn</span>
           </button>
@@ -3199,8 +3199,8 @@
         <i class="fa-solid fa-heart"></i>
       </div>
       <div class="memory-banner-text">
-        <h4>Mode Kenangan Aktif (Usia 0-2 Tahun)</h4>
-        <p>Seluruh riwayat masa emas si kecil telah disimpan permanen sebagai album kenangan. Anda dapat melihat grafik & rekapan di menu <strong>DASHBOARD</strong> dan <strong>HISTORI</strong>.</p>
+        <h4 data-i18n="memoryBannerTitle">Mode Kenangan Aktif (Usia 0-2 Tahun)</h4>
+        <p data-i18n="memoryBannerDesc">Seluruh riwayat masa emas si kecil telah disimpan permanen sebagai album kenangan. Anda dapat melihat grafik & rekapan di menu DASBOR dan HISTORI.</p>
       </div>
     </div>
 
@@ -3973,7 +3973,7 @@
           <div style="display:flex; justify-content:space-between; align-items:center;">
             <div>
               <div style="font-size:12.5px; font-weight:700; color:var(--text);">
-                <i class="fa-solid fa-heart" style="color:#ec4899; margin-right:4px;"></i> Mode Kenangan (0-2 Thn)
+                <i class="fa-solid fa-heart" style="color:#ec4899; margin-right:4px;"></i> <span data-i18n="memoryModeProfileTitle">Mode Kenangan (0-2 Thn)</span>
               </div>
               <div id="memoryModeStatusText" style="font-size:11px; color:var(--muted); margin-top:2px;">
                 Status: Aktif Mencatat
@@ -4115,8 +4115,8 @@
         <i class="fa-solid fa-headset"></i>
       </div>
       <div>
-        <div class="user-chat-title">Admin Support</div>
-        <div class="user-chat-status">Online</div>
+        <div class="user-chat-title" data-i18n="chatSupportTitle">Admin Support</div>
+        <div class="user-chat-status" data-i18n="chatOnline">Online</div>
       </div>
     </div>
     <div class="user-chat-actions">
@@ -4130,14 +4130,14 @@
   </div>
 
   <div id="userChatMessages" class="user-chat-messages">
-    <div class="chat-empty-hint">
+    <div class="chat-empty-hint" data-i18n="chatEmptyHint">
       <i class="fa-regular fa-comments"></i>
       Halo! Ada yang bisa kami bantu seputar Catatan Si Kecil atau langganan? Tulis pesan di bawah.
     </div>
   </div>
 
   <form id="userChatForm" class="user-chat-footer" onsubmit="event.preventDefault(); sendUserChatMessage();">
-    <input type="text" id="userChatInput" class="user-chat-input" placeholder="Tulis pesan ke admin..." autocomplete="off">
+    <input type="text" id="userChatInput" class="user-chat-input" placeholder="Tulis pesan ke admin..." autocomplete="off" data-i18n-ph="chatPlaceholder">
     <button type="submit" class="user-chat-send-btn" title="Kirim">
       <i class="fa-solid fa-paper-plane"></i>
     </button>
@@ -4145,48 +4145,48 @@
 </div>
 
 <!-- PROMOTIONAL SPLASH SCREEN (Tampil Sehari Sekali saat Login) -->
-<div id="promoSplashModal" class="modal-backdrop-custom">
-  <div class="modal-box promo-splash-box">
-    <button class="modal-close" onclick="closePromoSplash()" aria-label="Tutup Promosi">
+<div id="promoSplashModal" class="modal-backdrop-custom" onclick="if(event.target===this)closePromoSplash()">
+  <div class="modal-box promo-splash-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closePromoSplash()" aria-label="Tutup Promosi" data-i18n-aria="promoCloseAria">
       <i class="fa-solid fa-xmark"></i>
     </button>
     <div class="promo-splash-header">
       <div class="promo-splash-crown">
         <i class="fa-solid fa-crown"></i>
       </div>
-      <div class="promo-badge-tag">Promo Eksklusif</div>
-      <h2 class="promo-splash-title">Catatan Si Kecil Premium</h2>
-      <p class="promo-splash-subtitle">Temani setiap detik tumbuh kembang buah hati tercinta dengan fitur lengkap tanpa batas.</p>
+      <div class="promo-badge-tag" data-i18n="promoTag">Promo Eksklusif</div>
+      <h2 class="promo-splash-title" data-i18n="promoTitle">Catatan Si Kecil Premium</h2>
+      <p class="promo-splash-subtitle" data-i18n="promoSubtitle">Temani setiap detik tumbuh kembang buah hati tercinta dengan fitur lengkap tanpa batas.</p>
     </div>
 
     <div class="promo-splash-body">
       <div class="promo-highlight-cards">
         <div class="promo-card trial">
           <div class="promo-card-icon"><i class="fa-solid fa-gift"></i></div>
-          <h4>Gratis Trial 30 Hari</h4>
-          <p>Nikmati seluruh fitur premium gratis 1 bulan pertama sejak pendaftaran.</p>
+          <h4 data-i18n="promoTrialTitle">Gratis Trial 30 Hari</h4>
+          <p data-i18n="promoTrialDesc">Nikmati seluruh fitur premium gratis 1 bulan pertama sejak pendaftaran.</p>
         </div>
         <div class="promo-card vip">
           <div class="promo-card-icon"><i class="fa-solid fa-gem"></i></div>
-          <h4>Rp 250.000 / 1 Tahun</h4>
-          <p>Langganan 365 hari penuh, hemat & dapatkan badge VIP berkilau.</p>
+          <h4 data-i18n="promoVipTitle">Rp 250.000 / 1 Tahun</h4>
+          <p data-i18n="promoVipDesc">Langganan 365 hari penuh, hemat & dapatkan badge VIP berkilau.</p>
         </div>
       </div>
 
       <ul class="promo-feature-list">
-        <li><i class="fa-solid fa-circle-check"></i> Catatan ASI, DBF, Pumping, Sufor & MPASI lengkap</li>
-        <li><i class="fa-solid fa-circle-check"></i> Grafik Kurva Pertumbuhan Standar WHO & KMS</li>
-        <li><i class="fa-solid fa-circle-check"></i> Pemantau Obat, Suhu, Feses & Jadwal Imunisasi</li>
-        <li><i class="fa-solid fa-circle-check"></i> Konsultasi Langsung via Chat Inbox Admin</li>
-        <li><i class="fa-solid fa-circle-check"></i> Backup Otomatis & Ekspor Data Kapan Saja</li>
+        <li data-i18n="promoFeature1"><i class="fa-solid fa-circle-check"></i> Catatan ASI, DBF, Pumping, Sufor & MPASI lengkap</li>
+        <li data-i18n="promoFeature2"><i class="fa-solid fa-circle-check"></i> Grafik Kurva Pertumbuhan Standar WHO & KMS</li>
+        <li data-i18n="promoFeature3"><i class="fa-solid fa-circle-check"></i> Pemantau Obat, Suhu, Feses & Jadwal Imunisasi</li>
+        <li data-i18n="promoFeature4"><i class="fa-solid fa-circle-check"></i> Konsultasi Langsung via Chat Inbox Admin</li>
+        <li data-i18n="promoFeature5"><i class="fa-solid fa-circle-check"></i> Backup Otomatis & Ekspor Data Kapan Saja</li>
       </ul>
     </div>
 
     <div class="promo-splash-footer">
       <button type="button" class="primary-btn" onclick="openSubscribeFromPromo()">
-        <i class="fa-solid fa-crown" style="margin-right:6px;"></i> Lihat Paket Langganan
+        <i class="fa-solid fa-crown" style="margin-right:6px;"></i> <span data-i18n="promoBtnSubscribe">Lihat Paket Langganan</span>
       </button>
-      <button type="button" class="promo-close-link" onclick="closePromoSplash()">
+      <button type="button" class="promo-close-link" onclick="closePromoSplash()" data-i18n="promoBtnContinue">
         Lanjut ke Aplikasi
       </button>
     </div>
@@ -4194,33 +4194,33 @@
 </div>
 
 <!-- MODAL KONFIRMASI BERHENTI GUNAKAN (MODE KENANGAN) -->
-<div id="memoryModeModal" class="modal-backdrop-custom">
-  <div class="modal-box memory-modal-box">
+<div id="memoryModeModal" class="modal-backdrop-custom" onclick="if(event.target===this)closeMemoryModeModal()">
+  <div class="modal-box memory-modal-box" onclick="event.stopPropagation()">
     <div class="memory-modal-header">
       <div class="memory-modal-heart">
         <i class="fa-solid fa-heart"></i>
       </div>
-      <h3 style="margin:0 0 4px; font-size:17px; font-weight:800; color:var(--text);">Simpan Sebagai Kenangan</h3>
-      <p class="memory-modal-subtitle" style="font-size:12px; color:var(--muted); margin:0;">Masa emas tumbuh kembang 0-2 tahun buah hati Anda.</p>
+      <h3 style="margin:0 0 4px; font-size:17px; font-weight:800; color:var(--text);" data-i18n="memoryModalTitle">Simpan Sebagai Kenangan</h3>
+      <p class="memory-modal-subtitle" style="font-size:12px; color:var(--muted); margin:0;" data-i18n="memoryModalSubtitle">Masa emas tumbuh kembang 0-2 tahun buah hati Anda.</p>
     </div>
 
     <div class="memory-modal-body">
       <div class="memory-info-card">
-        <div style="font-weight:700; color:#db2777; margin-bottom:6px;"><i class="fa-solid fa-circle-info"></i> Apa itu Mode Kenangan?</div>
-        <p style="margin:0 0 6px;">Jika Anda memilih <strong>Berhenti Gunakan</strong>:</p>
+        <div style="font-weight:700; color:#db2777; margin-bottom:6px;"><i class="fa-solid fa-circle-info"></i> <span data-i18n="memoryInfoTitle">Apa itu Mode Kenangan?</span></div>
+        <p style="margin:0 0 6px;" data-i18n="memoryInfoIntro">Jika Anda memilih <strong>Berhenti Gunakan</strong>:</p>
         <ul style="margin:0; padding-left:18px;">
-          <li>✅ <strong>Dashboard & Riwayat</strong> tetap dapat Anda buka kapan pun untuk mengenang seluruh perjalanan si kecil.</li>
-          <li>✅ <strong>Grafik & Kurva WHO</strong> tetap tersimpan rapi sebagai buku harian abadi.</li>
-          <li>🔒 <strong>Input, Edit & Hapus Catatan dinonaktifkan</strong> agar data historis tetap aman dan terlindungi.</li>
+          <li data-i18n="memoryPoint1">✅ <strong>Dashboard & Riwayat</strong> tetap dapat Anda buka kapan pun untuk mengenang seluruh perjalanan si kecil.</li>
+          <li data-i18n="memoryPoint2">✅ <strong>Grafik & Kurva WHO</strong> tetap tersimpan rapi sebagai buku harian abadi.</li>
+          <li data-i18n="memoryPoint3">🔒 <strong>Input, Edit & Hapus Catatan dinonaktifkan</strong> agar data historis tetap aman dan terlindungi.</li>
         </ul>
       </div>
     </div>
 
     <div class="memory-modal-footer">
       <button type="button" class="primary-btn memory-confirm-btn" onclick="confirmEnableMemoryMode()">
-        <i class="fa-solid fa-heart" style="margin-right:6px;"></i> Ya, Simpan Sebagai Kenangan
+        <i class="fa-solid fa-heart" style="margin-right:6px;"></i> <span data-i18n="btnMemoryConfirm">Ya, Simpan Sebagai Kenangan</span>
       </button>
-      <button type="button" class="secondary-btn" style="width:100%; margin-top:8px;" onclick="closeMemoryModeModal()">
+      <button type="button" class="secondary-btn" style="width:100%; margin-top:8px;" onclick="closeMemoryModeModal()" data-i18n="btnMemoryCancel">
         Batal / Nanti Saja
       </button>
     </div>
@@ -4589,7 +4589,59 @@ const translations = {
     unitTimesText: "kali",
     unitMl: "ml",
     unitKg: "kg",
-    unitCm: "cm"
+    unitCm: "cm",
+
+    // Mode Kenangan (Memory Mode 0-2 Tahun)
+    menuMemoryMode: "Mode Kenangan",
+    menuMemoryBadgeActive: "Aktif (Kenangan)",
+    menuMemoryBadgeInactive: "0-2 Thn",
+    memoryBannerTitle: "Mode Kenangan Aktif (Usia 0-2 Tahun)",
+    memoryBannerDesc: "Seluruh riwayat masa emas si kecil telah disimpan permanen sebagai arsip kenangan. Fitur penambahan, pengubahan, dan penghapusan data dikunci agar catatan tetap abadi.",
+    memoryModeProfileTitle: "Mode Kenangan (0-2 Thn)",
+    memoryModeStatusActive: "Mode Kenangan Aktif (Hanya Baca)",
+    memoryModeStatusInactive: "Status: Aktif Mencatat",
+    btnStopUsing: "Berhenti Gunakan",
+    btnReactivate: "Kembali ke Mode Aktif",
+    memoryModalTitle: "Simpan Sebagai Kenangan",
+    memoryModalSubtitle: "Masa emas tumbuh kembang 0-2 tahun buah hati Anda.",
+    memoryInfoTitle: "Apa itu Mode Kenangan?",
+    memoryInfoIntro: "Jika Anda memilih Berhenti Gunakan:",
+    memoryPoint1: "✅ <strong>Dashboard & Riwayat</strong> tetap dapat Anda buka kapan pun untuk mengenang seluruh perjalanan si kecil.",
+    memoryPoint2: "✅ <strong>Grafik & Kurva WHO</strong> tetap tersimpan rapi sebagai buku harian abadi.",
+    memoryPoint3: "🔒 <strong>Input, Edit & Hapus Catatan dinonaktifkan</strong> agar data historis tetap aman dan terlindungi.",
+    btnMemoryConfirm: "Ya, Simpan Sebagai Kenangan",
+    btnMemoryCancel: "Batal / Nanti Saja",
+    memoryToastActive: "💖 Mode Kenangan Aktif: Masa emas 0-2 tahun si kecil disimpan permanen sebagai kenangan.",
+    memoryToastInactive: "✅ Mode Aktif kembali dinyalakan.",
+    memoryToastBlockedAdd: "🔒 Mode Kenangan Aktif: Catatan baru tidak dapat ditambah.",
+    memoryToastBlockedDelete: "🔒 Mode Kenangan Aktif: Data tidak dapat dihapus.",
+    memoryConfirmReactivate: "Apakah Anda ingin kembali ke Mode Aktif untuk menambah atau mengedit catatan?",
+
+    // Promo Splash Screen Modal
+    promoTag: "Promo Eksklusif",
+    promoTitle: "Catatan Si Kecil Premium",
+    promoSubtitle: "Temani setiap detik tumbuh kembang buah hati tercinta dengan fitur lengkap tanpa batas.",
+    promoTrialTitle: "Gratis Trial 30 Hari",
+    promoTrialDesc: "Nikmati seluruh fitur premium gratis 1 bulan pertama sejak pendaftaran.",
+    promoVipTitle: "Rp 250.000 / 1 Tahun",
+    promoVipDesc: "Langganan 365 hari penuh, hemat & dapatkan badge VIP berkilau.",
+    promoFeature1: "Catatan ASI, DBF, Pumping, Sufor & MPASI lengkap",
+    promoFeature2: "Grafik Kurva Pertumbuhan Standar WHO & KMS",
+    promoFeature3: "Pemantau Obat, Suhu, Feses & Jadwal Imunisasi",
+    promoFeature4: "Konsultasi Langsung via Chat Inbox Admin",
+    promoFeature5: "Backup Otomatis & Ekspor Data Kapan Saja",
+    promoBtnSubscribe: "Lihat Paket Langganan",
+    promoBtnContinue: "Lanjut ke Aplikasi",
+    promoCloseAria: "Tutup Promosi",
+
+    // Chat Support & Admin Inbox
+    menuChat: "Chat Admin",
+    chatSupportTitle: "Admin Support",
+    chatOnline: "Online",
+    chatPlaceholder: "Tulis pesan ke admin...",
+    chatEmptyHint: "Halo! Ada yang bisa kami bantu seputar Catatan Si Kecil atau langganan? Tulis pesan di bawah.",
+    chatConfirmClear: "Hapus seluruh riwayat chat Anda dengan admin?",
+    chatClearSuccess: "Riwayat chat berhasil dibersihkan."
   },
 
   en: {
@@ -4809,7 +4861,59 @@ const translations = {
     unitTimesText: "times",
     unitMl: "ml",
     unitKg: "kg",
-    unitCm: "cm"
+    unitCm: "cm",
+
+    // Mode Kenangan (Memory Mode 0-2 Years)
+    menuMemoryMode: "Memory Mode",
+    menuMemoryBadgeActive: "Active (Memory)",
+    menuMemoryBadgeInactive: "0-2 Yrs",
+    memoryBannerTitle: "Memory Mode Active (Ages 0-2 Years)",
+    memoryBannerDesc: "All precious golden age records of your little one have been permanently preserved as a memory archive. Adding, editing, and deleting records is locked to keep memories safe.",
+    memoryModeProfileTitle: "Memory Mode (0-2 Yrs)",
+    memoryModeStatusActive: "Memory Mode Active (Read Only)",
+    memoryModeStatusInactive: "Status: Actively Logging",
+    btnStopUsing: "Stop Tracking",
+    btnReactivate: "Return to Active Mode",
+    memoryModalTitle: "Save as Memory Mode",
+    memoryModalSubtitle: "The golden age of your baby's growth from 0 to 2 years.",
+    memoryInfoTitle: "What is Memory Mode?",
+    memoryInfoIntro: "If you choose to Stop Tracking:",
+    memoryPoint1: "✅ <strong>Dashboard & History</strong> remain accessible anytime to cherish your little one's journey.",
+    memoryPoint2: "✅ <strong>WHO Charts & Curves</strong> stay neatly preserved as a lifelong keepsake.",
+    memoryPoint3: "🔒 <strong>Adding, Editing & Deleting records is disabled</strong> to safeguard historical data.",
+    btnMemoryConfirm: "Yes, Save as Memories",
+    btnMemoryCancel: "Cancel / Later",
+    memoryToastActive: "💖 Memory Mode Active: Your baby's 0-2 years milestones are preserved permanently as memories.",
+    memoryToastInactive: "✅ Active Mode re-enabled.",
+    memoryToastBlockedAdd: "🔒 Memory Mode Active: New entries cannot be added.",
+    memoryToastBlockedDelete: "🔒 Memory Mode Active: Data cannot be deleted.",
+    memoryConfirmReactivate: "Do you want to return to Active Mode to add or edit records?",
+
+    // Promo Splash Screen Modal
+    promoTag: "Exclusive Promo",
+    promoTitle: "Catatan Si Kecil Premium",
+    promoSubtitle: "Cherish every second of your little one's growth with unlimited premium features.",
+    promoTrialTitle: "Free 30-Day Trial",
+    promoTrialDesc: "Enjoy all premium features free for your first month after registration.",
+    promoVipTitle: "IDR 250,000 / 1 Year",
+    promoVipDesc: "Full 365-day subscription, save more & unlock the glowing VIP badge.",
+    promoFeature1: "Complete Breastfeeding, DBF, Pumping, Formula & Solid Food logs",
+    promoFeature2: "WHO & KMS Standard Growth Charts and Curves",
+    promoFeature3: "Medicine, Temperature, Diaper & Immunization trackers",
+    promoFeature4: "Direct consultation via Admin Chat Inbox",
+    promoFeature5: "Automatic Cloud Backup & Data Export anytime",
+    promoBtnSubscribe: "View Subscription Plans",
+    promoBtnContinue: "Continue to App",
+    promoCloseAria: "Close Promotion",
+
+    // Chat Support & Admin Inbox
+    menuChat: "Admin Chat",
+    chatSupportTitle: "Admin Support",
+    chatOnline: "Online",
+    chatPlaceholder: "Write a message to admin...",
+    chatEmptyHint: "Hi! How can we help you regarding Catatan Si Kecil or subscriptions? Send a message below.",
+    chatConfirmClear: "Delete all your chat history with admin?",
+    chatClearSuccess: "Chat history has been cleared."
   }
 };
 
@@ -4831,9 +4935,13 @@ function updateUITranslations() {
     const text = t(key);
     const icon = el.querySelector('i');
     if (icon) {
-      el.innerHTML = icon.outerHTML + ' ' + escHtml(text);
+      el.innerHTML = icon.outerHTML + ' ' + (text.includes('<') ? text : escHtml(text));
     } else {
-      el.textContent = text;
+      if (text.includes('<')) {
+        el.innerHTML = text;
+      } else {
+        el.textContent = text;
+      }
     }
   });
 
@@ -4841,6 +4949,12 @@ function updateUITranslations() {
   document.querySelectorAll('[data-i18n-ph]').forEach(function(el) {
     const key = el.getAttribute('data-i18n-ph');
     el.placeholder = t(key);
+  });
+
+  // 2b. Terjemahkan aria-label dengan data-i18n-aria
+  document.querySelectorAll('[data-i18n-aria]').forEach(function(el) {
+    const key = el.getAttribute('data-i18n-aria');
+    el.setAttribute('aria-label', t(key));
   });
 
   // 3. Update Nama Bayi & Profil
@@ -4890,6 +5004,11 @@ function updateUITranslations() {
   // 8. Render Ulang komponen aktif
   renderAllDashboards();
   renderHistory();
+
+  // 9. Update Status & Label Mode Kenangan Dinamis
+  if (typeof applyMemoryModeUI === 'function') {
+    applyMemoryModeUI();
+  }
 }
 
 function updateFilterMonthSelectOptions() {
@@ -5241,7 +5360,7 @@ async function handleLogin(e) {
     }
 
     currentUser = data.user;
-    await enterApp();
+    await enterApp(true);
   } catch (err) {
     console.error('Error saat login:', err);
     showAuthError(translateAuthError(err));
@@ -5320,7 +5439,7 @@ async function handleRegister(e) {
       } catch(profileErr) {
         console.warn('Auto insert profile warning:', profileErr);
       }
-      await enterApp();
+      await enterApp(true);
       showToast(t('registerSuccess'));
     } else {
       // Data pendaftaran berhasil masuk ke sistem
@@ -5504,7 +5623,7 @@ function logout() {
 
 let isEnteringApp = false;
 
-async function enterApp() {
+async function enterApp(isManualLogin = false) {
   if (isEnteringApp) return;
   isEnteringApp = true;
   clearUserData();
@@ -5522,7 +5641,7 @@ async function enterApp() {
   // Inisialisasi fitur lokal secara instan sebelum network await
   initMemoryMode();
   initUserChat();
-  checkAndShowPromoSplash();
+  checkAndShowPromoSplash(isManualLogin);
 
   try {
     await loadAllData();
@@ -5795,7 +5914,7 @@ function showMainSection(section) {
 
   if (section === 'input') {
     if (typeof isMemoryModeActive !== 'undefined' && isMemoryModeActive) {
-      showToast('💖 Mode Kenangan Aktif: Data masa emas 0-2 tahun si kecil telah disimpan permanen sebagai kenangan.');
+      showToast(t('memoryToastActive'));
     }
     document.getElementById(
       'sectionInput'
@@ -6433,7 +6552,7 @@ function openProfile() {
 
 function checkAndShowPromoSplash(forceShow = false) {
   const todayStr = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-  const userKey = 'baby_promo_splash_' + ((currentUser && (currentUser.id || currentUser.email)) || 'user');
+  const userKey = 'baby_promo_splash_v4_' + ((currentUser && (currentUser.id || currentUser.email)) || 'user');
   const lastShown = localStorage.getItem(userKey);
 
   if (forceShow || lastShown !== todayStr) {
@@ -6499,17 +6618,17 @@ function confirmEnableMemoryMode() {
   localStorage.setItem(userKey, 'true');
   closeMemoryModeModal();
   applyMemoryModeUI();
-  showToast('💖 Mode Kenangan Aktif: Masa emas 0-2 tahun si kecil disimpan permanen sebagai kenangan.');
+  showToast(t('memoryToastActive'));
   showMainSection('dashboard');
 }
 
 function disableMemoryMode() {
-  if (!confirm('Apakah Anda ingin kembali ke Mode Aktif untuk menambah atau mengedit catatan?')) return;
+  if (!confirm(t('memoryConfirmReactivate'))) return;
   const userKey = 'baby_memory_mode_' + (currentUser ? currentUser.id : 'guest');
   isMemoryModeActive = false;
   localStorage.removeItem(userKey);
   applyMemoryModeUI();
-  showToast('✅ Mode Aktif kembali dinyalakan.');
+  showToast(t('memoryToastInactive'));
 }
 
 function toggleMemoryModeFromProfile() {
@@ -6531,14 +6650,14 @@ function applyMemoryModeUI() {
     document.body.classList.add('memory-mode-active');
     if (banner) banner.classList.remove('hidden');
     if (profileToggleBtn) {
-      profileToggleBtn.textContent = 'Kembali ke Mode Aktif';
+      profileToggleBtn.textContent = t('btnReactivate');
       profileToggleBtn.className = 'admin-btn acc';
     }
     if (profileStatusText) {
-      profileStatusText.innerHTML = '<span style="color:#ec4899; font-weight:700;">Mode Kenangan Aktif (Hanya Baca)</span>';
+      profileStatusText.innerHTML = '<span style="color:#ec4899; font-weight:700;">' + t('memoryModeStatusActive') + '</span>';
     }
     if (menuMemoryBadge) {
-      menuMemoryBadge.textContent = 'Aktif (Kenangan)';
+      menuMemoryBadge.textContent = t('menuMemoryBadgeActive');
       menuMemoryBadge.style.background = '#ec4899';
       menuMemoryBadge.style.color = '#fff';
     }
@@ -6546,14 +6665,14 @@ function applyMemoryModeUI() {
     document.body.classList.remove('memory-mode-active');
     if (banner) banner.classList.add('hidden');
     if (profileToggleBtn) {
-      profileToggleBtn.textContent = 'Berhenti Gunakan';
+      profileToggleBtn.textContent = t('btnStopUsing');
       profileToggleBtn.className = 'admin-btn reject';
     }
     if (profileStatusText) {
-      profileStatusText.textContent = 'Status: Aktif Mencatat';
+      profileStatusText.textContent = t('memoryModeStatusInactive');
     }
     if (menuMemoryBadge) {
-      menuMemoryBadge.textContent = '0-2 Thn';
+      menuMemoryBadge.textContent = t('menuMemoryBadgeInactive');
       menuMemoryBadge.style.background = 'rgba(236,72,153,0.15)';
       menuMemoryBadge.style.color = '#ec4899';
     }
@@ -6776,7 +6895,7 @@ function deleteUserChatMessage(msgId) {
 }
 
 function clearUserChatHistory() {
-  if (!confirm('Hapus seluruh riwayat chat Anda dengan admin?')) return;
+  if (!confirm(t('chatConfirmClear'))) return;
   const myEmail = getCurrentUserChatEmail();
   const thread = getUserChatThread(myEmail);
   if (thread) {
@@ -6784,7 +6903,7 @@ function clearUserChatHistory() {
     thread.unread_by_user = 0;
     saveUserChatThread(thread);
     renderUserChatMessages();
-    showToast('Riwayat chat berhasil dibersihkan.');
+    showToast(t('chatClearSuccess'));
   }
 }
 
@@ -8118,7 +8237,7 @@ async function submitDBF(e) {
   if (isSubmittingDBF) return;
 
   if (typeof isMemoryModeActive !== 'undefined' && isMemoryModeActive) {
-    showToast('🔒 Mode Kenangan Aktif: Catatan baru tidak dapat ditambah.');
+    showToast(t('memoryToastBlockedAdd'));
     return;
   }
 
@@ -8366,7 +8485,7 @@ async function submitSusu(e) {
   if (isSubmittingSusu) return;
 
   if (typeof isMemoryModeActive !== 'undefined' && isMemoryModeActive) {
-    showToast('🔒 Mode Kenangan Aktif: Catatan baru tidak dapat ditambah.');
+    showToast(t('memoryToastBlockedAdd'));
     return;
   }
 
@@ -8588,7 +8707,7 @@ async function submitPopok(e) {
   if (isSubmittingPopok) return;
 
   if (typeof isMemoryModeActive !== 'undefined' && isMemoryModeActive) {
-    showToast('🔒 Mode Kenangan Aktif: Catatan baru tidak dapat ditambah.');
+    showToast(t('memoryToastBlockedAdd'));
     return;
   }
 
@@ -8812,7 +8931,7 @@ async function submitFisik(e) {
   if (isSubmittingFisik) return;
 
   if (typeof isMemoryModeActive !== 'undefined' && isMemoryModeActive) {
-    showToast('🔒 Mode Kenangan Aktif: Catatan baru tidak dapat ditambah.');
+    showToast(t('memoryToastBlockedAdd'));
     return;
   }
 
@@ -11651,7 +11770,7 @@ function editHistory(type,index) {
 async function deleteHistory(type,index) {
 
   if (typeof isMemoryModeActive !== 'undefined' && isMemoryModeActive) {
-    showToast('🔒 Mode Kenangan Aktif: Data tidak dapat dihapus.');
+    showToast(t('memoryToastBlockedDelete'));
     return;
   }
 
