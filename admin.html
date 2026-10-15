@@ -427,6 +427,255 @@
       border: 1px solid rgba(236, 72, 153, 0.4);
     }
 
+    .chat-unread-badge {
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 800;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 9px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    /* Admin Chat Layout */
+    .admin-chat-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 16px;
+      height: 520px;
+      background: var(--surface2);
+      border: 1px solid var(--surface-border);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .admin-chat-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+    }
+
+    .admin-chat-sidebar {
+      border-right: 1px solid var(--surface-border);
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+    }
+
+    .admin-chat-search {
+      padding: 12px;
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .admin-chat-search input {
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--surface-border);
+      background: var(--surface2);
+      color: var(--text);
+    }
+
+    .admin-chat-threads-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .admin-thread-item {
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: var(--surface2);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .admin-thread-item:hover {
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .admin-thread-item.active {
+      background: var(--primary-soft);
+      border-color: var(--primary);
+    }
+
+    .admin-thread-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .admin-thread-email {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .admin-thread-badge {
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 999px;
+    }
+
+    .admin-thread-lastmsg {
+      font-size: 11px;
+      color: var(--text-muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-top: 3px;
+    }
+
+    .admin-thread-time {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .admin-chat-main {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background: var(--bg);
+    }
+
+    .admin-chat-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--text-muted);
+      font-size: 13px;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .admin-chat-placeholder i {
+      font-size: 42px;
+      color: var(--primary);
+      margin-bottom: 12px;
+      opacity: 0.7;
+    }
+
+    .admin-chat-conversation {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .admin-conv-header {
+      padding: 12px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--surface-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .admin-conv-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .admin-conv-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .admin-conv-messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .admin-bubble {
+      max-width: 82%;
+      padding: 9px 13px;
+      border-radius: 16px;
+      font-size: 12.5px;
+      line-height: 1.45;
+      position: relative;
+      word-break: break-word;
+    }
+
+    .admin-bubble.user {
+      align-self: flex-start;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--surface-border);
+      border-bottom-left-radius: 4px;
+    }
+
+    .admin-bubble.admin {
+      align-self: flex-end;
+      background: linear-gradient(135deg, var(--primary) 0%, #d97706 100%);
+      color: #ffffff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .admin-bubble-meta {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      font-size: 9.5px;
+      margin-top: 4px;
+      opacity: 0.75;
+    }
+
+    .admin-bubble.user .admin-bubble-meta {
+      justify-content: flex-start;
+    }
+
+    .admin-conv-footer {
+      padding: 12px 16px;
+      background: var(--surface);
+      border-top: 1px solid var(--surface-border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .admin-reply-input {
+      flex: 1;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--surface-border);
+      background: var(--surface2);
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+    }
+
+    .admin-reply-input:focus {
+      border-color: var(--primary);
+    }
+
     .admin-req-body {
       display: flex;
       align-items: center;
@@ -690,8 +939,9 @@
           <input
             id="adminEmail"
             type="email"
-            autocomplete="username"
-            placeholder="rojulanfayadulmujahid@gmail.com"
+            autocomplete="off"
+            placeholder="Email Admin"
+            value=""
             required
           >
         </div>
@@ -702,8 +952,9 @@
             <input
               id="adminPassword"
               type="password"
-              autocomplete="current-password"
+              autocomplete="off"
               placeholder="Password"
+              value=""
               required
             >
             <button
@@ -748,6 +999,10 @@
         </button>
         <button type="button" class="admin-tab" id="tabPwdBtn" onclick="switchAdminTab('pwd')">
           <i class="fa-solid fa-key"></i> Ubah Password / Email
+        </button>
+        <button type="button" class="admin-tab" id="tabChatBtn" onclick="switchAdminTab('chat')">
+          <i class="fa-solid fa-comments"></i> Inbox Chat
+          <span id="adminChatBadge" class="chat-unread-badge hidden" style="margin-left:6px;">0</span>
         </button>
       </div>
 
@@ -834,6 +1089,54 @@
             <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan
           </button>
         </form>
+      </div>
+
+      <!-- TAB 4: INBOX CHAT PENGGUNA -->
+      <div id="adminChatSection" class="hidden">
+        <div class="admin-chat-layout">
+          <!-- Left: User Threads List -->
+          <div class="admin-chat-sidebar">
+            <div class="admin-chat-search">
+              <input type="text" id="adminChatSearchInput" placeholder="Cari email / nama user..." oninput="filterAdminChatThreads()">
+            </div>
+            <div id="adminChatThreadsList" class="admin-chat-threads-list">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Right: Active Chat Conversation -->
+          <div class="admin-chat-main">
+            <div id="adminChatEmptyHint" class="admin-chat-placeholder">
+              <i class="fa-regular fa-comments"></i>
+              <p>Pilih pesan pengguna di sebelah kiri untuk membaca dan membalas percakapan.</p>
+            </div>
+
+            <div id="adminChatConversationBox" class="admin-chat-conversation hidden">
+              <div class="admin-conv-header">
+                <div>
+                  <div id="adminActiveUserName" class="admin-conv-name">Nama User</div>
+                  <div id="adminActiveUserMeta" class="admin-conv-meta">user@gmail.com • VIP</div>
+                </div>
+                <div style="display:flex; gap:8px;">
+                  <button type="button" class="admin-btn reject" style="padding:4px 10px; font-size:11px;" onclick="adminDeleteActiveConversation()">
+                    <i class="fa-solid fa-trash-can"></i> Hapus Percakapan
+                  </button>
+                </div>
+              </div>
+
+              <div id="adminActiveMessagesList" class="admin-conv-messages">
+                <!-- Rendered dynamically -->
+              </div>
+
+              <form id="adminReplyForm" class="admin-conv-footer" onsubmit="event.preventDefault(); adminSendReply();">
+                <input type="text" id="adminReplyInput" class="admin-reply-input" placeholder="Tulis balasan untuk pengguna ini..." autocomplete="off">
+                <button type="submit" class="btn-primary" style="width:auto; padding:0 18px; height:40px; border-radius:12px;">
+                  <i class="fa-solid fa-paper-plane"></i> Balas
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
 
       <button type="button" class="btn-logout" onclick="logoutAdmin()">
@@ -971,13 +1274,373 @@
       document.getElementById('adminSubSection').classList.toggle('hidden', tab !== 'sub');
       document.getElementById('adminUsersSection').classList.toggle('hidden', tab !== 'users');
       document.getElementById('adminPwdSection').classList.toggle('hidden', tab !== 'pwd');
+      const chatSec = document.getElementById('adminChatSection');
+      if (chatSec) chatSec.classList.toggle('hidden', tab !== 'chat');
 
       document.getElementById('tabSubBtn').classList.toggle('active', tab === 'sub');
       document.getElementById('tabUsersBtn').classList.toggle('active', tab === 'users');
       document.getElementById('tabPwdBtn').classList.toggle('active', tab === 'pwd');
+      const tabChatBtn = document.getElementById('tabChatBtn');
+      if (tabChatBtn) tabChatBtn.classList.toggle('active', tab === 'chat');
 
       if (tab === 'sub') renderAdminSubList();
       if (tab === 'users') renderAdminUsersList();
+      if (tab === 'chat') {
+        renderAdminChatThreads();
+        updateAdminChatUnreadBadge();
+      }
+    }
+
+    /* =========================================================
+       ADMIN INBOX & LIVE CHAT MANAGEMENT
+       Auto-pruning messages older than 7 days, cross-tab broadcast,
+       thread deletion, individual message deletion.
+    ========================================================= */
+
+    const ADMIN_CHAT_BUS = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('baby_chat_bus') : null;
+    let adminActiveChatEmail = null;
+    let adminChatInitialized = false;
+
+    function getAllChatThreads() {
+      try {
+        const raw = localStorage.getItem('baby_chat_threads');
+        return raw ? JSON.parse(raw) : {};
+      } catch(e) {
+        return {};
+      }
+    }
+
+    function saveAllChatThreads(threads) {
+      try {
+        localStorage.setItem('baby_chat_threads', JSON.stringify(threads));
+      } catch(e) {}
+    }
+
+    function pruneOldMessages(messages) {
+      if (!Array.isArray(messages)) return [];
+      const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000; // 7 hari auto-prune
+      const now = Date.now();
+      return messages.filter(m => (now - new Date(m.created_at).getTime()) <= ONE_WEEK_MS);
+    }
+
+    function initAdminChat() {
+      updateAdminChatUnreadBadge();
+
+      if (!adminChatInitialized) {
+        adminChatInitialized = true;
+
+        if (ADMIN_CHAT_BUS) {
+          ADMIN_CHAT_BUS.onmessage = function(event) {
+            const data = event.data;
+            if (!data) return;
+            if (data.type === 'NEW_USER_MESSAGE') {
+              const currentSearch = document.getElementById('adminChatSearchInput') ? document.getElementById('adminChatSearchInput').value : '';
+              renderAdminChatThreads(currentSearch);
+              updateAdminChatUnreadBadge();
+
+              if (adminActiveChatEmail && adminActiveChatEmail.toLowerCase() === (data.user_email || '').toLowerCase()) {
+                renderAdminActiveConversation();
+                // Mark read as admin is actively looking at it
+                const all = getAllChatThreads();
+                if (all[adminActiveChatEmail]) {
+                  all[adminActiveChatEmail].unread_by_admin = 0;
+                  saveAllChatThreads(all);
+                  updateAdminChatUnreadBadge();
+                }
+              }
+            }
+          };
+        }
+
+        window.addEventListener('storage', function(e) {
+          if (e.key === 'baby_chat_threads') {
+            const currentSearch = document.getElementById('adminChatSearchInput') ? document.getElementById('adminChatSearchInput').value : '';
+            renderAdminChatThreads(currentSearch);
+            updateAdminChatUnreadBadge();
+            if (adminActiveChatEmail) {
+              renderAdminActiveConversation();
+            }
+          }
+        });
+      }
+
+      renderAdminChatThreads();
+    }
+
+    function updateAdminChatUnreadBadge() {
+      const badge = document.getElementById('adminChatBadge');
+      if (!badge) return;
+
+      const all = getAllChatThreads();
+      let totalUnread = 0;
+      Object.keys(all).forEach(k => {
+        const th = all[k];
+        if (th && th.unread_by_admin) {
+          totalUnread += Number(th.unread_by_admin) || 0;
+        }
+      });
+
+      if (totalUnread > 0) {
+        badge.textContent = totalUnread > 99 ? '99+' : totalUnread;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    function renderAdminChatThreads(filterQuery = '') {
+      const container = document.getElementById('adminChatThreadsList');
+      if (!container) return;
+
+      const all = getAllChatThreads();
+      let keys = Object.keys(all);
+
+      // Auto-prune and collect valid threads
+      let threads = [];
+      let dirty = false;
+
+      keys.forEach(k => {
+        const th = all[k];
+        if (!th) return;
+        const beforeLen = th.messages ? th.messages.length : 0;
+        th.messages = pruneOldMessages(th.messages);
+        if (th.messages.length !== beforeLen) dirty = true;
+        threads.push(th);
+      });
+
+      if (dirty) {
+        saveAllChatThreads(all);
+      }
+
+      const q = (filterQuery || '').trim().toLowerCase();
+      if (q) {
+        threads = threads.filter(th => {
+          const em = (th.user_email || '').toLowerCase();
+          const nm = (th.user_name || '').toLowerCase();
+          return em.includes(q) || nm.includes(q);
+        });
+      }
+
+      // Sort by newest message or updated_at
+      threads.sort((a, b) => {
+        const timeA = (a.messages && a.messages.length > 0)
+          ? new Date(a.messages[a.messages.length - 1].created_at).getTime()
+          : (a.updated_at ? new Date(a.updated_at).getTime() : 0);
+        const timeB = (b.messages && b.messages.length > 0)
+          ? new Date(b.messages[b.messages.length - 1].created_at).getTime()
+          : (b.updated_at ? new Date(b.updated_at).getTime() : 0);
+        return timeB - timeA;
+      });
+
+      if (threads.length === 0) {
+        container.innerHTML = `
+          <div style="padding:28px 16px; text-align:center; color:var(--text-muted); font-size:12.5px;">
+            <i class="fa-regular fa-comment-dots" style="font-size:24px; opacity:0.4; margin-bottom:6px; display:block;"></i>
+            ${q ? 'Tidak ada percakapan yang cocok dengan pencarian.' : 'Belum ada pesan dari pengguna.'}
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = threads.map(th => {
+        const isActive = adminActiveChatEmail && adminActiveChatEmail.toLowerCase() === th.user_email.toLowerCase();
+        const unreadCount = Number(th.unread_by_admin) || 0;
+        const lastMsg = (th.messages && th.messages.length > 0) ? th.messages[th.messages.length - 1] : null;
+        const lastText = lastMsg ? (lastMsg.sender === 'admin' ? 'Anda: ' + lastMsg.text : lastMsg.text) : 'Belum ada pesan';
+        const snippet = lastText.length > 34 ? lastText.substring(0, 34) + '...' : lastText;
+        const timeStr = lastMsg ? formatDateTimeReadable(lastMsg.created_at) : '-';
+
+        return `
+          <div class="admin-thread-item ${isActive ? 'active' : ''}" onclick="selectAdminChatUser('${escHtml(th.user_email)}')">
+            <div class="admin-thread-top">
+              <span class="admin-thread-name">${escHtml(th.user_name || th.user_email)}</span>
+              <span class="admin-thread-time">${escHtml(timeStr)}</span>
+            </div>
+            <div style="font-size:11px; color:var(--text-muted); margin-bottom:3px; word-break:break-all;">
+              ${escHtml(th.user_email)} <span style="font-weight:700; color:var(--primary); font-size:10px;">• ${escHtml(th.user_tier || 'User')}</span>
+            </div>
+            <div class="admin-thread-bottom">
+              <span class="admin-thread-snippet">${escHtml(snippet)}</span>
+              ${unreadCount > 0 ? `<span class="admin-thread-badge">${unreadCount}</span>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterAdminChatThreads() {
+      const q = document.getElementById('adminChatSearchInput') ? document.getElementById('adminChatSearchInput').value : '';
+      renderAdminChatThreads(q);
+    }
+
+    function selectAdminChatUser(email) {
+      if (!email) return;
+      adminActiveChatEmail = email.toLowerCase().trim();
+
+      // Mark thread read by admin
+      const all = getAllChatThreads();
+      if (all[adminActiveChatEmail]) {
+        all[adminActiveChatEmail].unread_by_admin = 0;
+        saveAllChatThreads(all);
+      }
+
+      updateAdminChatUnreadBadge();
+      const currentSearch = document.getElementById('adminChatSearchInput') ? document.getElementById('adminChatSearchInput').value : '';
+      renderAdminChatThreads(currentSearch);
+      renderAdminActiveConversation();
+
+      setTimeout(() => {
+        const inp = document.getElementById('adminReplyInput');
+        if (inp) inp.focus();
+      }, 100);
+    }
+
+    function renderAdminActiveConversation() {
+      const emptyHint = document.getElementById('adminChatEmptyHint');
+      const convBox = document.getElementById('adminChatConversationBox');
+      if (!emptyHint || !convBox) return;
+
+      if (!adminActiveChatEmail) {
+        emptyHint.classList.remove('hidden');
+        convBox.classList.add('hidden');
+        return;
+      }
+
+      emptyHint.classList.add('hidden');
+      convBox.classList.remove('hidden');
+
+      const all = getAllChatThreads();
+      const thread = all[adminActiveChatEmail];
+
+      if (!thread) {
+        document.getElementById('adminActiveUserName').textContent = adminActiveChatEmail;
+        document.getElementById('adminActiveUserMeta').textContent = `${adminActiveChatEmail} • Tidak ada data`;
+        document.getElementById('adminActiveMessagesList').innerHTML = `
+          <div style="text-align:center; padding:30px; color:var(--text-muted); font-size:12px;">Percakapan belum dimulai.</div>
+        `;
+        return;
+      }
+
+      // Auto prune
+      thread.messages = pruneOldMessages(thread.messages);
+
+      document.getElementById('adminActiveUserName').textContent = thread.user_name || thread.user_email;
+      document.getElementById('adminActiveUserMeta').textContent = `${thread.user_email} • Status: ${thread.user_tier || 'User'}`;
+
+      const listContainer = document.getElementById('adminActiveMessagesList');
+      if (!thread.messages || thread.messages.length === 0) {
+        listContainer.innerHTML = `
+          <div style="text-align:center; padding:32px 16px; color:var(--text-muted); font-size:12.5px;">
+            <i class="fa-regular fa-comment" style="font-size:24px; opacity:0.4; margin-bottom:6px; display:block;"></i>
+            Belum ada pesan dalam percakapan ini atau pesan lama (> 7 hari) telah otomatis dihapus.
+          </div>
+        `;
+        return;
+      }
+
+      listContainer.innerHTML = thread.messages.map(m => {
+        const isAdmin = m.sender === 'admin';
+        const timeStr = formatDateTimeReadable(m.created_at);
+
+        return `
+          <div class="admin-bubble ${isAdmin ? 'admin' : 'user'}">
+            <div>${escHtml(m.text)}</div>
+            <div class="admin-bubble-meta">
+              <span>${escHtml(timeStr)}</span>
+              <button type="button" class="chat-msg-del" onclick="deleteAdminChatMessage('${m.id}')" title="Hapus pesan ini">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      listContainer.scrollTop = listContainer.scrollHeight;
+    }
+
+    function adminSendReply() {
+      const input = document.getElementById('adminReplyInput');
+      const text = (input ? input.value : '').trim();
+      if (!text || !adminActiveChatEmail) return;
+
+      const all = getAllChatThreads();
+      let thread = all[adminActiveChatEmail];
+      if (!thread) {
+        thread = {
+          user_email: adminActiveChatEmail,
+          user_name: adminActiveChatEmail,
+          user_tier: 'User',
+          unread_by_admin: 0,
+          unread_by_user: 0,
+          messages: []
+        };
+      }
+
+      const newMsg = {
+        id: 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+        sender: 'admin',
+        text: text,
+        created_at: new Date().toISOString()
+      };
+
+      thread.messages = pruneOldMessages(thread.messages);
+      thread.messages.push(newMsg);
+      thread.unread_by_user = (thread.unread_by_user || 0) + 1;
+      thread.unread_by_admin = 0;
+      thread.updated_at = new Date().toISOString();
+
+      all[adminActiveChatEmail] = thread;
+      saveAllChatThreads(all);
+
+      if (input) input.value = '';
+      renderAdminActiveConversation();
+
+      const currentSearch = document.getElementById('adminChatSearchInput') ? document.getElementById('adminChatSearchInput').value : '';
+      renderAdminChatThreads(currentSearch);
+
+      // Broadcast to active user
+      if (ADMIN_CHAT_BUS) {
+        ADMIN_CHAT_BUS.postMessage({
+          type: 'NEW_ADMIN_REPLY',
+          user_email: adminActiveChatEmail,
+          admin_email: 'rojulanfayadulmujahid@gmail.com',
+          text: text,
+          timestamp: newMsg.created_at
+        });
+      }
+    }
+
+    function deleteAdminChatMessage(msgId) {
+      if (!adminActiveChatEmail) return;
+      const all = getAllChatThreads();
+      const thread = all[adminActiveChatEmail];
+      if (!thread || !thread.messages) return;
+
+      thread.messages = thread.messages.filter(m => m.id !== msgId);
+      saveAllChatThreads(all);
+
+      renderAdminActiveConversation();
+      const currentSearch = document.getElementById('adminChatSearchInput') ? document.getElementById('adminChatSearchInput').value : '';
+      renderAdminChatThreads(currentSearch);
+    }
+
+    function adminDeleteActiveConversation() {
+      if (!adminActiveChatEmail) return;
+      if (!confirm(`Hapus seluruh riwayat percakapan dengan "${adminActiveChatEmail}"? Pesan ini akan dibersihkan dari inbox.`)) {
+        return;
+      }
+
+      const all = getAllChatThreads();
+      if (all[adminActiveChatEmail]) {
+        all[adminActiveChatEmail].messages = [];
+        all[adminActiveChatEmail].unread_by_admin = 0;
+        saveAllChatThreads(all);
+      }
+
+      renderAdminActiveConversation();
+      const currentSearch = document.getElementById('adminChatSearchInput') ? document.getElementById('adminChatSearchInput').value : '';
+      renderAdminChatThreads(currentSearch);
+      updateAdminChatUnreadBadge();
     }
 
     // Render Subscriptions List
@@ -1307,8 +1970,13 @@
         document.getElementById('loginCard').classList.add('hidden');
         document.getElementById('adminCard').classList.remove('hidden');
 
+        // Clear login inputs immediately so email is never retained
+        document.getElementById('adminEmail').value = '';
+        document.getElementById('adminPassword').value = '';
+
         renderAdminSubList();
         renderAdminUsersList();
+        initAdminChat();
 
       } catch (error) {
         console.error(error);
@@ -1429,9 +2097,19 @@
     async function checkSession() {
       try {
         const { data: { session } } = await supabaseClient.auth.getSession();
-        if (!session || !session.user) return;
+        if (!session || !session.user) {
+          const em = document.getElementById('adminEmail');
+          if (em) em.value = '';
+          const pwd = document.getElementById('adminPassword');
+          if (pwd) pwd.value = '';
+          return;
+        }
         if (!isAdminUser(session.user)) {
           await supabaseClient.auth.signOut();
+          const em = document.getElementById('adminEmail');
+          if (em) em.value = '';
+          const pwd = document.getElementById('adminPassword');
+          if (pwd) pwd.value = '';
           return;
         }
         document.getElementById('loggedAdminEmail').textContent = session.user.email || '';
@@ -1439,10 +2117,18 @@
         document.getElementById('adminCard').classList.remove('hidden');
         renderAdminSubList();
         renderAdminUsersList();
+        initAdminChat();
       } catch (err) {
         console.warn('Session check:', err);
       }
     }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const em = document.getElementById('adminEmail');
+      if (em) em.value = '';
+      const pwd = document.getElementById('adminPassword');
+      if (pwd) pwd.value = '';
+    });
 
     checkSession();
   </script>

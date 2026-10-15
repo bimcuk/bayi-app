@@ -410,6 +410,531 @@
       font-weight: 600;
     }
 
+    .user-tier-badge.memory {
+      background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(236, 72, 153, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    /* Memory Mode Lockdowns */
+    body.memory-mode-active .btn-edit,
+    body.memory-mode-active .btn-delete,
+    body.memory-mode-active .history-action-btn,
+    body.memory-mode-active .action-btn-danger,
+    body.memory-mode-active #recordForm button[type="submit"],
+    body.memory-mode-active .record-submit-btn {
+      display: none !important;
+    }
+
+    .memory-banner {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(244, 63, 94, 0.08));
+      border: 1.5px dashed rgba(236, 72, 153, 0.45);
+      border-radius: 18px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .memory-banner-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ec4899, #f43f5e);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(236, 72, 153, 0.35);
+    }
+
+    .memory-banner-text h4 {
+      margin: 0;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #db2777;
+    }
+
+    .memory-banner-text p {
+      margin: 2px 0 0;
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* Floating Chat Button */
+    .chat-float-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary) 0%, #db2777 100%);
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 8px 24px rgba(236, 72, 153, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .chat-float-btn:hover {
+      transform: scale(1.08) translateY(-2px);
+      box-shadow: 0 12px 30px rgba(236, 72, 153, 0.55);
+    }
+
+    .chat-float-btn:active {
+      transform: scale(0.95);
+    }
+
+    .chat-unread-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 5px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--surface, #ffffff);
+      box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
+    }
+
+    /* User Chat Modal Window */
+    .user-chat-modal {
+      display: none;
+      position: fixed;
+      bottom: 90px;
+      right: 24px;
+      width: 360px;
+      max-width: calc(100vw - 32px);
+      height: 520px;
+      max-height: calc(100vh - 120px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      z-index: 1001;
+      flex-direction: column;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      animation: slideUpFade 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .user-chat-modal.show {
+      display: flex !important;
+    }
+
+    @keyframes slideUpFade {
+      from { opacity: 0; transform: translateY(20px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .user-chat-header {
+      padding: 14px 16px;
+      background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .user-chat-header-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-chat-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .user-chat-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .user-chat-status {
+      font-size: 11px;
+      color: #10b981;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 2px;
+    }
+
+    .user-chat-status::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    .user-chat-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .user-chat-action-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .user-chat-action-btn:hover {
+      background: var(--surface2);
+      color: var(--text);
+    }
+
+    .user-chat-messages {
+      flex: 1;
+      padding: 14px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: var(--bg);
+    }
+
+    .chat-bubble {
+      max-width: 82%;
+      padding: 9px 13px;
+      border-radius: 16px;
+      font-size: 12.5px;
+      line-height: 1.45;
+      position: relative;
+      word-break: break-word;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .chat-bubble.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, var(--primary) 0%, #db2777 100%);
+      color: #ffffff;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 4px 12px rgba(236,72,153,0.3);
+    }
+
+    .chat-bubble.admin {
+      align-self: flex-start;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .chat-bubble-meta {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      font-size: 9.5px;
+      margin-top: 4px;
+      opacity: 0.75;
+    }
+
+    .chat-msg-del {
+      background: none;
+      border: none;
+      color: inherit;
+      opacity: 0.5;
+      cursor: pointer;
+      padding: 0 2px;
+      font-size: 10px;
+      transition: opacity 0.2s;
+    }
+
+    .chat-msg-del:hover {
+      opacity: 1;
+    }
+
+    .chat-bubble.admin .chat-bubble-meta {
+      justify-content: flex-start;
+    }
+
+    .chat-empty-hint {
+      text-align: center;
+      padding: 30px 16px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      margin: auto 0;
+    }
+
+    .chat-empty-hint i {
+      font-size: 32px;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: block;
+      opacity: 0.8;
+    }
+
+    .user-chat-footer {
+      padding: 10px 12px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .user-chat-input {
+      flex: 1;
+      padding: 9px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      font-size: 12.5px;
+      outline: none;
+    }
+
+    .user-chat-input:focus {
+      border-color: var(--primary);
+    }
+
+    .user-chat-send-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13.5px;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .user-chat-send-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* Promo Splash Modal */
+    .promo-splash-box {
+      max-width: 440px;
+      text-align: center;
+      padding: 24px 22px;
+      position: relative;
+    }
+
+    .promo-splash-crown {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin: 0 auto 10px;
+      box-shadow: 0 6px 18px rgba(245, 158, 11, 0.4);
+    }
+
+    .promo-badge-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      color: #d97706;
+      background: rgba(245, 158, 11, 0.14);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 2px 10px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    .promo-splash-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+      margin: 0 0 6px;
+    }
+
+    .promo-splash-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 16px;
+      line-height: 1.45;
+    }
+
+    .promo-highlight-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+
+    .promo-card {
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+    }
+
+    .promo-card.trial {
+      border-color: rgba(59, 130, 246, 0.3);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(96, 165, 250, 0.04));
+    }
+
+    .promo-card.vip {
+      border-color: rgba(245, 158, 11, 0.35);
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(251, 191, 36, 0.05));
+    }
+
+    .promo-card-icon {
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .promo-card.trial .promo-card-icon { color: #3b82f6; }
+    .promo-card.vip .promo-card-icon { color: #f59e0b; }
+
+    .promo-card h4 {
+      font-size: 12px;
+      font-weight: 700;
+      margin: 0 0 2px;
+      color: var(--text);
+    }
+
+    .promo-card p {
+      font-size: 10.5px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.35;
+    }
+
+    .promo-feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 18px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .promo-feature-list li {
+      font-size: 11.5px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .promo-feature-list li i {
+      color: #10b981;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .promo-close-link {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: none;
+      border: none;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 4px;
+    }
+
+    .promo-close-link:hover {
+      color: var(--text);
+    }
+
+    /* Memory Mode Modal */
+    .memory-modal-box {
+      max-width: 440px;
+      text-align: center;
+      padding: 24px 20px;
+    }
+
+    .memory-modal-heart {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ec4899, #db2777);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin: 0 auto 12px;
+      box-shadow: 0 6px 18px rgba(236, 72, 153, 0.4);
+    }
+
+    .memory-info-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      text-align: left;
+      margin: 14px 0 16px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .memory-info-card ul {
+      margin: 8px 0 0;
+      padding-left: 16px;
+    }
+
+    .memory-info-card li {
+      margin-bottom: 6px;
+    }
+
+    .memory-confirm-btn {
+      background: linear-gradient(135deg, #ec4899 0%, #db2777 100%) !important;
+      color: #fff !important;
+      box-shadow: 0 6px 16px rgba(236, 72, 153, 0.35) !important;
+    }
+
     .menu-divider {
       height: 1px;
       background: var(--border);
@@ -2374,7 +2899,7 @@
           <label data-i18n="lblEmail">Email</label>
         </div>
         <div class="auth-input-wrapper">
-          <input type="email" id="loginEmail" autocomplete="email" placeholder="nama@email.com" required>
+          <input type="email" id="loginEmail" autocomplete="off" placeholder="nama@email.com" required>
           <i class="fa-regular fa-envelope auth-input-icon"></i>
         </div>
       </div>
@@ -2414,7 +2939,7 @@
           <label data-i18n="lblBabyName">Nama Bayi</label>
         </div>
         <div class="auth-input-wrapper">
-          <input type="text" id="registerBabyName" placeholder="Contoh: Adek Bayi" data-i18n-ph="phBabyName" required>
+          <input type="text" id="registerBabyName" placeholder="" required>
           <i class="fa-solid fa-baby auth-input-icon"></i>
         </div>
       </div>
@@ -2424,7 +2949,7 @@
           <label data-i18n="lblEmail">Email</label>
         </div>
         <div class="auth-input-wrapper">
-          <input type="email" id="registerEmail" autocomplete="email" placeholder="nama@email.com" required>
+          <input type="email" id="registerEmail" autocomplete="off" placeholder="" required>
           <i class="fa-regular fa-envelope auth-input-icon"></i>
         </div>
       </div>
@@ -2434,7 +2959,7 @@
           <label data-i18n="lblPassword">Password (min. 6 karakter)</label>
         </div>
         <div class="auth-input-wrapper has-toggle">
-          <input type="password" id="registerPassword" autocomplete="new-password" minlength="6" placeholder="Minimal 6 karakter" data-i18n-ph="phMinPassword" required>
+          <input type="password" id="registerPassword" autocomplete="new-password" minlength="6" placeholder="" required>
           <i class="fa-solid fa-lock auth-input-icon"></i>
           <button
             type="button"
@@ -2451,7 +2976,7 @@
           <label data-i18n="lblConfirmNewPassword">Konfirmasi Password</label>
         </div>
         <div class="auth-input-wrapper has-toggle">
-          <input type="password" id="registerPasswordConfirm" autocomplete="new-password" minlength="6" placeholder="Ulangi password" data-i18n-ph="phRepeatPassword" required>
+          <input type="password" id="registerPasswordConfirm" autocomplete="new-password" minlength="6" placeholder="" required>
           <i class="fa-solid fa-shield-halved auth-input-icon"></i>
           <button
             type="button"
@@ -2467,11 +2992,7 @@
         <i class="fa-solid fa-user-plus"></i> Daftar Akun Baru
       </button>
 
-      <div class="auth-microcopy" style="text-align:center; margin-top:10px;">
-        <i class="fa-solid fa-check" style="color:#10b981;"></i> Akun tersimpan dengan aman
-      </div>
-
-      <div class="auth-switch-text">
+      <div class="auth-switch-text" style="margin-top:16px;">
         <span data-i18n="authHaveAccount">Sudah punya akun?</span>
         <a href="javascript:void(0)" onclick="switchAuthMode('login')" data-i18n="authToLogin">Masuk di sini</a>
       </div>
@@ -2583,13 +3104,22 @@
             <span class="menu-badge" id="menuSubscribeBadge">Trial</span>
           </button>
 
-          <!-- 5b. Panel Admin (Khusus Akun Admin) -->
-          <button class="menu-item admin-only-item hidden" id="menuAdminBtn" onclick="openAdminPanel(); closeHamburgerMenu();">
+          <!-- 5b. Chat dengan Admin (Pusat Bantuan) -->
+          <button class="menu-item" id="menuChatBtn" onclick="openUserChat(); closeHamburgerMenu();">
             <div class="menu-item-left">
-              <i class="fa-solid fa-shield-halved" style="color: var(--primary);"></i>
-              <span data-i18n="menuAdmin">Panel Admin</span>
+              <i class="fa-solid fa-comments" style="color: var(--primary);"></i>
+              <span>Chat Admin</span>
             </div>
-            <span class="menu-badge" style="background:var(--primary); color:#fff;">Admin</span>
+            <span class="menu-badge hidden" id="menuChatBadge" style="background:#ef4444; color:#fff;">0</span>
+          </button>
+
+          <!-- 5c. Berhenti Gunakan (Mode Kenangan 2 Tahun) -->
+          <button class="menu-item" id="menuMemoryModeBtn" onclick="openMemoryModePrompt(); closeHamburgerMenu();">
+            <div class="menu-item-left">
+              <i class="fa-solid fa-heart" style="color: #ec4899;"></i>
+              <span>Mode Kenangan</span>
+            </div>
+            <span class="menu-badge" id="menuMemoryBadge" style="font-size:10px; background:rgba(236,72,153,0.15); color:#ec4899;">0-2 Thn</span>
           </button>
 
           <div class="menu-divider"></div>
@@ -2653,6 +3183,17 @@
 
   <!-- INPUT -->
   <section id="sectionInput" class="section active">
+
+    <!-- MEMORY MODE BANNER -->
+    <div id="memoryModeBanner" class="memory-banner hidden">
+      <div class="memory-banner-icon">
+        <i class="fa-solid fa-heart"></i>
+      </div>
+      <div class="memory-banner-text">
+        <h4>Mode Kenangan Aktif (Usia 0-2 Tahun)</h4>
+        <p>Seluruh riwayat masa emas si kecil telah disimpan permanen sebagai album kenangan. Anda dapat melihat grafik & rekapan di menu <strong>DASHBOARD</strong> dan <strong>HISTORI</strong>.</p>
+      </div>
+    </div>
 
     <div class="sub-nav" style="margin-top:12px;">
       <button id="inputSubDBF" class="sub-btn active" onclick="showInputPanel('dbf')">DBF</button>
@@ -3416,8 +3957,24 @@
         </button>
 
         <button type="button" class="secondary-btn" style="width:100%; margin-top:12px;" onclick="closeProfile(); openSubscribeModal();" data-i18n="btnOpenSubscribe">
-          <i class="fa-solid fa-crown" style="color:#f59e0b; margin-right:6px;"></i> Langganan (1 Tahun)
+          <i class="fa-solid fa-crown" style="color:#f59e0b; margin-right:6px;"></i> <span id="profileSubscribeBtnLabel">Langganan (1 Tahun)</span>
         </button>
+
+        <div style="margin-top:14px; padding:12px 14px; background:var(--surface2); border:1px solid var(--border); border-radius:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-size:12.5px; font-weight:700; color:var(--text);">
+                <i class="fa-solid fa-heart" style="color:#ec4899; margin-right:4px;"></i> Mode Kenangan (0-2 Thn)
+              </div>
+              <div id="memoryModeStatusText" style="font-size:11px; color:var(--muted); margin-top:2px;">
+                Status: Aktif Mencatat
+              </div>
+            </div>
+            <button type="button" id="toggleMemoryModeBtn" class="admin-btn reject" style="padding:4px 10px; font-size:11px;" onclick="toggleMemoryModeFromProfile()">
+              Berhenti Gunakan
+            </button>
+          </div>
+        </div>
       </form>
     </div>
 
@@ -3534,6 +4091,130 @@
 
   </div>
 
+<!-- FLOATING CHAT BUTTON (PUSAT BANTUAN) -->
+<button id="chatFloatBtn" class="chat-float-btn" onclick="toggleUserChat()" title="Chat dengan Admin">
+  <i class="fa-solid fa-comments"></i>
+  <span id="chatFloatBadge" class="chat-unread-badge hidden">0</span>
+</button>
+
+<!-- USER CHAT MODAL WINDOW -->
+<div id="userChatModal" class="user-chat-modal">
+  <div class="user-chat-header">
+    <div class="user-chat-header-info">
+      <div class="user-chat-avatar">
+        <i class="fa-solid fa-headset"></i>
+      </div>
+      <div>
+        <div class="user-chat-title">Admin Support</div>
+        <div class="user-chat-status">Online</div>
+      </div>
+    </div>
+    <div class="user-chat-actions">
+      <button type="button" class="user-chat-action-btn" onclick="clearUserChatHistory()" title="Hapus Riwayat Chat">
+        <i class="fa-regular fa-trash-can"></i>
+      </button>
+      <button type="button" class="user-chat-action-btn" onclick="closeUserChat()" title="Tutup Chat">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </div>
+
+  <div id="userChatMessages" class="user-chat-messages">
+    <div class="chat-empty-hint">
+      <i class="fa-regular fa-comments"></i>
+      Halo! Ada yang bisa kami bantu seputar Catatan Si Kecil atau langganan? Tulis pesan di bawah.
+    </div>
+  </div>
+
+  <form id="userChatForm" class="user-chat-footer" onsubmit="event.preventDefault(); sendUserChatMessage();">
+    <input type="text" id="userChatInput" class="user-chat-input" placeholder="Tulis pesan ke admin..." autocomplete="off">
+    <button type="submit" class="user-chat-send-btn" title="Kirim">
+      <i class="fa-solid fa-paper-plane"></i>
+    </button>
+  </form>
+</div>
+
+<!-- PROMOTIONAL SPLASH SCREEN (Tampil Sehari Sekali saat Login) -->
+<div id="promoSplashModal" class="modal-backdrop-custom">
+  <div class="modal-box promo-splash-box">
+    <button class="modal-close" onclick="closePromoSplash()" aria-label="Tutup Promosi">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="promo-splash-header">
+      <div class="promo-splash-crown">
+        <i class="fa-solid fa-crown"></i>
+      </div>
+      <div class="promo-badge-tag">Promo Eksklusif</div>
+      <h2 class="promo-splash-title">Catatan Si Kecil Premium</h2>
+      <p class="promo-splash-subtitle">Temani setiap detik tumbuh kembang buah hati tercinta dengan fitur lengkap tanpa batas.</p>
+    </div>
+
+    <div class="promo-splash-body">
+      <div class="promo-highlight-cards">
+        <div class="promo-card trial">
+          <div class="promo-card-icon"><i class="fa-solid fa-gift"></i></div>
+          <h4>Gratis Trial 30 Hari</h4>
+          <p>Nikmati seluruh fitur premium gratis 1 bulan pertama sejak pendaftaran.</p>
+        </div>
+        <div class="promo-card vip">
+          <div class="promo-card-icon"><i class="fa-solid fa-gem"></i></div>
+          <h4>Rp 250.000 / 1 Tahun</h4>
+          <p>Langganan 365 hari penuh, hemat & dapatkan badge VIP berkilau.</p>
+        </div>
+      </div>
+
+      <ul class="promo-feature-list">
+        <li><i class="fa-solid fa-circle-check"></i> Catatan ASI, DBF, Pumping, Sufor & MPASI lengkap</li>
+        <li><i class="fa-solid fa-circle-check"></i> Grafik Kurva Pertumbuhan Standar WHO & KMS</li>
+        <li><i class="fa-solid fa-circle-check"></i> Pemantau Obat, Suhu, Feses & Jadwal Imunisasi</li>
+        <li><i class="fa-solid fa-circle-check"></i> Konsultasi Langsung via Chat Inbox Admin</li>
+        <li><i class="fa-solid fa-circle-check"></i> Backup Otomatis & Ekspor Data Kapan Saja</li>
+      </ul>
+    </div>
+
+    <div class="promo-splash-footer">
+      <button type="button" class="primary-btn" onclick="openSubscribeFromPromo()">
+        <i class="fa-solid fa-crown" style="margin-right:6px;"></i> Lihat Paket Langganan
+      </button>
+      <button type="button" class="promo-close-link" onclick="closePromoSplash()">
+        Lanjut ke Aplikasi
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL KONFIRMASI BERHENTI GUNAKAN (MODE KENANGAN) -->
+<div id="memoryModeModal" class="modal-backdrop-custom">
+  <div class="modal-box memory-modal-box">
+    <div class="memory-modal-header">
+      <div class="memory-modal-heart">
+        <i class="fa-solid fa-heart"></i>
+      </div>
+      <h3 style="margin:0 0 4px; font-size:17px; font-weight:800; color:var(--text);">Simpan Sebagai Kenangan</h3>
+      <p class="memory-modal-subtitle" style="font-size:12px; color:var(--muted); margin:0;">Masa emas tumbuh kembang 0-2 tahun buah hati Anda.</p>
+    </div>
+
+    <div class="memory-modal-body">
+      <div class="memory-info-card">
+        <div style="font-weight:700; color:#db2777; margin-bottom:6px;"><i class="fa-solid fa-circle-info"></i> Apa itu Mode Kenangan?</div>
+        <p style="margin:0 0 6px;">Jika Anda memilih <strong>Berhenti Gunakan</strong>:</p>
+        <ul style="margin:0; padding-left:18px;">
+          <li>✅ <strong>Dashboard & Riwayat</strong> tetap dapat Anda buka kapan pun untuk mengenang seluruh perjalanan si kecil.</li>
+          <li>✅ <strong>Grafik & Kurva WHO</strong> tetap tersimpan rapi sebagai buku harian abadi.</li>
+          <li>🔒 <strong>Input, Edit & Hapus Catatan dinonaktifkan</strong> agar data historis tetap aman dan terlindungi.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="memory-modal-footer">
+      <button type="button" class="primary-btn memory-confirm-btn" onclick="confirmEnableMemoryMode()">
+        <i class="fa-solid fa-heart" style="margin-right:6px;"></i> Ya, Simpan Sebagai Kenangan
+      </button>
+      <button type="button" class="secondary-btn" style="width:100%; margin-top:8px;" onclick="closeMemoryModeModal()">
+        Batal / Nanti Saja
+      </button>
+    </div>
+  </div>
 </div>
 
 <div id="toast" class="toast"></div>
@@ -4403,6 +5084,10 @@ function switchAuthMode(mode) {
     authTabs.style.display = 'flex';
     tabLoginBtn.classList.add('active');
     tabRegisterBtn.classList.remove('active');
+    const emailInput = document.getElementById('loginEmail');
+    if (emailInput) emailInput.value = '';
+    const passInput = document.getElementById('loginPassword');
+    if (passInput) passInput.value = '';
     if (authSubtitle) authSubtitle.textContent = t('authSubtitle');
   } else if (mode === 'register') {
     registerForm.style.display = 'block';
@@ -4598,12 +5283,11 @@ async function handleRegister(e) {
       switchAuthMode('login');
       const loginEmailInput = document.getElementById('loginEmail');
       if (loginEmailInput) {
-        loginEmailInput.value = email;
+        loginEmailInput.value = '';
       }
       const loginPassInput = document.getElementById('loginPassword');
       if (loginPassInput) {
-        loginPassInput.value = password;
-        loginPassInput.focus();
+        loginPassInput.value = '';
       }
     }
   } catch (err) {
@@ -4793,6 +5477,9 @@ async function enterApp() {
   try {
     await loadAllData();
     await checkUserSubscriptionStatus();
+    initMemoryMode();
+    initUserChat();
+    checkAndShowPromoSplash();
   } catch(error) {
     console.error('Error saat loadAllData:', error);
     showToast('Gagal memuat sebagian data: ' + getErrorMessage(error));
@@ -4810,6 +5497,11 @@ function showLogin() {
   if (subModal) subModal.classList.remove('show');
   document.body.classList.remove('auth-loading');
   document.getElementById('authOverlay').classList.remove('hidden');
+  const emailInput = document.getElementById('loginEmail');
+  if (emailInput) {
+    emailInput.value = '';
+    emailInput.setAttribute('autocomplete', 'off');
+  }
   const pass = document.getElementById('loginPassword');
   if (pass) pass.value = '';
   // Pastikan tema dokumen kembali ke pink saat di login page
@@ -5055,7 +5747,9 @@ function showMainSection(section) {
     document.getElementById('globalFilterBar');
 
   if (section === 'input') {
-
+    if (typeof isMemoryModeActive !== 'undefined' && isMemoryModeActive) {
+      showToast('💖 Mode Kenangan Aktif: Data masa emas 0-2 tahun si kecil telah disimpan permanen sebagai kenangan.');
+    }
     document.getElementById(
       'sectionInput'
     ).classList.add('active');
@@ -5685,6 +6379,373 @@ function openProfile() {
 
 }
 
+
+/* =========================================================
+   PROMOTIONAL SPLASH SCREEN (TAMPIL SEHARI SEKALI SAAT LOGIN)
+   ========================================================= */
+
+function checkAndShowPromoSplash() {
+  if (!currentUser) return;
+  const todayStr = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  const userKey = 'baby_promo_splash_' + (currentUser.id || currentUser.email || 'guest');
+  const lastShown = localStorage.getItem(userKey);
+
+  if (lastShown !== todayStr) {
+    setTimeout(() => {
+      openPromoSplash();
+      localStorage.setItem(userKey, todayStr);
+    }, 700);
+  }
+}
+
+function openPromoSplash() {
+  const modal = document.getElementById('promoSplashModal');
+  if (modal) modal.classList.add('show');
+}
+
+function closePromoSplash() {
+  const modal = document.getElementById('promoSplashModal');
+  if (modal) modal.classList.remove('show');
+}
+
+function openSubscribeFromPromo() {
+  closePromoSplash();
+  openSubscribeModal();
+}
+
+/* =========================================================
+   FITUR BERHENTI GUNAKAN (MODE KENANGAN 0-2 TAHUN)
+   ========================================================= */
+
+let isMemoryModeActive = false;
+
+function initMemoryMode() {
+  const userKey = 'baby_memory_mode_' + (currentUser ? currentUser.id : 'guest');
+  isMemoryModeActive = localStorage.getItem(userKey) === 'true';
+  applyMemoryModeUI();
+}
+
+function openMemoryModePrompt() {
+  const modal = document.getElementById('memoryModeModal');
+  if (modal) modal.classList.add('show');
+}
+
+function closeMemoryModeModal() {
+  const modal = document.getElementById('memoryModeModal');
+  if (modal) modal.classList.remove('show');
+}
+
+function confirmEnableMemoryMode() {
+  const userKey = 'baby_memory_mode_' + (currentUser ? currentUser.id : 'guest');
+  isMemoryModeActive = true;
+  localStorage.setItem(userKey, 'true');
+  closeMemoryModeModal();
+  applyMemoryModeUI();
+  showToast('💖 Mode Kenangan Aktif: Masa emas 0-2 tahun si kecil disimpan permanen sebagai kenangan.');
+  showMainSection('dashboard');
+}
+
+function disableMemoryMode() {
+  if (!confirm('Apakah Anda ingin kembali ke Mode Aktif untuk menambah atau mengedit catatan?')) return;
+  const userKey = 'baby_memory_mode_' + (currentUser ? currentUser.id : 'guest');
+  isMemoryModeActive = false;
+  localStorage.removeItem(userKey);
+  applyMemoryModeUI();
+  showToast('✅ Mode Aktif kembali dinyalakan.');
+}
+
+function toggleMemoryModeFromProfile() {
+  closeProfile();
+  if (isMemoryModeActive) {
+    disableMemoryMode();
+  } else {
+    openMemoryModePrompt();
+  }
+}
+
+function applyMemoryModeUI() {
+  const banner = document.getElementById('memoryModeBanner');
+  const profileToggleBtn = document.getElementById('toggleMemoryModeBtn');
+  const profileStatusText = document.getElementById('memoryModeStatusText');
+  const menuMemoryBadge = document.getElementById('menuMemoryBadge');
+
+  if (isMemoryModeActive) {
+    document.body.classList.add('memory-mode-active');
+    if (banner) banner.classList.remove('hidden');
+    if (profileToggleBtn) {
+      profileToggleBtn.textContent = 'Kembali ke Mode Aktif';
+      profileToggleBtn.className = 'admin-btn acc';
+    }
+    if (profileStatusText) {
+      profileStatusText.innerHTML = '<span style="color:#ec4899; font-weight:700;">Mode Kenangan Aktif (Hanya Baca)</span>';
+    }
+    if (menuMemoryBadge) {
+      menuMemoryBadge.textContent = 'Aktif (Kenangan)';
+      menuMemoryBadge.style.background = '#ec4899';
+      menuMemoryBadge.style.color = '#fff';
+    }
+  } else {
+    document.body.classList.remove('memory-mode-active');
+    if (banner) banner.classList.add('hidden');
+    if (profileToggleBtn) {
+      profileToggleBtn.textContent = 'Berhenti Gunakan';
+      profileToggleBtn.className = 'admin-btn reject';
+    }
+    if (profileStatusText) {
+      profileStatusText.textContent = 'Status: Aktif Mencatat';
+    }
+    if (menuMemoryBadge) {
+      menuMemoryBadge.textContent = '0-2 Thn';
+      menuMemoryBadge.style.background = 'rgba(236,72,153,0.15)';
+      menuMemoryBadge.style.color = '#ec4899';
+    }
+  }
+}
+
+/* =========================================================
+   LIVE CHAT SUPPORT (USER <-> ADMIN INBOX)
+   - Auto hilang jika sudah seminggu (7 hari)
+   - Notifikasi unread badge & toast
+   - Opsi hapus pesan / riwayat
+   ========================================================= */
+
+const CHAT_BUS = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('baby_chat_bus') : null;
+
+function getAllChatThreads() {
+  try {
+    const raw = localStorage.getItem('baby_chat_threads');
+    return raw ? JSON.parse(raw) : {};
+  } catch(e) {
+    return {};
+  }
+}
+
+function saveAllChatThreads(threads) {
+  try {
+    localStorage.setItem('baby_chat_threads', JSON.stringify(threads));
+  } catch(e) {}
+}
+
+function pruneOldMessages(messages) {
+  if (!Array.isArray(messages)) return [];
+  const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000; // 7 hari
+  const now = Date.now();
+  return messages.filter(m => (now - new Date(m.created_at).getTime()) <= ONE_WEEK_MS);
+}
+
+function getUserChatThread(email) {
+  if (!email) return null;
+  const normEmail = email.toLowerCase().trim();
+  const all = getAllChatThreads();
+  let thread = all[normEmail];
+  if (!thread) {
+    thread = {
+      user_email: normEmail,
+      user_name: (profileData && profileData.babyName) || (currentUser ? currentUser.email : 'Pengguna'),
+      user_tier: window.isVipUser ? (isCurrentUserVVIP() ? 'VVIP' : 'VIP') : 'Trial',
+      unread_by_admin: 0,
+      unread_by_user: 0,
+      messages: []
+    };
+  }
+  // Auto prune pesan yang lebih dari 7 hari
+  thread.messages = pruneOldMessages(thread.messages);
+  return thread;
+}
+
+function saveUserChatThread(thread) {
+  if (!thread || !thread.user_email) return;
+  const normEmail = thread.user_email.toLowerCase().trim();
+  const all = getAllChatThreads();
+  thread.messages = pruneOldMessages(thread.messages);
+  all[normEmail] = thread;
+  saveAllChatThreads(all);
+}
+
+function initUserChat() {
+  if (!currentUser || !currentUser.email) return;
+  updateUserChatUnreadBadge();
+
+  if (CHAT_BUS) {
+    CHAT_BUS.onmessage = function(event) {
+      const data = event.data;
+      if (!data) return;
+      if (data.type === 'NEW_ADMIN_REPLY' && currentUser && currentUser.email && data.user_email.toLowerCase() === currentUser.email.toLowerCase()) {
+        renderUserChatMessages();
+        updateUserChatUnreadBadge();
+        const chatModal = document.getElementById('userChatModal');
+        const isOpen = chatModal && chatModal.classList.contains('show');
+        if (!isOpen) {
+          showToast('💬 Pesan baru dari Admin: "' + (data.text.length > 40 ? data.text.substring(0, 40) + '...' : data.text) + '"');
+        }
+      }
+    };
+  }
+
+  // Cross-tab storage listener
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'baby_chat_threads') {
+      renderUserChatMessages();
+      updateUserChatUnreadBadge();
+    }
+  });
+}
+
+function toggleUserChat() {
+  const modal = document.getElementById('userChatModal');
+  if (!modal) return;
+  if (modal.classList.contains('show')) {
+    closeUserChat();
+  } else {
+    openUserChat();
+  }
+}
+
+function openUserChat() {
+  const modal = document.getElementById('userChatModal');
+  if (!modal) return;
+  modal.classList.add('show');
+
+  // Reset unread by user
+  if (currentUser && currentUser.email) {
+    const thread = getUserChatThread(currentUser.email);
+    if (thread) {
+      thread.unread_by_user = 0;
+      saveUserChatThread(thread);
+      updateUserChatUnreadBadge();
+    }
+  }
+
+  renderUserChatMessages();
+  setTimeout(() => {
+    const input = document.getElementById('userChatInput');
+    if (input) input.focus();
+  }, 150);
+}
+
+function closeUserChat() {
+  const modal = document.getElementById('userChatModal');
+  if (!modal) return;
+  modal.classList.remove('show');
+}
+
+function renderUserChatMessages() {
+  const container = document.getElementById('userChatMessages');
+  if (!container || !currentUser || !currentUser.email) return;
+
+  const thread = getUserChatThread(currentUser.email);
+  if (!thread || !thread.messages || thread.messages.length === 0) {
+    container.innerHTML = `
+      <div class="chat-empty-hint">
+        <i class="fa-regular fa-comments"></i>
+        Halo ${escHtml((profileData && profileData.babyName) || 'Bunda/Ayah')}! Ada yang bisa kami bantu seputar fitur Catatan Si Kecil atau langganan? Tulis pesan di bawah.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = thread.messages.map(m => {
+    const isUser = m.sender === 'user';
+    const timeStr = formatDateTimeReadable(m.created_at);
+    return `
+      <div class="chat-bubble ${isUser ? 'user' : 'admin'}">
+        <div>${escHtml(m.text)}</div>
+        <div class="chat-bubble-meta">
+          <span>${escHtml(timeStr)}</span>
+          <button type="button" class="chat-msg-del" onclick="deleteUserChatMessage('${m.id}')" title="Hapus pesan ini">
+            <i class="fa-regular fa-trash-can"></i>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  container.scrollTop = container.scrollHeight;
+}
+
+function sendUserChatMessage() {
+  const input = document.getElementById('userChatInput');
+  const text = (input ? input.value : '').trim();
+  if (!text || !currentUser || !currentUser.email) return;
+
+  const thread = getUserChatThread(currentUser.email);
+  const newMsg = {
+    id: 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+    sender: 'user',
+    text: text,
+    created_at: new Date().toISOString()
+  };
+
+  thread.messages.push(newMsg);
+  thread.user_name = (profileData && profileData.babyName) || currentUser.email;
+  thread.user_tier = window.isVipUser ? (isCurrentUserVVIP() ? 'VVIP' : 'VIP') : 'Trial';
+  thread.unread_by_admin = (thread.unread_by_admin || 0) + 1;
+  thread.updated_at = new Date().toISOString();
+
+  saveUserChatThread(thread);
+
+  if (input) input.value = '';
+  renderUserChatMessages();
+
+  // Broadcast ke admin inbox
+  if (CHAT_BUS) {
+    CHAT_BUS.postMessage({
+      type: 'NEW_USER_MESSAGE',
+      user_email: currentUser.email,
+      user_name: thread.user_name,
+      text: text,
+      timestamp: newMsg.created_at
+    });
+  }
+}
+
+function deleteUserChatMessage(msgId) {
+  if (!currentUser || !currentUser.email) return;
+  const thread = getUserChatThread(currentUser.email);
+  if (!thread) return;
+  thread.messages = thread.messages.filter(m => m.id !== msgId);
+  saveUserChatThread(thread);
+  renderUserChatMessages();
+}
+
+function clearUserChatHistory() {
+  if (!currentUser || !currentUser.email) return;
+  if (!confirm('Hapus seluruh riwayat chat Anda dengan admin?')) return;
+  const thread = getUserChatThread(currentUser.email);
+  if (thread) {
+    thread.messages = [];
+    thread.unread_by_user = 0;
+    saveUserChatThread(thread);
+    renderUserChatMessages();
+    showToast('Riwayat chat berhasil dibersihkan.');
+  }
+}
+
+function updateUserChatUnreadBadge() {
+  if (!currentUser || !currentUser.email) return;
+  const thread = getUserChatThread(currentUser.email);
+  const count = thread ? (thread.unread_by_user || 0) : 0;
+
+  const floatBadge = document.getElementById('chatFloatBadge');
+  if (floatBadge) {
+    if (count > 0) {
+      floatBadge.textContent = count > 9 ? '9+' : count;
+      floatBadge.classList.remove('hidden');
+    } else {
+      floatBadge.classList.add('hidden');
+    }
+  }
+
+  const menuBadge = document.getElementById('menuChatBadge');
+  if (menuBadge) {
+    if (count > 0) {
+      menuBadge.textContent = count > 9 ? '9+' : count;
+      menuBadge.classList.remove('hidden');
+    } else {
+      menuBadge.classList.add('hidden');
+    }
+  }
+}
 
 /* =========================================================
    SUBSCRIBE, TRIAL 1 BULAN & ADMIN ACC / HAPUS AKUN
@@ -6989,6 +8050,11 @@ async function submitDBF(e) {
 
   if (isSubmittingDBF) return;
 
+  if (typeof isMemoryModeActive !== 'undefined' && isMemoryModeActive) {
+    showToast('🔒 Mode Kenangan Aktif: Catatan baru tidak dapat ditambah.');
+    return;
+  }
+
   if (!currentUser) {
 
     showToast(t('loginSessionNotFound'));
@@ -7232,6 +8298,11 @@ async function submitSusu(e) {
 
   if (isSubmittingSusu) return;
 
+  if (typeof isMemoryModeActive !== 'undefined' && isMemoryModeActive) {
+    showToast('🔒 Mode Kenangan Aktif: Catatan baru tidak dapat ditambah.');
+    return;
+  }
+
   if (!currentUser) {
 
     showToast(
@@ -7448,6 +8519,11 @@ async function submitPopok(e) {
   if (e && typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
 
   if (isSubmittingPopok) return;
+
+  if (typeof isMemoryModeActive !== 'undefined' && isMemoryModeActive) {
+    showToast('🔒 Mode Kenangan Aktif: Catatan baru tidak dapat ditambah.');
+    return;
+  }
 
   if (!currentUser) {
 
@@ -7667,6 +8743,11 @@ async function submitFisik(e) {
   if (e && typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
 
   if (isSubmittingFisik) return;
+
+  if (typeof isMemoryModeActive !== 'undefined' && isMemoryModeActive) {
+    showToast('🔒 Mode Kenangan Aktif: Catatan baru tidak dapat ditambah.');
+    return;
+  }
 
   if (!currentUser) {
 
@@ -10501,6 +11582,11 @@ function editHistory(type,index) {
 ========================================================= */
 
 async function deleteHistory(type,index) {
+
+  if (typeof isMemoryModeActive !== 'undefined' && isMemoryModeActive) {
+    showToast('🔒 Mode Kenangan Aktif: Data tidak dapat dihapus.');
+    return;
+  }
 
   if (
     !confirm(
