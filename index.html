@@ -484,7 +484,7 @@
       justify-content: center;
       font-size: 22px;
       cursor: pointer;
-      z-index: 1000;
+      z-index: 9990;
       transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
@@ -530,7 +530,7 @@
       border: 1px solid var(--border);
       border-radius: 24px;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-      z-index: 1001;
+      z-index: 9995;
       flex-direction: column;
       overflow: hidden;
       backdrop-filter: blur(20px);
@@ -1659,7 +1659,15 @@
     }
 
     .modal-backdrop-custom.show {
-      display: flex;
+      display: flex !important;
+    }
+
+    #promoSplashModal {
+      z-index: 10002;
+    }
+
+    #memoryModeModal {
+      z-index: 10005;
     }
 
     .modal-box {
@@ -2742,17 +2750,18 @@
     .logout-confirm-overlay {
       position: fixed;
       inset: 0;
-      z-index: 99999;
+      z-index: 100000;
       display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: rgba(0, 0, 0, .35);
-      backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, .55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     .logout-confirm-overlay.show {
-      display: flex;
+      display: flex !important;
     }
 
     .logout-confirm-card {
@@ -4090,6 +4099,7 @@
     >
 
   </div>
+</div>
 
 <!-- FLOATING CHAT BUTTON (PUSAT BANTUAN) -->
 <button id="chatFloatBtn" class="chat-float-btn" onclick="toggleUserChat()" title="Chat dengan Admin">
@@ -4212,6 +4222,37 @@
       </button>
       <button type="button" class="secondary-btn" style="width:100%; margin-top:8px;" onclick="closeMemoryModeModal()">
         Batal / Nanti Saja
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- LOGOUT CONFIRMATION MODAL -->
+<div id="logoutConfirmModal" class="logout-confirm-overlay" onclick="if(event.target===this)closeLogoutConfirm()">
+  <div class="logout-confirm-card" onclick="event.stopPropagation()">
+    <div class="logout-confirm-icon">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </div>
+    <div class="logout-confirm-title" data-i18n="modalLogoutTitle">
+      Keluar dari akun?
+    </div>
+    <div class="logout-confirm-text" data-i18n="modalLogoutText">
+      Data yang sedang ditampilkan akan ditutup.
+    </div>
+    <div class="logout-confirm-actions">
+      <button
+        type="button"
+        class="logout-cancel-btn"
+        onclick="closeLogoutConfirm()"
+        data-i18n="btnCancel">
+        Batal
+      </button>
+      <button
+        type="button"
+        class="logout-ok-btn"
+        onclick="confirmLogout()"
+        data-i18n="btnLogout">
+        Keluar
       </button>
     </div>
   </div>
@@ -5013,6 +5054,10 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   initLanguage();
 
+  initMemoryMode();
+
+  initUserChat();
+
   setupEventListeners();
 
   setDefaultDates();
@@ -5474,12 +5519,14 @@ async function enterApp() {
   const userMode = localStorage.getItem('babyMode') || 'light';
   applyTheme(userColor, userMode);
 
+  // Inisialisasi fitur lokal secara instan sebelum network await
+  initMemoryMode();
+  initUserChat();
+  checkAndShowPromoSplash();
+
   try {
     await loadAllData();
     await checkUserSubscriptionStatus();
-    initMemoryMode();
-    initUserChat();
-    checkAndShowPromoSplash();
   } catch(error) {
     console.error('Error saat loadAllData:', error);
     showToast('Gagal memuat sebagian data: ' + getErrorMessage(error));
@@ -6384,28 +6431,33 @@ function openProfile() {
    PROMOTIONAL SPLASH SCREEN (TAMPIL SEHARI SEKALI SAAT LOGIN)
    ========================================================= */
 
-function checkAndShowPromoSplash() {
-  if (!currentUser) return;
+function checkAndShowPromoSplash(forceShow = false) {
   const todayStr = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-  const userKey = 'baby_promo_splash_' + (currentUser.id || currentUser.email || 'guest');
+  const userKey = 'baby_promo_splash_' + ((currentUser && (currentUser.id || currentUser.email)) || 'user');
   const lastShown = localStorage.getItem(userKey);
 
-  if (lastShown !== todayStr) {
+  if (forceShow || lastShown !== todayStr) {
     setTimeout(() => {
       openPromoSplash();
       localStorage.setItem(userKey, todayStr);
-    }, 700);
+    }, 450);
   }
 }
 
 function openPromoSplash() {
   const modal = document.getElementById('promoSplashModal');
-  if (modal) modal.classList.add('show');
+  if (modal) {
+    modal.classList.add('show');
+    modal.style.display = 'flex';
+  }
 }
 
 function closePromoSplash() {
   const modal = document.getElementById('promoSplashModal');
-  if (modal) modal.classList.remove('show');
+  if (modal) {
+    modal.classList.remove('show');
+    modal.style.display = 'none';
+  }
 }
 
 function openSubscribeFromPromo() {
@@ -6427,12 +6479,18 @@ function initMemoryMode() {
 
 function openMemoryModePrompt() {
   const modal = document.getElementById('memoryModeModal');
-  if (modal) modal.classList.add('show');
+  if (modal) {
+    modal.classList.add('show');
+    modal.style.display = 'flex';
+  }
 }
 
 function closeMemoryModeModal() {
   const modal = document.getElementById('memoryModeModal');
-  if (modal) modal.classList.remove('show');
+  if (modal) {
+    modal.classList.remove('show');
+    modal.style.display = 'none';
+  }
 }
 
 function confirmEnableMemoryMode() {
@@ -6533,15 +6591,21 @@ function pruneOldMessages(messages) {
   return messages.filter(m => (now - new Date(m.created_at).getTime()) <= ONE_WEEK_MS);
 }
 
+function getCurrentUserChatEmail() {
+  if (currentUser && currentUser.email) return currentUser.email.toLowerCase().trim();
+  const stored = localStorage.getItem('babyUserEmail');
+  if (stored) return stored.toLowerCase().trim();
+  return 'pengguna@sikecil.com';
+}
+
 function getUserChatThread(email) {
-  if (!email) return null;
-  const normEmail = email.toLowerCase().trim();
+  const normEmail = (email || getCurrentUserChatEmail()).toLowerCase().trim();
   const all = getAllChatThreads();
   let thread = all[normEmail];
   if (!thread) {
     thread = {
       user_email: normEmail,
-      user_name: (profileData && profileData.babyName) || (currentUser ? currentUser.email : 'Pengguna'),
+      user_name: (profileData && profileData.babyName) || (currentUser ? currentUser.email : 'Bunda/Ayah'),
       user_tier: window.isVipUser ? (isCurrentUserVVIP() ? 'VVIP' : 'VIP') : 'Trial',
       unread_by_admin: 0,
       unread_by_user: 0,
@@ -6563,18 +6627,18 @@ function saveUserChatThread(thread) {
 }
 
 function initUserChat() {
-  if (!currentUser || !currentUser.email) return;
   updateUserChatUnreadBadge();
 
   if (CHAT_BUS) {
     CHAT_BUS.onmessage = function(event) {
       const data = event.data;
       if (!data) return;
-      if (data.type === 'NEW_ADMIN_REPLY' && currentUser && currentUser.email && data.user_email.toLowerCase() === currentUser.email.toLowerCase()) {
+      const myEmail = getCurrentUserChatEmail();
+      if (data.type === 'NEW_ADMIN_REPLY' && data.user_email && data.user_email.toLowerCase() === myEmail) {
         renderUserChatMessages();
         updateUserChatUnreadBadge();
         const chatModal = document.getElementById('userChatModal');
-        const isOpen = chatModal && chatModal.classList.contains('show');
+        const isOpen = chatModal && (chatModal.classList.contains('show') || chatModal.style.display === 'flex');
         if (!isOpen) {
           showToast('💬 Pesan baru dari Admin: "' + (data.text.length > 40 ? data.text.substring(0, 40) + '...' : data.text) + '"');
         }
@@ -6594,7 +6658,7 @@ function initUserChat() {
 function toggleUserChat() {
   const modal = document.getElementById('userChatModal');
   if (!modal) return;
-  if (modal.classList.contains('show')) {
+  if (modal.classList.contains('show') || modal.style.display === 'flex') {
     closeUserChat();
   } else {
     openUserChat();
@@ -6605,15 +6669,15 @@ function openUserChat() {
   const modal = document.getElementById('userChatModal');
   if (!modal) return;
   modal.classList.add('show');
+  modal.style.display = 'flex';
 
   // Reset unread by user
-  if (currentUser && currentUser.email) {
-    const thread = getUserChatThread(currentUser.email);
-    if (thread) {
-      thread.unread_by_user = 0;
-      saveUserChatThread(thread);
-      updateUserChatUnreadBadge();
-    }
+  const myEmail = getCurrentUserChatEmail();
+  const thread = getUserChatThread(myEmail);
+  if (thread) {
+    thread.unread_by_user = 0;
+    saveUserChatThread(thread);
+    updateUserChatUnreadBadge();
   }
 
   renderUserChatMessages();
@@ -6627,13 +6691,15 @@ function closeUserChat() {
   const modal = document.getElementById('userChatModal');
   if (!modal) return;
   modal.classList.remove('show');
+  modal.style.display = 'none';
 }
 
 function renderUserChatMessages() {
   const container = document.getElementById('userChatMessages');
-  if (!container || !currentUser || !currentUser.email) return;
+  if (!container) return;
 
-  const thread = getUserChatThread(currentUser.email);
+  const myEmail = getCurrentUserChatEmail();
+  const thread = getUserChatThread(myEmail);
   if (!thread || !thread.messages || thread.messages.length === 0) {
     container.innerHTML = `
       <div class="chat-empty-hint">
@@ -6666,9 +6732,10 @@ function renderUserChatMessages() {
 function sendUserChatMessage() {
   const input = document.getElementById('userChatInput');
   const text = (input ? input.value : '').trim();
-  if (!text || !currentUser || !currentUser.email) return;
+  if (!text) return;
 
-  const thread = getUserChatThread(currentUser.email);
+  const myEmail = getCurrentUserChatEmail();
+  const thread = getUserChatThread(myEmail);
   const newMsg = {
     id: 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
     sender: 'user',
@@ -6677,7 +6744,7 @@ function sendUserChatMessage() {
   };
 
   thread.messages.push(newMsg);
-  thread.user_name = (profileData && profileData.babyName) || currentUser.email;
+  thread.user_name = (profileData && profileData.babyName) || (currentUser ? currentUser.email : 'Bunda/Ayah');
   thread.user_tier = window.isVipUser ? (isCurrentUserVVIP() ? 'VVIP' : 'VIP') : 'Trial';
   thread.unread_by_admin = (thread.unread_by_admin || 0) + 1;
   thread.updated_at = new Date().toISOString();
@@ -6691,7 +6758,7 @@ function sendUserChatMessage() {
   if (CHAT_BUS) {
     CHAT_BUS.postMessage({
       type: 'NEW_USER_MESSAGE',
-      user_email: currentUser.email,
+      user_email: myEmail,
       user_name: thread.user_name,
       text: text,
       timestamp: newMsg.created_at
@@ -6700,8 +6767,8 @@ function sendUserChatMessage() {
 }
 
 function deleteUserChatMessage(msgId) {
-  if (!currentUser || !currentUser.email) return;
-  const thread = getUserChatThread(currentUser.email);
+  const myEmail = getCurrentUserChatEmail();
+  const thread = getUserChatThread(myEmail);
   if (!thread) return;
   thread.messages = thread.messages.filter(m => m.id !== msgId);
   saveUserChatThread(thread);
@@ -6709,9 +6776,9 @@ function deleteUserChatMessage(msgId) {
 }
 
 function clearUserChatHistory() {
-  if (!currentUser || !currentUser.email) return;
   if (!confirm('Hapus seluruh riwayat chat Anda dengan admin?')) return;
-  const thread = getUserChatThread(currentUser.email);
+  const myEmail = getCurrentUserChatEmail();
+  const thread = getUserChatThread(myEmail);
   if (thread) {
     thread.messages = [];
     thread.unread_by_user = 0;
@@ -6722,8 +6789,8 @@ function clearUserChatHistory() {
 }
 
 function updateUserChatUnreadBadge() {
-  if (!currentUser || !currentUser.email) return;
-  const thread = getUserChatThread(currentUser.email);
+  const myEmail = getCurrentUserChatEmail();
+  const thread = getUserChatThread(myEmail);
   const count = thread ? (thread.unread_by_user || 0) : 0;
 
   const floatBadge = document.getElementById('chatFloatBadge');
@@ -11818,19 +11885,19 @@ function escHtml(value) {
 }
 
 function openLogoutConfirm() {
-
-  document
-    .getElementById('logoutConfirmModal')
-    .classList.add('show');
-
+  const modal = document.getElementById('logoutConfirmModal');
+  if (modal) {
+    modal.classList.add('show');
+    modal.style.display = 'flex';
+  }
 }
 
 function closeLogoutConfirm() {
-
-  document
-    .getElementById('logoutConfirmModal')
-    .classList.remove('show');
-
+  const modal = document.getElementById('logoutConfirmModal');
+  if (modal) {
+    modal.classList.remove('show');
+    modal.style.display = 'none';
+  }
 }
 
 async function confirmLogout() {
@@ -11839,7 +11906,10 @@ async function confirmLogout() {
 
   try {
     if (window.supabase && supabaseClient && supabaseClient.auth) {
-      await supabaseClient.auth.signOut();
+      await Promise.race([
+        supabaseClient.auth.signOut(),
+        new Promise(resolve => setTimeout(resolve, 800))
+      ]);
     }
   } catch (err) {
     console.warn('Supabase signOut warning:', err);
@@ -11890,47 +11960,6 @@ function showToast(message) {
 }
 
 </script>
-
-<!-- LOGOUT CONFIRMATION -->
-<div id="logoutConfirmModal" class="logout-confirm-overlay">
-
-  <div class="logout-confirm-card">
-
-    <div class="logout-confirm-icon">
-      <i class="fa-solid fa-right-from-bracket"></i>
-    </div>
-
-    <div class="logout-confirm-title" data-i18n="modalLogoutTitle">
-      Keluar dari akun?
-    </div>
-
-    <div class="logout-confirm-text" data-i18n="modalLogoutText">
-      Data yang sedang ditampilkan akan ditutup.
-    </div>
-
-    <div class="logout-confirm-actions">
-
-      <button
-        type="button"
-        class="logout-cancel-btn"
-        onclick="closeLogoutConfirm()"
-        data-i18n="btnCancel">
-        Batal
-      </button>
-
-      <button
-        type="button"
-        class="logout-ok-btn"
-        onclick="confirmLogout()"
-        data-i18n="btnLogout">
-        Keluar
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
 
 </body>
 </html>
